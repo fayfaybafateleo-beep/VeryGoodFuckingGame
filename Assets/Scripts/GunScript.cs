@@ -24,7 +24,7 @@ public class GunScript : MonoBehaviour
     [Header("Animations")]
     public Animator GunAnimator;
     public float AnimatorSpeed;
-   // public GUNSHake shake;
+    public GunShake shake;
     // Slug Count//
     public int SlugCount;
 
@@ -58,13 +58,14 @@ public class GunScript : MonoBehaviour
             // Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
             GameObject muzzleFlash=Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
             muzzleFlash.transform.SetParent(FirePoint);
-            //shake.AddRecoil(1f);
+
+            //Animations
+            shake.AddRecoil(1f);
             GunAnimator.SetTrigger("Fire");
             // Sound
             AudioSource.PlayOneShot(ClipShooting);
-
             // Screenshake
-         //   Impulse.GenerateImpulse();
+            Impulse.GenerateImpulse();
         }
     }
 }
