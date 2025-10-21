@@ -64,9 +64,19 @@ namespace StarterAssets
 		private float _jumpTimeoutDelta;
 		private float _fallTimeoutDelta;
 
-	
+
+        //Modify
+        [Header("Camera Tilt (Strafe)")]
+        [Tooltip("左右平移时镜头最大倾斜角（度，右移一般是负Z）")]
+        public float StrafeTiltMax = 6f;
+        [Tooltip("倾斜平滑时间（秒），越小越跟手")]
+        public float StrafeTiltSmoothTime = 0.08f;
+        private float _strafeTiltZ;
+        private float _strafeTiltVel;
+
+
 #if ENABLE_INPUT_SYSTEM
-		private PlayerInput _playerInput;
+        private PlayerInput _playerInput;
 #endif
 		private CharacterController _controller;
 		private StarterAssetsInputs _input;
@@ -129,38 +139,43 @@ namespace StarterAssets
 			Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
 		}
 
-		private void CameraRotation()
-		{
-			// if there is an input
-			if (_input.look.sqrMagnitude >= _threshold)
-			{
-				//Don't multiply mouse input by Time.deltaTime
-				float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
-				
-				_cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
-				_rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
+        private void CameraRotation()
+        {
+            // 鼠标与手柄的时间系数
+            float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-				// clamp our pitch rotation
-				_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+            // 处理俯仰与水平旋转输入（与原逻辑一致）
+            if (_input.look.sqrMagnitude >= _threshold)
+            {
+                _cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
+                _rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
 
-				// Update Cinemachine camera target pitch
-				CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
+                // 旋转玩家左右朝向（Yaw）
+                transform.Rotate(Vector3.up * _rotationVelocity);
+            }
 
-				// rotate the player left and right
-				transform.Rotate(Vector3.up * _rotationVelocity);
-			}
-		}
+            // 限制俯仰
+            _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
-		private void Move()
+            // === 新增：根据左右移动输入产生“镜头滚转（Z轴倾斜）” ===
+            // 右移希望画面右倾：通常为负Z；如需反向把负号去掉
+            float targetTilt = -_input.move.x * StrafeTiltMax;
+            _strafeTiltZ = Mathf.SmoothDampAngle(_strafeTiltZ, targetTilt, ref _strafeTiltVel, StrafeTiltSmoothTime);
+
+            // 应用到 CM 跟随目标：俯仰 + 滚转（保留原来的 Y=0）
+            CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0f, _strafeTiltZ);
+        }
+
+        private void Move()
 		{
 			// set target speed based on move speed, sprint speed and if sprint is pressed
-			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+			//float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
 			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
-
-			// note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-			// if there is no input, set the target speed to 0
-			if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+			float targetSpeed = MoveSpeed;
+            // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+            // if there is no input, set the target speed to 0
+            if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
 			// a reference to the players current horizontal velocity
 			float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;

@@ -5,28 +5,24 @@ public class Bullet : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("Physics")]
     public Rigidbody Rigidbody;
-   
-    public float Speed; // m/s
+    public float Speed; 
 
-    [Space]
-    // When duration = 0, the bullets is destroyed
     [Range(1, 10)]
-    public float Duration = 5f; // seconds
+    public float Duration = 5f; 
 
     [Header("Impact")]
     [Range(0, 1000)]
-    public float Force = 100; // Netwons
+    public float Force = 100; 
     [Range(0.1f, 1)]
-    public float Radius = 0.25f; // m
+    public float Radius = 0.25f; 
 
-    // Start is called before the first frame update
-
-    //modify//
     public GameObject UI;
+    public CrossHairShake HitMarkShake;
     void Start()
     {
         Rigidbody.linearVelocity = transform.forward * Speed;
         UI = GameObject.FindGameObjectWithTag("HitMark");
+        HitMarkShake = UI.GetComponentInParent<CrossHairShake>();
     }
 
     void Update()
@@ -48,6 +44,7 @@ public class Bullet : MonoBehaviour
             rigidbody.AddExplosionForce(Force, transform.position, Radius);
             Debug.Log("hit!" + rigidbody.name);
             UI.GetComponent<Animator>().SetTrigger("Hit");
+            HitMarkShake.AddShake(1f);
         }
 
         // Destroy the bullet on collision
