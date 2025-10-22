@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
+using Unity.Cinemachine;
 #endif
 
 namespace StarterAssets
@@ -72,8 +73,7 @@ namespace StarterAssets
         [Tooltip("倾斜平滑时间（秒），越小越跟手")]
         public float StrafeTiltSmoothTime = 0.08f;
         private float _strafeTiltZ;
-        private float _strafeTiltVel;
-
+		private float _strafeTiltVel;
 
 #if ENABLE_INPUT_SYSTEM
         private PlayerInput _playerInput;
@@ -211,7 +211,7 @@ namespace StarterAssets
 
 			// move the player
 			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-		}
+        }
 
 		private void JumpAndGravity()
 		{
@@ -279,5 +279,6 @@ namespace StarterAssets
 			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
-	}
+
+    }
 }

@@ -30,7 +30,7 @@ public class GunScript : MonoBehaviour
 
     public GameObject GunModel;
     public GameObject MuzzleFlash;
-
+    public WeaponWaging WeaponWagingScript;
     
   
     // Update is called once per frame
@@ -52,7 +52,7 @@ public class GunScript : MonoBehaviour
             ReloadTimer = ReloadTime;
 
             // Fire
-
+            WeaponWagingScript.SuppressSwayOnFire();
             Bullet bullet = Instantiate(BulletPrefab, FirePoint.position, FirePoint.rotation);
             //muzzleFlash//
             // Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
