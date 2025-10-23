@@ -2275,6 +2275,15 @@ MonoBehaviour:
   GunAnimator: {fileID: 3494828783787249865}
   AnimatorSpeed: 5
   shake: {fileID: 8266180076864470332}
+  Camera: {fileID: 0}
+  MaxDistance: 10000
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  ignoreSelfLayers:
+    serializedVersion: 2
+    m_Bits: 246
+  nearOffset: 0.001
   SlugCount: 0
   GunModel: {fileID: 8494665456162348921}
   MuzzleFlash: {fileID: 8808410404107600223, guid: 58e809856578fe44094df60e6ab5c6b6, type: 3}
