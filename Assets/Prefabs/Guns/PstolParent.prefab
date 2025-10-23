@@ -671,7 +671,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.05, y: 0, z: 0.1}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 0.4, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 780947920312204378}
@@ -1259,19 +1259,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FirePoint: {fileID: 1898633215775109795}
   BulletPrefab: {fileID: 3454573842243275128, guid: c87df9d91869f9240b5d030728824403, type: 3}
-  ReloadTime: 0.5
+  ReloadTime: 0.2
   AudioSource: {fileID: 1608334892052711823}
-  ClipShooting: {fileID: 8300000, guid: e52d28c32b394ac43853521296f31f23, type: 3}
-  ClipCocking: {fileID: 8300000, guid: e52d28c32b394ac43853521296f31f23, type: 3}
+  ClipShooting: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
+  ClipCocking: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
   Impulse: {fileID: 8079157214226115878}
   GunAnimator: {fileID: 227658081199487082}
   AnimatorSpeed: 5
   shake: {fileID: 1979443626662996304}
+  GunDamage: 15
+  GunPeneration: 3
   Camera: {fileID: 0}
   MaxDistance: 60
-  Layer:
+  HitLayers:
     serializedVersion: 2
     m_Bits: 4294967295
+  IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  Offset: 0.1
   SlugCount: 0
   GunModel: {fileID: 7617261173868679732}
   MuzzleFlash: {fileID: 2933326327969011748, guid: 2b7e7fc9265810a45b3ad8fd3e61a65a, type: 3}
@@ -1367,7 +1373,7 @@ MonoBehaviour:
   rotationTarget: {fileID: 8527786742178356590}
   kickBackDistance: 0.05
   kickPitchYaw: {x: 0.4, y: 0.4}
-  kickRandomYawSignChance: 0.5
+  kickRandomYawSignChance: 0.3
   posSpringStiffness: 400
   rotSpringStiffness: 300
   dampingRatioPos: 1.1

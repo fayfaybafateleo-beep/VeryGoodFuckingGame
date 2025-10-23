@@ -2168,17 +2168,23 @@ MonoBehaviour:
   BulletPrefab: {fileID: 3454573842243275128, guid: c87df9d91869f9240b5d030728824403, type: 3}
   ReloadTime: 0.08
   AudioSource: {fileID: 216248416366208575}
-  ClipShooting: {fileID: 8300000, guid: e52d28c32b394ac43853521296f31f23, type: 3}
-  ClipCocking: {fileID: 8300000, guid: e52d28c32b394ac43853521296f31f23, type: 3}
+  ClipShooting: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
+  ClipCocking: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
   Impulse: {fileID: 7059261749466493182}
   GunAnimator: {fileID: 6880274206709530987}
   AnimatorSpeed: 5
   shake: {fileID: 6570069078564711955}
+  GunDamage: 15
+  GunPeneration: 4
   Camera: {fileID: 0}
   MaxDistance: 60
-  Layer:
+  HitLayers:
     serializedVersion: 2
     m_Bits: 4294967295
+  IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  Offset: 0.1
   SlugCount: 0
   GunModel: {fileID: 7663199390295935275}
   MuzzleFlash: {fileID: 2933326327969011748, guid: 50fc41b127b11eb4996696968d995375, type: 3}

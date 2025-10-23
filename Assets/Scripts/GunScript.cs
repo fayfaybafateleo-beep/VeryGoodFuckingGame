@@ -28,6 +28,9 @@ public class GunScript : MonoBehaviour
     public float AnimatorSpeed;
     public GunShake shake;
 
+    [Header("GunData")]
+    public float GunDamage;
+    public int GunPeneration;
 
     [Header("ZeroTheFirePoint")]
     public Camera Camera;
@@ -42,7 +45,7 @@ public class GunScript : MonoBehaviour
     public GameObject MuzzleFlash;
     public WeaponWaging WeaponWagingScript;
 
-
+   
     // Update is called once per frame
     void Start()
     {
@@ -95,6 +98,8 @@ public class GunScript : MonoBehaviour
             // Fire
             WeaponWagingScript.SuppressSwayOnFire();
             Bullet bullet = Instantiate(BulletPrefab, FirePoint.position, FirePoint.rotation);
+            bullet.GetComponent<Bullet>().Damage = GunDamage;
+            bullet.GetComponent<Bullet>().PenatrateLevel = GunPeneration;
             //muzzleFlash//
             // Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
             GameObject muzzleFlash=Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);

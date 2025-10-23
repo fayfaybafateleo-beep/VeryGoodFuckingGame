@@ -14,15 +14,25 @@ public class Bullet : MonoBehaviour
     [Range(0, 1000)]
     public float Force = 100; 
     [Range(0.1f, 1)]
-    public float Radius = 0.25f; 
+    public float Radius = 0.25f;
 
-    public GameObject UI;
-    public CrossHairShake HitMarkShake;
+    public GameObject HitMark;
+    public CrossHairGenral HitMarkParent;
+    public string EnemyTag = "Enemy";
+
+    [Header("GunDatas")]
+    public float Damage;
+    public int PenatrateLevel;
+
+    [Header("DamgeMultiplier")]
+     float PenertrateRate=1f;
+     float OverPenertrateRate = 1.5f;
+     float NotPenertrateRate = 0.3f;
     void Start()
     {
         Rigidbody.linearVelocity = transform.forward * Speed;
-        UI = GameObject.FindGameObjectWithTag("HitMark");
-        HitMarkShake = UI.GetComponentInParent<CrossHairShake>();
+        HitMark = GameObject.FindGameObjectWithTag("HitMark");
+        HitMarkParent = HitMark.GetComponentInParent<CrossHairGenral>();
     }
 
     void Update()
@@ -39,16 +49,37 @@ public class Bullet : MonoBehaviour
     {
         // Add explosive force to objects (if they have a rigidbody)
         Rigidbody rigidbody = collision.collider.GetComponent<Rigidbody>();
-        if (rigidbody != null)
+        EnemyHealth enemyHealth = collision.collider.GetComponent<EnemyHealth>();
+        string tag = collision.gameObject.tag;
+        if (rigidbody != null && enemyHealth!= null && tag== EnemyTag)
         {
             rigidbody.AddExplosionForce(Force, transform.position, Radius);
+            int enemyThoughness = enemyHealth.Thougthness;
             Debug.Log("hit!" + rigidbody.name);
-            UI.GetComponent<Animator>().SetTrigger("Hit");
-            HitMarkShake.AddShake(1f);
+            HitMark.GetComponent<Animator>().SetTrigger("Hit");
+            HitMarkParent.AddShake(1f);
+            HitMarkParent.HitMarkHitSoundPlay();
+            //DamageSettlement
+            DamageSettle(enemyThoughness);
+            enemyHealth.Health -= Damage;
         }
-
+        
         // Destroy the bullet on collision
         Destroy(gameObject);
     }
-
+    public void DamageSettle(int enemyThoughness)
+    {
+        if (enemyThoughness > PenatrateLevel)
+        {
+            Damage = Damage * NotPenertrateRate;
+        }
+        if(enemyThoughness == PenatrateLevel)
+        {
+            Damage = Damage * PenertrateRate;
+        }
+        if (enemyThoughness < PenatrateLevel)
+        {
+            Damage = Damage * OverPenertrateRate;
+        }
+    }
 }

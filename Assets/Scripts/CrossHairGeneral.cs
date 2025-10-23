@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CrossHairShake : MonoBehaviour
+public class CrossHairGenral : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("Crosshair")]
@@ -30,6 +30,9 @@ public class CrossHairShake : MonoBehaviour
     float _holdTimer;
     float _seedX, _seedY, _seedR;
 
+    [Header("HitMarkSound")]
+    public AudioSource HitMarkHitSound;
+    public AudioClip HitMarkHitClip;
     void Awake()
     {
         _baseUIPos = UiTarget.anchoredPosition;
@@ -99,5 +102,16 @@ public class CrossHairShake : MonoBehaviour
         _fadeVel = 0f;
         _holdTimer = 0f;
         ApplyOutput(Vector2.zero, 0f);
+    }
+
+    public void HitMarkHitSoundPlay()
+    {
+        HitMarkHitSound.PlayOneShot(HitMarkHitClip);
+    }
+    public void AddKillShake(float strength = 1f)
+    {
+        _holdTimer = ShakeHoldTime;
+        _strength = Mathf.Clamp01(Mathf.Max(_strength, 10f * strength)); // 叠加时保持有力
+        _fadeVel = 0f; // 重置淡出速度，避免上次残留
     }
 }
