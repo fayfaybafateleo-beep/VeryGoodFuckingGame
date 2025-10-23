@@ -33,6 +33,7 @@ public class CrossHairGenral : MonoBehaviour
     [Header("HitMarkSound")]
     public AudioSource HitMarkHitSound;
     public AudioClip HitMarkHitClip;
+    public AudioClip HitMarkKillClip;
     void Awake()
     {
         _baseUIPos = UiTarget.anchoredPosition;
@@ -108,10 +109,15 @@ public class CrossHairGenral : MonoBehaviour
     {
         HitMarkHitSound.PlayOneShot(HitMarkHitClip);
     }
+
     public void AddKillShake(float strength = 1f)
     {
         _holdTimer = ShakeHoldTime;
         _strength = Mathf.Clamp01(Mathf.Max(_strength, 10f * strength)); // 叠加时保持有力
         _fadeVel = 0f; // 重置淡出速度，避免上次残留
+    }
+    public void HitMarkKillSoundPlay()
+    {
+        HitMarkHitSound.PlayOneShot(HitMarkKillClip);
     }
 }

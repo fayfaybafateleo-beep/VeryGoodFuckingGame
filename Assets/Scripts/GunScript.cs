@@ -1,7 +1,5 @@
 using UnityEngine;
 using Unity.Cinemachine;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using UnityEditor.PackageManager;
 
 public class GunScript : MonoBehaviour
 {

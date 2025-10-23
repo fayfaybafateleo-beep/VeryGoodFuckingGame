@@ -23,7 +23,7 @@ public class EnemyHealth : MonoBehaviour
             Destroy(gameObject, 0f);
             HitMark.GetComponent<Animator>().SetTrigger("Kill");
             HitMarkParent.AddKillShake(10f);
-            HitMarkParent.HitMarkHitSoundPlay();
+            HitMarkParent.HitMarkKillSoundPlay();
         }
     }
 }
