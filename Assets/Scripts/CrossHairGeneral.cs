@@ -19,14 +19,14 @@ public class CrossHairGenral : MonoBehaviour
     public float FadeOut;
 
     [Header("IsUnScaleTime")]
-    public bool UseUnscaledTime = true;   // 命中反馈一般不受慢动作影响更顺手
+    public bool UseUnscaledTime = true;   
 
    
     Vector2 _baseUIPos;
     float _baseUIRotZ;
 
-    float _strength;     // 0..1
-    float _fadeVel;      // SmoothDamp缓存
+    float _strength;     
+    float _fadeVel;      
     float _holdTimer;
     float _seedX, _seedY, _seedR;
 
@@ -49,7 +49,7 @@ public class CrossHairGenral : MonoBehaviour
         float dt = UseUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
         if (dt <= 0f) return;
 
-        // 更新包络：先hold，再SmoothDamp到0
+        
         if (_holdTimer > 0f)
         {
             _holdTimer -= dt;
@@ -61,14 +61,14 @@ public class CrossHairGenral : MonoBehaviour
             if (_strength < 0.0001f) _strength = 0f;
         }
 
-        // 无抖动需求时保持基准
+        // KeppIdle
         if (_strength <= 0f)
         {
             ApplyOutput(Vector2.zero, 0f);
             return;
         }
 
-        // 生成连续的Perlin噪声（不会跳变）
+        // Noice
         float ft = tNow * Frequency;
         float nx = (Mathf.PerlinNoise(_seedX, ft) - 0.5f) * 2f; // [-1,1]
         float ny = (Mathf.PerlinNoise(_seedY, ft) - 0.5f) * 2f;
@@ -88,15 +88,14 @@ public class CrossHairGenral : MonoBehaviour
             UiTarget.localEulerAngles = e;
     }
 
-    /// 在命中时调用；strength 可用于暴头/弱命中区分（1=标准）
     public void AddShake(float strength = 1f)
     {
         _holdTimer = ShakeHoldTime;
-        _strength = Mathf.Clamp01(Mathf.Max(_strength, 0.8f * strength)); // 叠加时保持有力
-        _fadeVel = 0f; // 重置淡出速度，避免上次残留
+        _strength = Mathf.Clamp01(Mathf.Max(_strength, 0.8f * strength)); 
+        _fadeVel = 0f; 
     }
 
-    // 可选：命中后立刻复位（如果需要）
+  
     public void ResetPose()
     {
         _strength = 0f;
@@ -113,8 +112,8 @@ public class CrossHairGenral : MonoBehaviour
     public void AddKillShake(float strength = 1f)
     {
         _holdTimer = ShakeHoldTime;
-        _strength = Mathf.Clamp01(Mathf.Max(_strength, 10f * strength)); // 叠加时保持有力
-        _fadeVel = 0f; // 重置淡出速度，避免上次残留
+        _strength = Mathf.Clamp01(Mathf.Max(_strength, 10f * strength)); 
+        _fadeVel = 0f; 
     }
     public void HitMarkKillSoundPlay()
     {

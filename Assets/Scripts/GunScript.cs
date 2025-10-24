@@ -9,9 +9,15 @@ public class GunScript : MonoBehaviour
     public Bullet BulletPrefab;
 
     [Header("FireRate")]
-    [Range(0, 5)]
-    public float ReloadTime; // seconds
-    private float ReloadTimer; // seconds
+    [Range(0, 3000)]
+    public float FireRate; // RPM
+    private float FireTimer; // seconds
+
+    [Header("MOA")]
+    public float SpreadAngle = 6f;
+
+    [Header("SlugNumber")]
+    public int SlugCount;
 
     [Header("Sound")]
     public AudioSource AudioSource;
@@ -37,7 +43,8 @@ public class GunScript : MonoBehaviour
     public LayerMask IgnoreLayers = 0;   
     public float Offset = 0.1f;          
     // Slug Count//
-    public int SlugCount;
+
+   
 
     public GameObject GunModel;
     public GameObject MuzzleFlash;
@@ -78,26 +85,39 @@ public class GunScript : MonoBehaviour
         Debug.DrawRay(RayOrigin, RayDir * MaxDistance, Color.cyan);             // 相机射线
         Debug.DrawRay(FirePoint.position, DirFromMuzzle * MaxDistance, Color.red); // 枪口方向
 
-        ReloadTimer -= Time.deltaTime;
+        FireTimer -= Time.deltaTime;
        GunAnimator.speed = AnimatorSpeed;
         // Mouse pressed
         if (Input.GetMouseButton(0))
         {
             // Gun not ready to shoot yet
-            if (ReloadTimer > 0)
+            if (FireTimer > 0)
             {
                 // AudioSource.PlayOneShot(ClipCocking);
                 return;
             }
 
-            // Starts reloading
-            ReloadTimer = ReloadTime;
-
+            // Starts CountDown in RPM rate
+            FireTimer =  60/FireRate;
+            // Sound
+            AudioSource.PlayOneShot(ClipShooting);
             // Fire
             WeaponWagingScript.SuppressSwayOnFire();
-            Bullet bullet = Instantiate(BulletPrefab, FirePoint.position, FirePoint.rotation);
-            bullet.GetComponent<Bullet>().Damage = GunDamage;
-            bullet.GetComponent<Bullet>().PenatrateLevel = GunPeneration;
+            //SlugCount
+            for (int i = 0; i < SlugCount; i++)
+            {
+                Vector2 c = Random.insideUnitCircle; // x,y ∈ unit circle
+                                                     // 可选：sqrt 分布让中心更密集： c *= Mathf.Sqrt(Random.value);
+                float yaw = c.x * SpreadAngle;
+                float pitch = c.y * SpreadAngle;
+
+                Quaternion spreadRot = FirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
+
+                Bullet bullet = Instantiate(BulletPrefab, FirePoint.position, spreadRot);
+                bullet.GetComponent<Bullet>().Damage = GunDamage;
+                bullet.GetComponent<Bullet>().PenatrateLevel = GunPeneration;
+            }
+           
             //muzzleFlash//
             // Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
             GameObject muzzleFlash=Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
@@ -106,8 +126,7 @@ public class GunScript : MonoBehaviour
             //Animations
             shake.AddRecoil(1f);
             GunAnimator.SetTrigger("Fire");
-            // Sound
-            AudioSource.PlayOneShot(ClipShooting);
+           
             // Screenshake
             Impulse.GenerateImpulse();
         }

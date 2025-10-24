@@ -5,8 +5,12 @@ public class Bullet : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("Physics")]
     public Rigidbody Rigidbody;
-    public float Speed; 
+    public float Speed;
 
+    [Header("HitEffect")]
+    public GameObject BulletHole;
+    public GameObject HitEffect;
+    public GameObject HitEffect2;
     [Range(1, 10)]
     public float Duration = 5f; 
 
@@ -50,18 +54,42 @@ public class Bullet : MonoBehaviour
         // Add explosive force to objects (if they have a rigidbody)
         Rigidbody rigidbody = collision.collider.GetComponent<Rigidbody>();
         EnemyHealth enemyHealth = collision.collider.GetComponent<EnemyHealth>();
+        ObjectThoughness objectThoughness= collision.collider.GetComponent<ObjectThoughness>();
         string tag = collision.gameObject.tag;
-        if (rigidbody != null && enemyHealth!= null && tag== EnemyTag)
+       
+        if (rigidbody != null && objectThoughness!=null)
         {
-            rigidbody.AddExplosionForce(Force, transform.position, Radius);
-            int enemyThoughness = enemyHealth.Thougthness;
-            Debug.Log("hit!" + rigidbody.name);
-            HitMark.GetComponent<Animator>().SetTrigger("Hit");
-            HitMarkParent.AddShake(1f);
-            HitMarkParent.HitMarkHitSoundPlay();
-            //DamageSettlement
-            DamageSettle(enemyThoughness);
-            enemyHealth.Health -= Damage;
+            //Instantiate BulletHole For all RB object
+            var hit = collision.GetContact(0);
+            GameObject bulletHole= Instantiate(BulletHole, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
+            bulletHole.transform.SetParent(collision.transform);
+
+            //HitEffect
+            if (objectThoughness.Thoughness>PenatrateLevel)
+            {
+                GameObject hitEffect1 = Instantiate(HitEffect, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
+                hitEffect1.transform.SetParent(collision.transform);
+            }
+            if (objectThoughness.Thoughness <= PenatrateLevel)
+            {
+                GameObject hitEffect2 = Instantiate(HitEffect2, hit.point + hit.normal * 0.1f, Quaternion.LookRotation(hit.normal));
+               // hitEffect2.transform.SetParent(collision.transform);
+            }
+
+            //Dule Damage
+            if (enemyHealth != null && tag == EnemyTag)
+            {
+                rigidbody.AddExplosionForce(Force, transform.position, Radius);
+                int enemyThoughness = enemyHealth.Thougthness;
+                Debug.Log("hit!" + rigidbody.name);
+                HitMark.GetComponent<Animator>().SetTrigger("Hit");
+                HitMarkParent.AddShake(1f);
+                HitMarkParent.HitMarkHitSoundPlay();
+                //DamageSettlement
+                DamageSettle(enemyThoughness);
+                enemyHealth.Health -= Damage;
+            }
+           
         }
         
         // Destroy the bullet on collision

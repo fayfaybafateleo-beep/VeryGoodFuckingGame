@@ -2166,7 +2166,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FirePoint: {fileID: 6791072409368940482}
   BulletPrefab: {fileID: 3454573842243275128, guid: c87df9d91869f9240b5d030728824403, type: 3}
-  ReloadTime: 0.08
+  FireRate: 550
+  SpreadAngle: 1
+  SlugCount: 1
   AudioSource: {fileID: 216248416366208575}
   ClipShooting: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
   ClipCocking: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
@@ -2185,7 +2187,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   Offset: 0.1
-  SlugCount: 0
   GunModel: {fileID: 7663199390295935275}
   MuzzleFlash: {fileID: 2933326327969011748, guid: 50fc41b127b11eb4996696968d995375, type: 3}
   WeaponWagingScript: {fileID: 4390834956886434075}
@@ -2263,7 +2264,7 @@ MonoBehaviour:
     DissipationMode: 2
     DissipationDistance: 100
     PropagationSpeed: 343
-  DefaultVelocity: {x: 0, y: 0, z: -0.04}
+  DefaultVelocity: {x: 0, y: 0, z: -0.05}
 --- !u!114 &6570069078564711955
 MonoBehaviour:
   m_ObjectHideFlags: 0
