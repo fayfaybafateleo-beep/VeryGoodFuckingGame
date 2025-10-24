@@ -15,11 +15,6 @@ public class Bullet : MonoBehaviour
     [Range(1, 10)]
     public float Duration = 5f; 
 
-    [Header("Impact")]
-    [Range(0, 1000)]
-    public float Force = 100; 
-    [Range(0.1f, 1)]
-    public float Radius = 0.25f;
 
     public GameObject HitMark;
     public CrossHairGenral HitMarkParent;
@@ -73,7 +68,7 @@ public class Bullet : MonoBehaviour
 
             if (enemy)
             {
-                enemy.ApplyHit(Damage, PenatrateLevel, hb);
+                enemy.ApplyHit(Damage, PenatrateLevel, hb,collision.GetContact(0).point);
                 HitMark.GetComponent<Animator>().SetTrigger("Hit");
                 HitMarkParent.AddShake(1f);
                 HitMarkParent.HitMarkHitSoundPlay();
