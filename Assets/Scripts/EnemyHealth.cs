@@ -26,9 +26,9 @@ public class EnemyHealth : MonoBehaviour
 
     public float KinematicActiveAfterDie;
     public float ForcePerDamage;
+    public float AngularPerDamage;
     public float UpwardForce;
-    public float LinearMultipulier;
-    float FinalDamage;
+    public float FinalDamage;
     public Animator EnemyAnimator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -44,9 +44,7 @@ public class EnemyHealth : MonoBehaviour
         {
             Die();
         }
-        if (IsDead && RB.linearDamping < 30)
-            RB.linearDamping += Time.unscaledDeltaTime* LinearMultipulier;
-       
+
        
     }
     public void ApplyHit(float baseDamage, int penetrateLevel, HitBoxPart hitbox,Vector3 hitPoint)
@@ -71,20 +69,25 @@ public class EnemyHealth : MonoBehaviour
     }
     void Die()
     {
-        if (IsDead) return;                                   // [MOD] 修复：防止重复执行导致多次施力
+        if (IsDead) return;                                   // One time excute
         IsDead = true;
+
         Debug.Log("ED");
+        //Hitmark using
         HitMark.GetComponent<Animator>().SetTrigger("Kill");
         HitMarkParent.AddKillShake(10f);
         HitMarkParent.HitMarkKillSoundPlay();
+
+        //BodyEffect
+        RB.constraints = RigidbodyConstraints.None;
         RB.isKinematic = false;
         EnemyAnimator.SetTrigger("Die");
         float impulseMag = FinalDamage * ForcePerDamage;
         Vector3 force = Dir * impulseMag;
-        
-        RB.AddForce(Vector3.up * UpwardForce, ForceMode.Impulse);
+        RB.AddForce(Vector3.up * UpwardForce*FinalDamage, ForceMode.Impulse);
+        RB.AddTorque(Random.onUnitSphere * AngularPerDamage * FinalDamage, ForceMode.Impulse);
         RB.AddForceAtPosition(force, LastHitPoint, ForceMode.Impulse);
-
+        //BodyStationary
         Invoke("EnemyKinematic", KinematicActiveAfterDie);
     }
     public void EnemyKinematic()
