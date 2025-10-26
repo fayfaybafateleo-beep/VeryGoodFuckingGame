@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEditor.Recorder.OutputPath;
 using static UnityEngine.Rendering.DebugUI;
 
 public class EnemyHealth : MonoBehaviour
@@ -30,11 +31,18 @@ public class EnemyHealth : MonoBehaviour
     public float UpwardForce;
     public float FinalDamage;
     public Animator EnemyAnimator;
+    public float TimeToDestroy;
+
+    [Header("BodyParts")]
+    public GameObject Head;
+    public GameObject Lower;
+    public GameObject Upper;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         HitMark = GameObject.FindGameObjectWithTag("HitMark");
         HitMarkParent = HitMark.GetComponentInParent<CrossHairGenral>();
+  
     }
 
     // Update is called once per frame
@@ -93,5 +101,11 @@ public class EnemyHealth : MonoBehaviour
     public void EnemyKinematic()
     {
         RB.isKinematic = true;
+        DestroyBody();
     }
+    public void DestroyBody()
+    {
+        Destroy(gameObject, TimeToDestroy);
+    }
+
 }
