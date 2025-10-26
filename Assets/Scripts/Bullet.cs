@@ -14,8 +14,10 @@ public class Bullet : MonoBehaviour
     public GameObject ExtraHitEffect;
     public GameObject HitEffect2;
     [Range(1, 10)]
-    public float Duration = 5f; 
+    public float Duration = 5f;
 
+    [SerializeField, Range(0f, 1f)]
+    private float ExtraEffectChance = 0.3f;
 
     public GameObject HitMark;
     public CrossHairGenral HitMarkParent;
@@ -62,10 +64,12 @@ public class Bullet : MonoBehaviour
             if (hb.Thoughness <= PenatrateLevel)
             {
                 GameObject hitEffect2 = Instantiate(HitEffect2, hit.point + hit.normal * 0.1f, Quaternion.LookRotation(hit.normal));
-                if (enemy)
+                if (enemy && Random.value <= ExtraEffectChance)
                 {
-                    GameObject extraHitEffect = Instantiate(ExtraHitEffect, hit.point + hit.normal * 0.1f, Quaternion.LookRotation(hit.normal));
-                    extraHitEffect.transform.SetParent(collision.transform);
+                   
+                        GameObject extraHitEffect = Instantiate(ExtraHitEffect, hit.point + hit.normal * 0.1f, Quaternion.LookRotation(hit.normal));
+                        extraHitEffect.transform.SetParent(collision.transform);
+                    
                 }
 
             }

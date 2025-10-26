@@ -60,7 +60,9 @@ public class HitBoxPart : MonoBehaviour
     }
     public void BreakPart()
     {
-        GameObject bloodEffect=  Instantiate(Blood, BloodPoint.position, BloodPoint.rotation);
+        Owner.BodyPartDesctructSound();
+        Quaternion randomRotation = Random.rotation;
+        GameObject bloodEffect=  Instantiate(Blood, BloodPoint.position, randomRotation);
         bloodEffect.transform.SetParent(Owner.transform);
         GameObject bloodSplash = Instantiate(BloodSplash, BloodPoint.position, BloodPoint.rotation);
         bloodSplash.transform.SetParent(Owner.transform);

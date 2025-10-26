@@ -37,6 +37,10 @@ public class EnemyHealth : MonoBehaviour
     public GameObject Head;
     public GameObject Lower;
     public GameObject Upper;
+
+    [Header("Audio")]
+    public AudioSource AudioSource;
+    public AudioClip Destruction;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -107,5 +111,8 @@ public class EnemyHealth : MonoBehaviour
     {
         Destroy(gameObject, TimeToDestroy);
     }
-
+    public void BodyPartDesctructSound()
+    {
+       AudioSource.PlayOneShot(Destruction);
+    }
 }
