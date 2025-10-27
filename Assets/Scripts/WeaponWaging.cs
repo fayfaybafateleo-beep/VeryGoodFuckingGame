@@ -63,7 +63,25 @@ public class WeaponWaging : MonoBehaviour
     float _fireSuppressTimer;     // >0 = 压制阶段（摆动为0）
     float _fireRecoverProgress;   // 0→1 恢复插值
 
+    // ===== 新增：装备/换弹 动画层（最终输出叠加） =====
+    [Header("Equip / Reload Hand Animation  // ===== 新增 =====")]
+    [Tooltip("下降到低位的距离（局部 -Y 米）")]
+    public float lowerDistance = 0.12f;                      // ===== 新增 =====
+    [Tooltip("下降/抬起时的附加俯仰（度，负值为枪口下压）")]
+    public float animPitchDeg = -8f;                          // ===== 新增 =====
+    [Tooltip("下降动画时长（秒）")]
+    public float lowerDuration = 0.18f;                       // ===== 新增 =====
+    [Tooltip("抬起动画时长（秒）")]
+    public float raiseDuration = 0.20f;                       // ===== 新增 =====
 
+    // 动画层内部状态
+    enum HandAnimState { None, Lowering, Raising }            // ===== 新增 =====
+    HandAnimState _animState = HandAnimState.None;            // ===== 新增 =====
+    Vector3 _animPosOffset;                                   // ===== 新增 =====
+    Vector3 _animRotOffsetEuler;                              // ===== 新增 =====
+    Vector3 _animStartPos, _animTargetPos;                    // ===== 新增 =====
+    Vector3 _animStartRotEuler, _animTargetRotEuler;          // ===== 新增 =====
+    float _animTimer, _animDuration;                          // ===== 新增 =====
 
 
     void Awake()
@@ -170,10 +188,21 @@ public class WeaponWaging : MonoBehaviour
             Mathf.Sin(_idlePhase * 1.5f) * idleRotAmplitude.y,
             -Mathf.Sin(_idlePhase) * idleRotAmplitude.z
         ) * idleBlend * weight * 0.8f;
+        if (_animState != HandAnimState.None)                 // ===== 新增 =====
+        {
+            _animTimer += dt;
+            float t = (_animDuration > 1e-6f) ? Mathf.Clamp01(_animTimer / _animDuration) : 1f;
+            float s = t * t * (3f - 2f * t); // SmoothStep
+
+            _animPosOffset = Vector3.LerpUnclamped(_animStartPos, _animTargetPos, s);
+            _animRotOffsetEuler = Vector3.LerpUnclamped(_animStartRotEuler, _animTargetRotEuler, s);
+
+            if (t >= 1f) _animState = HandAnimState.None;
+        }
 
         // —— 应用到局部变换（叠加在动画之后）—— //
-        P.localPosition = _baseLocalPos + walkPos + idlePos;
-        R.localRotation = Quaternion.Euler(_baseLocalEuler + walkRot + idleRot);
+        P.localPosition = _baseLocalPos + _animPosOffset + walkPos + idlePos;                        // ===== 修改 =====
+        R.localRotation = Quaternion.Euler(_baseLocalEuler + _animRotOffsetEuler + walkRot + idleRot); // ===== 修改 =====
     }
 
     /// 在“开火”事件里调用：暂停摆动并计时恢复
@@ -205,9 +234,63 @@ public class WeaponWaging : MonoBehaviour
         _walkPhase = 0f; _idlePhase = 0f;
         _fireSuppressTimer = 0f; _fireRecoverProgress = 1f;
 
+        // ===== 修改：重置时也清掉动画层 =====
+        _animState = HandAnimState.None; _animTimer = 0f; _animDuration = 0f; // ===== 修改 =====
+        _animPosOffset = Vector3.zero; _animRotOffsetEuler = Vector3.zero;    // ===== 修改 =====
+
         P.localPosition = _baseLocalPos;
         R.localRotation = Quaternion.Euler(_baseLocalEuler);
     }
+    /// <summary>从默认位姿“下降”到低位（用于换弹时的收枪）。</summary>
+    public void LowerForReload(float? duration = null, float? distance = null, float? pitchDeg = null) // ===== 新增 =====
+    {
+        float d = duration ?? lowerDuration;
+        float dist = distance ?? lowerDistance;
+        float pitch = pitchDeg ?? animPitchDeg;
 
-    
+        _animStartPos = _animPosOffset;
+        _animStartRotEuler = _animRotOffsetEuler;
+
+        _animTargetPos = new Vector3(0f, -Mathf.Abs(dist), 0f);
+        _animTargetRotEuler = new Vector3(pitch, 0f, 0f);
+
+        _animTimer = 0f;
+        _animDuration = Mathf.Max(0.01f, d);
+        _animState = HandAnimState.Lowering;
+    }
+
+    /// <summary>从低位“抬回”默认位姿（用于切枪/换弹结束）。</summary>
+    public void RaiseFromLow(float? duration = null)                                             // ===== 新增 =====
+    {
+        float d = duration ?? raiseDuration;
+
+        _animStartPos = _animPosOffset;
+        _animStartRotEuler = _animRotOffsetEuler;
+
+        _animTargetPos = Vector3.zero;
+        _animTargetRotEuler = Vector3.zero;
+
+        _animTimer = 0f;
+        _animDuration = Mathf.Max(0.01f, d);
+        _animState = HandAnimState.Raising;
+    }
+
+    /// <summary>瞬间切到低位（用于新武器出场先在低位，然后抬起）。</summary>
+    public void SnapToLow()                                                                      // ===== 新增 =====
+    {
+        _animState = HandAnimState.None;
+        _animTimer = 0f; _animDuration = 0f;
+        _animPosOffset = new Vector3(0f, -Mathf.Abs(lowerDistance), 0f);
+        _animRotOffsetEuler = new Vector3(animPitchDeg, 0f, 0f);
+    }
+
+    /// <summary>打断动画并恢复默认姿态。</summary>
+    public void CancelHandAnimation()                                                            // ===== 新增 =====
+    {
+        _animState = HandAnimState.None;
+        _animTimer = 0f; _animDuration = 0f;
+        _animPosOffset = Vector3.zero;
+        _animRotOffsetEuler = Vector3.zero;
+    }
+
 }

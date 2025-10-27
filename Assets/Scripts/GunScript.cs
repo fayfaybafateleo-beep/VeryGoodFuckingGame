@@ -50,7 +50,12 @@ public class GunScript : MonoBehaviour
     public GameObject MuzzleFlash;
     public WeaponWaging WeaponWagingScript;
 
-   
+    public enum GunState
+    {
+       CanFire,
+       CeaseFire
+    }
+    public GunState GS;
     // Update is called once per frame
     void Start()
     {
@@ -78,57 +83,63 @@ public class GunScript : MonoBehaviour
         }
         Vector3 DirFromMuzzle = (EndPoint - FirePoint.position).normalized;
 
-        // 3) 应用（带可选的固定偏置角，修正模型轴）
         Quaternion aim = Quaternion.LookRotation(DirFromMuzzle, Vector3.up);
         FirePoint.rotation = aim;
 
         Debug.DrawRay(RayOrigin, RayDir * MaxDistance, Color.cyan);             // 相机射线
         Debug.DrawRay(FirePoint.position, DirFromMuzzle * MaxDistance, Color.red); // 枪口方向
-
-        FireTimer -= Time.deltaTime;
-       GunAnimator.speed = AnimatorSpeed;
-        // Mouse pressed
-        if (Input.GetMouseButton(0))
+        switch (GS)
         {
-            // Gun not ready to shoot yet
-            if (FireTimer > 0)
-            {
-                // AudioSource.PlayOneShot(ClipCocking);
-                return;
-            }
+            case GunState.CanFire:
+                FireTimer -= Time.deltaTime;
+                GunAnimator.speed = AnimatorSpeed;
+                // Mouse pressed
+                if (Input.GetMouseButton(0))
+                {
+                    // Gun not ready to shoot yet
+                    if (FireTimer > 0)
+                    {
+                        // AudioSource.PlayOneShot(ClipCocking);
+                        return;
+                    }
 
-            // Starts CountDown in RPM rate
-            FireTimer =  60/FireRate;
-            // Sound
-            AudioSource.PlayOneShot(ClipShooting);
-            // Fire
-            WeaponWagingScript.SuppressSwayOnFire();
-            //SlugCount
-            for (int i = 0; i < SlugCount; i++)
-            {
-                Vector2 c = Random.insideUnitCircle; // x,y ∈ unit circle
-                                                     // 可选：sqrt 分布让中心更密集： c *= Mathf.Sqrt(Random.value);
-                float yaw = c.x * SpreadAngle;
-                float pitch = c.y * SpreadAngle;
+                    // Starts CountDown in RPM rate
+                    FireTimer = 60 / FireRate;
+                    // Sound
+                    AudioSource.PlayOneShot(ClipShooting);
+                    // Fire
+                    WeaponWagingScript.SuppressSwayOnFire();
+                    //SlugCount
+                    for (int i = 0; i < SlugCount; i++)
+                    {
+                        Vector2 c = Random.insideUnitCircle; // x,y ∈ unit circle
+                                                             // 可选：sqrt 分布让中心更密集： c *= Mathf.Sqrt(Random.value);
+                        float yaw = c.x * SpreadAngle;
+                        float pitch = c.y * SpreadAngle;
 
-                Quaternion spreadRot = FirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
+                        Quaternion spreadRot = FirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
 
-                Bullet bullet = Instantiate(BulletPrefab, FirePoint.position, spreadRot);
-                bullet.GetComponent<Bullet>().Damage = GunDamage;
-                bullet.GetComponent<Bullet>().PenatrateLevel = GunPeneration;
-            }
-           
-            //muzzleFlash//
-            // Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
-            GameObject muzzleFlash=Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
-            muzzleFlash.transform.SetParent(FirePoint);
+                        Bullet bullet = Instantiate(BulletPrefab, FirePoint.position, spreadRot);
+                        bullet.GetComponent<Bullet>().Damage = GunDamage;
+                        bullet.GetComponent<Bullet>().PenatrateLevel = GunPeneration;
+                    }
 
-            //Animations
-            shake.AddRecoil(1f);
-            GunAnimator.SetTrigger("Fire");
-           
-            // Screenshake
-            Impulse.GenerateImpulse();
+                    //muzzleFlash//
+                    // Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
+                    GameObject muzzleFlash = Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
+                    muzzleFlash.transform.SetParent(FirePoint);
+
+                    //Animations
+                    shake.AddRecoil(1f);
+                    GunAnimator.SetTrigger("Fire");
+
+                    // Screenshake
+                    Impulse.GenerateImpulse();
+                }
+                break;
+            case GunState.CeaseFire:
+                break;
         }
+        
     }
 }

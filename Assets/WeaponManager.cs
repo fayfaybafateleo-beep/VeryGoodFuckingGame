@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,14 +11,13 @@ public class WeaponManager : MonoBehaviour
     public List<GameObject> WeaponsOnEquipmentList;
     [Header (" KeyOfSwapWeapon")]
     public KeyCode Key = KeyCode.Q;
-    public KeyCode Key2 = KeyCode.R;
-    public KeyCode Key3 = KeyCode.J;
-    public KeyCode Key4 = KeyCode.K;
     [Header(" WeaponAttacher")]
     public GameObject WeaponParent;
 
     public bool IsWeaponSwaped=false;
     public int I = 0;
+    [Header(" SwapCD")]
+    public bool CanSwap = true;
     void Awake()
     {
         foreach (GameObject GunPrefab in OriginWeaponsList)
@@ -36,26 +36,83 @@ public class WeaponManager : MonoBehaviour
     void Start()
     {
         WeaponsOnEquipmentList[I + 1].SetActive(false);
+        WeaponsOnEquipmentList[I + 1].GetComponent<GunScript>().GS = GunScript.GunState.CeaseFire;
+      
     }
-
+   
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(Key))
+       
+        if (Input.GetKeyDown(Key) &&CanSwap)
         {
+            CanSwap = false;
             if (IsWeaponSwaped)
             {
+                //StopSecondWeaponOnFire
+                WeaponsOnEquipmentList[I+1].GetComponent<GunScript>().GS = GunScript.GunState.CeaseFire;
+                //SetGunActive
+
+                var oldSway = WeaponsOnEquipmentList[I+1].GetComponent<WeaponWaging>();
+                if (oldSway) oldSway.LowerForReload(0.12f);
+                WeaponsOnEquipmentList[I ].GetComponent<Animator>().SetTrigger("Idle");
                 WeaponsOnEquipmentList[I + 1].SetActive(false);
                 WeaponsOnEquipmentList[I].SetActive(true);
-                IsWeaponSwaped=!IsWeaponSwaped;
+
+                var newSwayA = WeaponsOnEquipmentList[I].GetComponent<WeaponWaging>();                 // ===== 新增 =====
+                if (newSwayA) { newSwayA.SnapToLow(); newSwayA.RaiseFromLow(); }
+
+                IsWeaponSwaped =!IsWeaponSwaped;
+                //SwapingCD
+                StartCoroutine(SwapToFirstGun());
             }
             else
             {
-                WeaponsOnEquipmentList[I + 1].SetActive(true);
+               
+                //StopFirstWeaponOnFire
+                WeaponsOnEquipmentList[I ].GetComponent<GunScript>().GS = GunScript.GunState.CeaseFire;
+                //SetGunActive
+
+                 var oldSway = WeaponsOnEquipmentList[I].GetComponent<WeaponWaging>();
+                 if (oldSway) oldSway.LowerForReload(0.12f);
+
+
+                WeaponsOnEquipmentList[I+1].GetComponent<Animator>().SetTrigger("Idle");
                 WeaponsOnEquipmentList[I].SetActive(false);
+                WeaponsOnEquipmentList[I + 1].SetActive(true);
+
+                var newSwayB = WeaponsOnEquipmentList[I + 1].GetComponent<WeaponWaging>();             // ===== 新增 =====
+                if (newSwayB) { newSwayB.SnapToLow(); newSwayB.RaiseFromLow(); }
                 IsWeaponSwaped = !IsWeaponSwaped;
+                //SwapingCD
+                StartCoroutine(SwapToSecondGun());
             }
         }
   
     }
+    IEnumerator SwapToSecondGun()
+    {
+        var Swap = WeaponsOnEquipmentList[I + 1].GetComponent<WeaponWaging>(); // 
+
+        float waitTime = Swap.raiseDuration ;
+
+        yield return new WaitForSecondsRealtime(waitTime);
+
+        WeaponsOnEquipmentList[I + 1].GetComponent<GunScript>().GS = GunScript.GunState.CanFire;
+
+        CanSwap = true;
+    }
+    IEnumerator SwapToFirstGun()
+    {
+        var Swap = WeaponsOnEquipmentList[I].GetComponent<WeaponWaging>(); // 
+
+        float waitTime = Swap.raiseDuration ;
+
+        yield return new WaitForSecondsRealtime(waitTime);
+
+        WeaponsOnEquipmentList[I].GetComponent<GunScript>().GS = GunScript.GunState.CanFire;
+
+        CanSwap = true;
+    }
+
 }
