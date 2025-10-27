@@ -63,6 +63,9 @@ public class WeaponWaging : MonoBehaviour
     float _fireSuppressTimer;     // >0 = Ñ¹ÖÆ½×¶Î£¨°Ú¶¯Îª0£©
     float _fireRecoverProgress;   // 0¡ú1 »Ö¸´²åÖµ
 
+
+
+
     void Awake()
     {
         _baseLocalPos = P.localPosition;
@@ -205,4 +208,6 @@ public class WeaponWaging : MonoBehaviour
         P.localPosition = _baseLocalPos;
         R.localRotation = Quaternion.Euler(_baseLocalEuler);
     }
+
+    
 }

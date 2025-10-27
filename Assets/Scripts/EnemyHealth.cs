@@ -32,6 +32,7 @@ public class EnemyHealth : MonoBehaviour
     public float FinalDamage;
     public Animator EnemyAnimator;
     public float TimeToDestroy;
+    public LayerMask BodiesLayer;
 
     [Header("BodyParts")]
     public GameObject Head;
@@ -104,15 +105,25 @@ public class EnemyHealth : MonoBehaviour
     }
     public void EnemyKinematic()
     {
-        RB.isKinematic = true;
+        //SwapToOtherLayer
+        SwapLayer();
         DestroyBody();
     }
     public void DestroyBody()
     {
-        Destroy(gameObject, TimeToDestroy);
+        RB.linearDamping = 20;
+        Destroy(gameObject, 3f);
     }
     public void BodyPartDesctructSound()
     {
        AudioSource.PlayOneShot(Destruction);
+    }
+    public void SwapLayer()
+    {
+        gameObject.layer = LayerMask.NameToLayer("AutoDestroy");
+        foreach(Transform child in gameObject.transform)
+        {
+            child.gameObject.layer = LayerMask.NameToLayer("AutoDestroy");
+        }
     }
 }

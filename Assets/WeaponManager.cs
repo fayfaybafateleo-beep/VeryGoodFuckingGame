@@ -10,6 +10,9 @@ public class WeaponManager : MonoBehaviour
     public List<GameObject> WeaponsOnEquipmentList;
     [Header (" KeyOfSwapWeapon")]
     public KeyCode Key = KeyCode.Q;
+    public KeyCode Key2 = KeyCode.R;
+    public KeyCode Key3 = KeyCode.J;
+    public KeyCode Key4 = KeyCode.K;
     [Header(" WeaponAttacher")]
     public GameObject WeaponParent;
 
@@ -53,5 +56,6 @@ public class WeaponManager : MonoBehaviour
                 IsWeaponSwaped = !IsWeaponSwaped;
             }
         }
+  
     }
 }

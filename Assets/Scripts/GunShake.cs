@@ -53,6 +53,7 @@ public class GunShake : MonoBehaviour
     [Tooltip("待机噪声频率（Hz）")]
     public float idleNoiseFrequency = 6f;
 
+
     [Header("Time")]
     [Tooltip("使用不受 Time.timeScale 影响的时间（慢动作时保持同手感）")]
     public bool useUnscaledTime = false;
@@ -70,7 +71,7 @@ public class GunShake : MonoBehaviour
     Transform P => positionTarget ? positionTarget : transform;
     Transform R => rotationTarget ? rotationTarget : transform;
 
-
+ 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -147,19 +148,11 @@ public class GunShake : MonoBehaviour
     }
     public void AddRecoil(float strength = 1f)
     {
-        // 位移后座：往 -Z 推一小段（转为速度脉冲）
         _posVel += new Vector3(0f, 0f, -kickBackDistance * strength * 60f);
-
-        // 旋转后座：上仰 + 随机左右
         float yawSign = (Random.value < kickRandomYawSignChance) ? -1f : 1f;
-        _rotVel += new Vector3(kickPitchYaw.x * strength * 30f,
-                               kickPitchYaw.y * yawSign * strength * 30f,
-                               0f);
-
-        // 开火噪声：立刻满强，并保持一小段时间后淡出
+        _rotVel += new Vector3(kickPitchYaw.x * strength * 30f,kickPitchYaw.y * yawSign * strength * 30f,0f);
         _shakeT = 1f;
         _holdTimer = shakeHoldTime;
-        // 重置淡出速度缓存，避免上一次 SmoothDamp 的残留影响
         _shakeVel = 0f;
     }
 
@@ -172,4 +165,6 @@ public class GunShake : MonoBehaviour
         v += a * dt;
         x += v * dt;
     }
+
+  
 }
