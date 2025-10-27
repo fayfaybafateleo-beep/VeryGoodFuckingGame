@@ -118,8 +118,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.4
-      minScalar: 0.7
+      scalar: 1
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4855,6 +4855,7 @@ GameObject:
   - component: {fileID: 3799297418974380779}
   - component: {fileID: 5446548099499384885}
   - component: {fileID: 5222031060516332523}
+  - component: {fileID: 7391500876844012403}
   m_Layer: 0
   m_Name: GroundBlood
   m_TagString: Untagged
@@ -9744,6 +9745,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &7391500876844012403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2833431458485925209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 052411d07d132414597cb76a7d335eab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Owner: {fileID: 501394236874677983}
 --- !u!1 &8547582975637564941
 GameObject:
   m_ObjectHideFlags: 0
@@ -9755,6 +9769,7 @@ GameObject:
   - component: {fileID: 286070860306584307}
   - component: {fileID: 526924240417958383}
   - component: {fileID: 5476918751207473775}
+  - component: {fileID: 3323239300806503651}
   m_Layer: 7
   m_Name: Particle System
   m_TagString: Untagged
@@ -14635,3 +14650,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &3323239300806503651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8547582975637564941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 052411d07d132414597cb76a7d335eab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Owner: {fileID: 501394236874677983}
