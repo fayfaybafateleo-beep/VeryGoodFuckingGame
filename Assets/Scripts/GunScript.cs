@@ -142,4 +142,8 @@ public class GunScript : MonoBehaviour
         }
         
     }
+    public void IdleAnimation()
+    {
+        GunAnimator.SetTrigger("Idle");
+    }
 }

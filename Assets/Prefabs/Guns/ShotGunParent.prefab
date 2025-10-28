@@ -2335,7 +2335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FirePoint: {fileID: 6328008716768508170}
   BulletPrefab: {fileID: 6506540414330150620, guid: 3163e6c9d4a31084089e044304871cfd, type: 3}
-  FireRate: 75
+  FireRate: 94
   SpreadAngle: 3
   SlugCount: 6
   AudioSource: {fileID: 5296983058485635032}
@@ -2345,8 +2345,8 @@ MonoBehaviour:
   GunAnimator: {fileID: 1458400183304755529}
   AnimatorSpeed: 4
   shake: {fileID: 4404955300069377803}
-  GunDamage: 10
-  GunPeneration: 1
+  GunDamage: 15
+  GunPeneration: 2
   Camera: {fileID: 0}
   MaxDistance: 60
   HitLayers:
@@ -2595,6 +2595,10 @@ MonoBehaviour:
   characterController: {fileID: 0}
   externalMoveSpeed: 0
   externalGrounded: 1
+  lowerDistance: -1
+  animPitchDeg: -8
+  lowerDuration: 0.18
+  raiseDuration: 0.4
 --- !u!1 &7993997884164863093
 GameObject:
   m_ObjectHideFlags: 0

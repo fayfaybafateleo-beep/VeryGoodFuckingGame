@@ -55,7 +55,8 @@ public class WeaponManager : MonoBehaviour
 
                 var oldSway = WeaponsOnEquipmentList[I+1].GetComponent<WeaponWaging>();
                 if (oldSway) oldSway.LowerForReload(0.12f);
-                WeaponsOnEquipmentList[I ].GetComponent<Animator>().SetTrigger("Idle");
+
+                WeaponsOnEquipmentList[I ].GetComponent<GunScript>().IdleAnimation();
                 WeaponsOnEquipmentList[I + 1].SetActive(false);
                 WeaponsOnEquipmentList[I].SetActive(true);
 
@@ -64,7 +65,7 @@ public class WeaponManager : MonoBehaviour
 
                 IsWeaponSwaped =!IsWeaponSwaped;
                 //SwapingCD
-                StartCoroutine(SwapToFirstGun());
+                StartCoroutine(SwapGun(I ));
             }
             else
             {
@@ -77,7 +78,7 @@ public class WeaponManager : MonoBehaviour
                  if (oldSway) oldSway.LowerForReload(0.12f);
 
 
-                WeaponsOnEquipmentList[I+1].GetComponent<Animator>().SetTrigger("Idle");
+                WeaponsOnEquipmentList[I + 1].GetComponent<GunScript>().IdleAnimation();
                 WeaponsOnEquipmentList[I].SetActive(false);
                 WeaponsOnEquipmentList[I + 1].SetActive(true);
 
@@ -85,24 +86,24 @@ public class WeaponManager : MonoBehaviour
                 if (newSwayB) { newSwayB.SnapToLow(); newSwayB.RaiseFromLow(); }
                 IsWeaponSwaped = !IsWeaponSwaped;
                 //SwapingCD
-                StartCoroutine(SwapToSecondGun());
+                StartCoroutine(SwapGun( I+1));
             }
         }
   
     }
-    IEnumerator SwapToSecondGun()
+    IEnumerator SwapGun(int gunSelected)
     {
-        var Swap = WeaponsOnEquipmentList[I + 1].GetComponent<WeaponWaging>(); // 
+        var Swap = WeaponsOnEquipmentList[gunSelected].GetComponent<WeaponWaging>(); // 
 
         float waitTime = Swap.raiseDuration ;
 
         yield return new WaitForSecondsRealtime(waitTime);
 
-        WeaponsOnEquipmentList[I + 1].GetComponent<GunScript>().GS = GunScript.GunState.CanFire;
+        WeaponsOnEquipmentList[gunSelected].GetComponent<GunScript>().GS = GunScript.GunState.CanFire;
 
         CanSwap = true;
     }
-    IEnumerator SwapToFirstGun()
+  /*  IEnumerator SwapToFirstGun()
     {
         var Swap = WeaponsOnEquipmentList[I].GetComponent<WeaponWaging>(); // 
 
@@ -113,6 +114,6 @@ public class WeaponManager : MonoBehaviour
         WeaponsOnEquipmentList[I].GetComponent<GunScript>().GS = GunScript.GunState.CanFire;
 
         CanSwap = true;
-    }
+    }*/
 
 }
