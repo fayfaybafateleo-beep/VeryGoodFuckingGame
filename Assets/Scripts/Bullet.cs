@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour
    void OnCollisionEnter(Collision collision)
     {
         var hb = collision.collider.GetComponent<HitBoxPart>();
-        var enemy = hb ? hb.Owner : collision.collider.GetComponentInParent<EnemyHealth>();
+        var enemy = hb ? hb.Owner : collision.collider.transform.parent.GetComponentInParent<EnemyHealth>();
         if (hb != null)
         {
             //Instantiate BulletHole For all RB object

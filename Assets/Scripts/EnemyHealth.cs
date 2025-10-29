@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Recorder.OutputPath;
 using static UnityEngine.Rendering.DebugUI;
@@ -35,6 +36,9 @@ public class EnemyHealth : MonoBehaviour
     public Animator EnemyAnimator;
     public float TimeToDestroy;
     public LayerMask BodiesLayer;
+
+    public List<GameObject> EnemyLightList;
+    public Material LightsOffMaterial;
 
     [Header("BodyParts")]
     public GameObject Head;
@@ -89,6 +93,12 @@ public class EnemyHealth : MonoBehaviour
         EBehaviour.ES = EnemyBehaviour.EnemyState.Die;
         IsDead = true;
         Debug.Log("ED");
+        //lightsOff
+        foreach(GameObject lights in EnemyLightList)
+        {
+            if(lights==null) return;
+            lights.GetComponent<Renderer>().material = LightsOffMaterial;
+        }
         //Hitmark using
         HitMark.GetComponent<Animator>().SetTrigger("Kill");
         HitMarkParent.AddKillShake(10f);

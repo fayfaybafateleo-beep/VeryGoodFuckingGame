@@ -16,6 +16,8 @@ public class EnemyBehaviour : MonoBehaviour
     [Range(0, 100)]
     public float TurningSpeed;
 
+    [Header("AnimationDetails")]
+    public Animator EnemyAnimator;
 
     [Header("Combat")]
     [Range(0, 100)]
@@ -49,7 +51,7 @@ public class EnemyBehaviour : MonoBehaviour
             // Find and Chase
             case EnemyState.Moving:
                 if (Target == null) return;
-
+                EnemyAnimator.SetBool("Run",true);
 
                 Agent.SetDestination(Target.transform.position);
                 Agent.nextPosition = Rigidbody.position;
@@ -83,8 +85,8 @@ public class EnemyBehaviour : MonoBehaviour
             break;
                 //Attack and Stop
             case EnemyState.Attack:
-                //EnterMoveMode
-
+                //End Run Animation
+                EnemyAnimator.SetBool("Run", false);
                 //Facing To Player
                 Vector3 direction2 = Target.transform.position - transform.position;
                 direction2.y = 0f;
@@ -94,6 +96,9 @@ public class EnemyBehaviour : MonoBehaviour
                 Quaternion targetRotation2 = Quaternion.Euler(0f, angle2, 0f);
 
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation2, Time.unscaledDeltaTime * TurningSpeed);
+
+                // Engage;
+
                 //QuitAttackMode
                 float qtaDist = (Target.transform.position - transform.position).sqrMagnitude;
                 if (qtaDist > AttackRange)

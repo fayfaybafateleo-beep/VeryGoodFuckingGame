@@ -22,9 +22,9 @@ public class HitBoxPart : MonoBehaviour
 
     void Awake()
     {
-        if (this.transform.parent != null && this.transform.parent.GetComponent<EnemyHealth>() != null)
+        if (this.transform.parent != null && this.transform.parent.parent != null && this.transform.parent.parent.GetComponent<EnemyHealth>() != null)
         {
-            Owner = GetComponentInParent<EnemyHealth>();
+            Owner = transform.parent.parent.GetComponent<EnemyHealth>();
             Thoughness = Owner.Thougthness;
         }
         else
