@@ -1,4 +1,4 @@
-using System.Collections;
+锘縰sing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +11,7 @@ public class WeaponManager : MonoBehaviour
     public List<GameObject> WeaponsOnEquipmentList;
     [Header (" KeyOfSwapWeapon")]
     public KeyCode Key = KeyCode.Q;
+    public KeyCode Key2 = KeyCode.E;
     [Header(" WeaponAttacher")]
     public GameObject WeaponParent;
 
@@ -18,6 +19,10 @@ public class WeaponManager : MonoBehaviour
     public int I = 0;
     [Header(" SwapCD")]
     public bool CanSwap = true;
+    public Transform FP;
+    Vector3 up = Vector3.up;
+
+
     void Awake()
     {
         foreach (GameObject GunPrefab in OriginWeaponsList)
@@ -43,7 +48,10 @@ public class WeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        if (Input.GetKeyDown(Key2))
+        {
+        }
+
         if (Input.GetKeyDown(Key) &&CanSwap)
         {
             CanSwap = false;
@@ -60,7 +68,7 @@ public class WeaponManager : MonoBehaviour
                 WeaponsOnEquipmentList[I + 1].SetActive(false);
                 WeaponsOnEquipmentList[I].SetActive(true);
 
-                var newSwayA = WeaponsOnEquipmentList[I].GetComponent<WeaponWaging>();                 // ===== 新增 =====
+                var newSwayA = WeaponsOnEquipmentList[I].GetComponent<WeaponWaging>();                 
                 if (newSwayA) { newSwayA.SnapToLow(); newSwayA.RaiseFromLow(); }
 
                 IsWeaponSwaped =!IsWeaponSwaped;
@@ -82,7 +90,7 @@ public class WeaponManager : MonoBehaviour
                 WeaponsOnEquipmentList[I].SetActive(false);
                 WeaponsOnEquipmentList[I + 1].SetActive(true);
 
-                var newSwayB = WeaponsOnEquipmentList[I + 1].GetComponent<WeaponWaging>();             // ===== 新增 =====
+                var newSwayB = WeaponsOnEquipmentList[I + 1].GetComponent<WeaponWaging>();             
                 if (newSwayB) { newSwayB.SnapToLow(); newSwayB.RaiseFromLow(); }
                 IsWeaponSwaped = !IsWeaponSwaped;
                 //SwapingCD
@@ -93,7 +101,7 @@ public class WeaponManager : MonoBehaviour
     }
     IEnumerator SwapGun(int gunSelected)
     {
-        var Swap = WeaponsOnEquipmentList[gunSelected].GetComponent<WeaponWaging>(); // 
+        var Swap = WeaponsOnEquipmentList[gunSelected].GetComponent<WeaponWaging>(); 
 
         float waitTime = Swap.raiseDuration ;
 
@@ -103,17 +111,11 @@ public class WeaponManager : MonoBehaviour
 
         CanSwap = true;
     }
-  /*  IEnumerator SwapToFirstGun()
-    {
-        var Swap = WeaponsOnEquipmentList[I].GetComponent<WeaponWaging>(); // 
+   
 
-        float waitTime = Swap.raiseDuration ;
+  
+     
+    
 
-        yield return new WaitForSecondsRealtime(waitTime);
-
-        WeaponsOnEquipmentList[I].GetComponent<GunScript>().GS = GunScript.GunState.CanFire;
-
-        CanSwap = true;
-    }*/
 
 }

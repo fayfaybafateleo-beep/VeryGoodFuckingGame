@@ -44,7 +44,7 @@ public class Bullet : MonoBehaviour
     }
 
     // Bullets die on collision
-    void OnCollisionEnter(Collision collision)
+   void OnCollisionEnter(Collision collision)
     {
         var hb = collision.collider.GetComponent<HitBoxPart>();
         var enemy = hb ? hb.Owner : collision.collider.GetComponentInParent<EnemyHealth>();

@@ -4,6 +4,8 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class EnemyHealth : MonoBehaviour
 {
+    [Header("EnemyBehaviourContorl")]
+    public EnemyBehaviour EBehaviour;
     [Header(" EnemyData")]
     public float Health;
     public int Thougthness;
@@ -83,8 +85,9 @@ public class EnemyHealth : MonoBehaviour
     void Die()
     {
         if (IsDead) return;                                   // One time excute
+        //Kill Confrim
+        EBehaviour.ES = EnemyBehaviour.EnemyState.Die;
         IsDead = true;
-
         Debug.Log("ED");
         //Hitmark using
         HitMark.GetComponent<Animator>().SetTrigger("Kill");
