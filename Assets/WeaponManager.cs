@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 
@@ -9,9 +10,12 @@ public class WeaponManager : MonoBehaviour
     public List<GameObject> OriginWeaponsList;
 
     public List<GameObject> WeaponsOnEquipmentList;
+
+    public List<GameObject> GrenadeList;
     [Header (" KeyOfSwapWeapon")]
     public KeyCode Key = KeyCode.Q;
     public KeyCode Key2 = KeyCode.E;
+
     [Header(" WeaponAttacher")]
     public GameObject WeaponParent;
 
@@ -21,6 +25,11 @@ public class WeaponManager : MonoBehaviour
     public bool CanSwap = true;
     public Transform FP;
     Vector3 up = Vector3.up;
+
+    [Header("GrenadeLaucner")]
+    public Animator GL;
+    public CinemachineImpulseSource Impulse;
+    public bool IsBursting = false;
 
 
     void Awake()
@@ -48,8 +57,10 @@ public class WeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(Key2))
+        if (Input.GetKeyDown(Key2) && IsBursting==false)
         {
+            GL.speed= GrenadeList[0].GetComponent<Grenades>().GLAnimationSpeed;
+            StartCoroutine(FireGrenadeBurst());
         }
 
         if (Input.GetKeyDown(Key) &&CanSwap)
@@ -111,11 +122,38 @@ public class WeaponManager : MonoBehaviour
 
         CanSwap = true;
     }
-   
 
-  
-     
+    IEnumerator FireGrenadeBurst()
+    {
+        IsBursting = true;
+
+        if (GrenadeList.Count == 0 || GrenadeList[0] == null)
+        {
+            IsBursting = false;
+            yield break;
+        }
+        // LoadingGLdata
+        Grenades gScript = GrenadeList[0].GetComponent<Grenades>();
+        int burstCount =  gScript.BurstCount;
+        float burstInterval = gScript.BurstInterval ;
+
+        for (int i = 0; i < burstCount; i++)
+        {
     
+            GL.SetTrigger("Fire");
+            // Interval
+            if (i < burstCount)
+            {
+                yield return new WaitForSeconds(burstInterval);
+            }
+               
+        }
 
-
+        IsBursting = false;
+    }
+    public void GLFire()
+   {
+        Instantiate(GrenadeList[0], FP.position, FP.rotation);
+        Impulse.GenerateImpulse();
+    }
 }

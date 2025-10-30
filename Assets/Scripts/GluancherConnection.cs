@@ -1,14 +1,8 @@
 using UnityEngine;
 
-public class GLauncher : MonoBehaviour
+public class GluancherConnection : MonoBehaviour
 {
-    [Header("WayToDetonate")]
-    public bool IsPercussion;
-    public float FuzeTime = 3f;
-    public float FuzeTimer = 0f;
-
-    [Header("ExplosionPrefab")]
-    public GameObject Explosive;
+    public WeaponManager WM;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,5 +13,9 @@ public class GLauncher : MonoBehaviour
     void Update()
     {
         
+    }
+    public void UsingWMFire()
+    {
+        WM.GLFire();
     }
 }
