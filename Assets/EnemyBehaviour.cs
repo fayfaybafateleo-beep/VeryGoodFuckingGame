@@ -20,8 +20,13 @@ public class EnemyBehaviour : MonoBehaviour
     public Animator EnemyAnimator;
 
     [Header("Combat")]
-    [Range(0, 100)]
-    public float AttackRange = 2.0f;  
+    [Range(0, 1000)]
+    public float AttackRange = 2.0f;
+    [Range(0, 1000)]
+    public float AttackRate = 2f;
+    public float AttackRateTimer =0f;
+    
+    public float Damage;
 
     public Rigidbody Rigidbody;
 
@@ -46,8 +51,14 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (ES != EnemyState.Attack)
+        {
+            AttackRateTimer = 0;
+        }
+
         switch (ES)
         {
+
             // Find and Chase
             case EnemyState.Moving:
                 if (Target == null) return;
@@ -98,7 +109,12 @@ public class EnemyBehaviour : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation2, Time.unscaledDeltaTime * TurningSpeed);
 
                 // Engage;
-
+                AttackRateTimer += Time.deltaTime;
+                if (AttackRateTimer >= AttackRate && Target!=null)
+                {
+                    AttackRateTimer = 0;
+                    EnemyAnimator.SetTrigger("Fire");
+                }
                 //QuitAttackMode
                 float qtaDist = (Target.transform.position - transform.position).sqrMagnitude;
                 if (qtaDist > AttackRange)
