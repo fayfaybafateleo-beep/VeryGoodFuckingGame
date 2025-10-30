@@ -93,12 +93,8 @@ public class EnemyHealth : MonoBehaviour
         EBehaviour.ES = EnemyBehaviour.EnemyState.Die;
         IsDead = true;
         Debug.Log("ED");
-        //lightsOff
-        foreach(GameObject lights in EnemyLightList)
-        {
-            if(lights==null) return;
-            lights.GetComponent<Renderer>().material = LightsOffMaterial;
-        }
+        
+       
         //Hitmark using
         HitMark.GetComponent<Animator>().SetTrigger("Kill");
         HitMarkParent.AddKillShake(10f);
@@ -115,6 +111,12 @@ public class EnemyHealth : MonoBehaviour
         RB.AddForceAtPosition(force, LastHitPoint, ForceMode.Impulse);
         //BodyStationary
         Invoke("EnemyKinematic", KinematicActiveAfterDie);
+        //lightsOff
+        foreach (GameObject lights in EnemyLightList)
+        {
+            if (lights == null) continue;
+            lights.GetComponent<Renderer>().material = LightsOffMaterial;
+        }
     }
     public void EnemyKinematic()
     {
@@ -134,7 +136,7 @@ public class EnemyHealth : MonoBehaviour
     public void SwapLayer()
     {
         gameObject.layer = LayerMask.NameToLayer("AutoDestroy");
-        foreach(Transform child in gameObject.transform)
+        foreach(Transform child in GetComponentsInChildren<Transform>(true))
         {
             child.gameObject.layer = LayerMask.NameToLayer("AutoDestroy");
         }

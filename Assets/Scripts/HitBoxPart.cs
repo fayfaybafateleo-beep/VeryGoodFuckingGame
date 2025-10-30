@@ -18,7 +18,16 @@ public class HitBoxPart : MonoBehaviour
     public int Thoughness;
     public EnemyHealth Owner;
 
-
+    [Header("Gore Settings")]
+    public GameObject meatChunkPrefab;  
+    public int MinChunks = 3;           
+    public int MaxChunks = 8;           
+    public float MinScale = 0.3f;       
+    public float MaxScale = 1.2f;      
+    public float Force = 8f;   
+    public float UpwardBias = 0.5f;    
+    public float TorqueForce = 5f;      
+    public float ChunkLife = 5f;   
 
     void Awake()
     {
@@ -46,11 +55,9 @@ public class HitBoxPart : MonoBehaviour
     public void ApplyPartDamage(float baseDamage)
     {
         if (partHealth <= 0 &&  destructible == false) return;
-
-        // 按部位倍率结算（最简：不依赖外部贯穿/韧性逻辑）
+     
         float final = baseDamage * damageMultiplier;
 
-        // 扣除整型生命
         partHealth -= final;
 
         if (partHealth <= 0 && destructible)
@@ -69,6 +76,34 @@ public class HitBoxPart : MonoBehaviour
         bloodSplash.transform.SetParent(Owner.transform);
         bloodSplash.transform.localScale = Owner.transform.localScale;
         Destroy(gameObject, 0f);
-        
+        SpawnGore(this.transform.position);
+    }
+    public void SpawnGore(Vector3 origin)
+    {
+        if (meatChunkPrefab == null) return;
+
+        int count = Random.Range(MinChunks, MaxChunks + 1);
+
+        for (int i = 0; i < count; i++)
+        {
+            // Offset
+            Vector3 spawnPos = origin + Random.insideUnitSphere * 0.1f;
+
+            GameObject chunk = Instantiate(meatChunkPrefab, spawnPos, Random.rotation);
+            float scale = Random.Range(MinScale, MaxScale);
+            chunk.transform.localScale = Vector3.one * scale;
+
+            // RandomForce
+            Rigidbody rb = chunk.GetComponent<Rigidbody>();
+            if (rb)
+            {
+                Vector3 randomDir = (Random.onUnitSphere + Vector3.up * UpwardBias).normalized;
+                float randomForce = Random.Range(Force * 0.7f, Force * 1.3f);
+                rb.AddForce(randomDir * randomForce, ForceMode.Impulse);
+                rb.AddTorque(Random.onUnitSphere * TorqueForce, ForceMode.Impulse);
+            }
+
+            Destroy(chunk, ChunkLife);
+        }
     }
 }
