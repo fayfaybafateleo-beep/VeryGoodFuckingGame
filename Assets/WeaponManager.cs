@@ -12,9 +12,10 @@ public class WeaponManager : MonoBehaviour
     public List<GameObject> WeaponsOnEquipmentList;
 
     public List<GameObject> GrenadeList;
-    [Header (" KeyOfSwapWeapon")]
+    [Header (" KeyOfInput")]
     public KeyCode Key = KeyCode.Q;
     public KeyCode Key2 = KeyCode.E;
+    public KeyCode Key3 = KeyCode.F;
 
     [Header(" WeaponAttacher")]
     public GameObject WeaponParent;
@@ -34,6 +35,14 @@ public class WeaponManager : MonoBehaviour
     //sound
     public AudioSource GLsound;
     public AudioClip GLFireClip;
+
+    [Header("Melee")]
+    public Animator MeleeAnimator;
+    public CinemachineImpulseSource MeleeImpulseSource;
+
+    [Header("MeleeSound")]
+    public AudioSource MeleeSound;
+    public AudioClip FireClip;
     void Awake()
     {
         foreach (GameObject GunPrefab in OriginWeaponsList)
@@ -64,7 +73,13 @@ public class WeaponManager : MonoBehaviour
             GL.speed= GrenadeList[0].GetComponent<Grenades>().GLAnimationSpeed;
             StartCoroutine(FireGrenadeBurst());
         }
-
+        if (Input.GetKeyDown(Key3))
+        {
+            MeleeAnimator.SetTrigger("Fire");
+            MeleeHitImpulse();
+            MeleeAnimator.speed = 5;
+            MeleeSound.PlayOneShot(FireClip);
+        }
         if (Input.GetKeyDown(Key) &&CanSwap)
         {
             CanSwap = false;
@@ -159,5 +174,11 @@ public class WeaponManager : MonoBehaviour
         Instantiate(MuzzelFlash, FP.position, FP.rotation);
         GLsound.PlayOneShot(GLFireClip);
         Impulse.GenerateImpulse();
+    }
+    public void MeleeHitImpulse()
+    {
+        MeleeImpulseSource.ImpulseDefinition.AmplitudeGain = 0.5f;
+        MeleeImpulseSource.ImpulseDefinition.FrequencyGain = 0.5f;
+        MeleeImpulseSource.GenerateImpulse();
     }
 }
