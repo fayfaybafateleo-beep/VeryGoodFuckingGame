@@ -30,8 +30,10 @@ public class WeaponManager : MonoBehaviour
     public Animator GL;
     public CinemachineImpulseSource Impulse;
     public bool IsBursting = false;
-
-
+    public GameObject MuzzelFlash;
+    //sound
+    public AudioSource GLsound;
+    public AudioClip GLFireClip;
     void Awake()
     {
         foreach (GameObject GunPrefab in OriginWeaponsList)
@@ -154,6 +156,8 @@ public class WeaponManager : MonoBehaviour
     public void GLFire()
    {
         Instantiate(GrenadeList[0], FP.position, FP.rotation);
+        Instantiate(MuzzelFlash, FP.position, FP.rotation);
+        GLsound.PlayOneShot(GLFireClip);
         Impulse.GenerateImpulse();
     }
 }

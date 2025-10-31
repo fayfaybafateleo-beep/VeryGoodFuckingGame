@@ -95,8 +95,10 @@ public class HitBoxPart : MonoBehaviour
             Vector3 spawnPos = origin + Random.insideUnitSphere * 0.1f;
 
             GameObject chunk = Instantiate(meatChunkPrefab, spawnPos, Random.rotation);
-            float scale = Random.Range(MinScale, MaxScale);
-            chunk.transform.localScale = Vector3.one * scale;
+            float scaleX = Random.Range(MinScale, MaxScale);
+            float scaleY= Random.Range(MinScale, MaxScale);
+            float scaleZ = Random.Range(MinScale, MaxScale);
+            chunk.transform.localScale = new Vector3(scaleX,scaleY,scaleZ);
 
             // RandomForce
             Rigidbody rb = chunk.GetComponent<Rigidbody>();

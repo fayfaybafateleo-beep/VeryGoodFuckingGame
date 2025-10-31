@@ -58,7 +58,7 @@ public class Explosive : MonoBehaviour
 
         Vector3 center = transform.position;
 
-        // 受力（可与伤害范围一致）
+        // PushForce
         var colsForce = Physics.OverlapSphere(center, Radius, ForceAffectsMask, TriggerMode);
         foreach (var col in colsForce)
         {
@@ -69,7 +69,6 @@ public class Explosive : MonoBehaviour
             }
                
         }
-        // 伤害：范围扫描 + 视线检测 + 衰减
         var cols = Physics.OverlapSphere(center, Radius, ~0, TriggerMode);
 
         HashSet<EnemyHealth> damagedEnemies = new HashSet<EnemyHealth>();
@@ -80,19 +79,16 @@ public class Explosive : MonoBehaviour
             var enemy = hb ? hb.Owner : col.GetComponentInParent<EnemyHealth>();
             if (!enemy) continue;
 
-            // 视线检测
+
             Vector3 targetPoint = col.ClosestPoint(center);
             if (Physics.Linecast(center, targetPoint, out RaycastHit block, ObstructionMask, TriggerMode))
                 if (block.collider != col) continue;
 
             float dmg = Damage;
 
-            // -----------------------------
-            // ✅ 部位伤害逻辑
-            // -----------------------------
             if (hb)
             {
-                // 如果是可破坏部位（手、头、腿）
+                // if Destructible
                 if (hb.destructible && hb.partHealth > 0)
                 {
                     hb.ApplyPartDamage(dmg, PenetrateLevel);
@@ -100,15 +96,10 @@ public class Explosive : MonoBehaviour
                 }
                 else
                 {
-                    // ❌ 不可破坏部位（例如上/下躯干）
-                    // 不重复调用 ApplyHit()
-                    // 什么也不做（或根据需要在这里加入特效）
                     continue;
                 }
             }
-            // -----------------------------
-            // ✅ 总体伤害 & UI反馈（只执行一次）
-            // -----------------------------
+        
             if (!damagedEnemies.Contains(enemy))
             {
                 damagedEnemies.Add(enemy);
@@ -116,20 +107,16 @@ public class Explosive : MonoBehaviour
                 HitMarkParent?.AddShake(1.5f);
                 HitMarkParent?.HitMarkHitSoundPlay();
 
-                // 🔹 给整个人的生命系统扣一次“全局爆炸伤害”
-                // 只在第一次命中时执行
+
                 enemy.ApplyHit(dmg, PenetrateLevel, null, targetPoint);
             }
 
-            // -----------------------------
-            // ✅ 命中特效
-            // -----------------------------
             Vector3 normal = (targetPoint - center).normalized;
             Instantiate(HitEffect, targetPoint + normal * 0.05f, Quaternion.LookRotation(normal, Vector3.up))
                 .transform.SetParent(col.transform);
         }
 
-        // 地面烧痕（可选）
+        // ScorchDecalInstantiate
         if (ScorchDecal && Physics.Raycast(center + Vector3.up * 0.2f, Vector3.down, out var rh, 2.0f, ~0, TriggerMode))
         {
             Instantiate(ScorchDecal, rh.point + rh.normal * 0.02f, Quaternion.LookRotation(rh.normal));

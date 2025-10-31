@@ -141,5 +141,6 @@ public class EnemyHealth : MonoBehaviour
         {
             child.gameObject.layer = LayerMask.NameToLayer("AutoDestroy");
         }
+        RB.AddForce(Vector3.down * 9.7f, ForceMode.Force);
     }
 }
