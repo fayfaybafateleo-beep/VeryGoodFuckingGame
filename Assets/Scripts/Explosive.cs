@@ -1,14 +1,140 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 public class Explosive : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-   
+
+
+    [Header("Damage")]
+    public float Damage = 100f;
+    [Range(0, 100f)]
+    public float Radius = 6f;               // 伤害半径
+    public int PenetrateLevel = 0;        // 传给 ApplyHit 的穿透等级（如无可置0）
+
+    [Header("Force")]
+    public float ExplosionForce = 8f;       // 冲击力(Impulse)
+    public float UpwardsModifier = 0.5f;    // 向上偏移
+    public LayerMask ForceAffectsMask = ~0; // 受力层（一般默认）
+
+    [Header("Effects")]
+    public GameObject ScorchDecal;          // 烧痕贴花（可选）
+    public GameObject HitEffect;
+    [Range(0, 1f)]
+    public float ExtraEffectChance = 0.3f;
+
+    public string EnemyTag = "Enemy";       
+    public CrossHairGenral HitMarkParent;   
+    public GameObject HitMark;              
+
+    [Header("Line of Sight")]
+    public LayerMask ObstructionMask = ~0;  // ExplosionBlock
+    public QueryTriggerInteraction TriggerMode = QueryTriggerInteraction.Ignore;
+
+    bool exploded;
 
     void Start()
+    {
+        if (HitMark == null)
+        {
+            HitMark = GameObject.FindGameObjectWithTag("HitMark");
+        }
+        if (HitMarkParent == null && HitMark)
+        {
+            HitMarkParent = HitMark.GetComponentInParent<CrossHairGenral>();
+        }
+        Detonate();
+    }
+
+    void OnCollisionEnter(Collision c)
     {
         
     }
 
-  
+    public void Detonate()
+    {
+        if (exploded) return;
+        exploded = true;
+
+        Vector3 center = transform.position;
+
+        // 受力（可与伤害范围一致）
+        var colsForce = Physics.OverlapSphere(center, Radius, ForceAffectsMask, TriggerMode);
+        foreach (var col in colsForce)
+        {
+            if (col.attachedRigidbody)
+            {
+                col.attachedRigidbody.AddExplosionForce(ExplosionForce, center, Radius, UpwardsModifier, ForceMode.Impulse);
+
+            }
+               
+        }
+        // 伤害：范围扫描 + 视线检测 + 衰减
+        var cols = Physics.OverlapSphere(center, Radius, ~0, TriggerMode);
+
+        HashSet<EnemyHealth> damagedEnemies = new HashSet<EnemyHealth>();
+
+        foreach (var col in Physics.OverlapSphere(center, Radius, ~0, TriggerMode))
+        {
+            var hb = col.GetComponent<HitBoxPart>();
+            var enemy = hb ? hb.Owner : col.GetComponentInParent<EnemyHealth>();
+            if (!enemy) continue;
+
+            // 视线检测
+            Vector3 targetPoint = col.ClosestPoint(center);
+            if (Physics.Linecast(center, targetPoint, out RaycastHit block, ObstructionMask, TriggerMode))
+                if (block.collider != col) continue;
+
+            float dmg = Damage;
+
+            // -----------------------------
+            // ✅ 部位伤害逻辑
+            // -----------------------------
+            if (hb)
+            {
+                // 如果是可破坏部位（手、头、腿）
+                if (hb.destructible && hb.partHealth > 0)
+                {
+                    hb.ApplyPartDamage(dmg, PenetrateLevel);
+                    enemy.ApplyHit(dmg, PenetrateLevel, hb, targetPoint);
+                }
+                else
+                {
+                    // ❌ 不可破坏部位（例如上/下躯干）
+                    // 不重复调用 ApplyHit()
+                    // 什么也不做（或根据需要在这里加入特效）
+                    continue;
+                }
+            }
+            // -----------------------------
+            // ✅ 总体伤害 & UI反馈（只执行一次）
+            // -----------------------------
+            if (!damagedEnemies.Contains(enemy))
+            {
+                damagedEnemies.Add(enemy);
+                if (HitMark) HitMark.GetComponent<Animator>()?.SetTrigger("Hit");
+                HitMarkParent?.AddShake(1.5f);
+                HitMarkParent?.HitMarkHitSoundPlay();
+
+                // 🔹 给整个人的生命系统扣一次“全局爆炸伤害”
+                // 只在第一次命中时执行
+                enemy.ApplyHit(dmg, PenetrateLevel, null, targetPoint);
+            }
+
+            // -----------------------------
+            // ✅ 命中特效
+            // -----------------------------
+            Vector3 normal = (targetPoint - center).normalized;
+            Instantiate(HitEffect, targetPoint + normal * 0.05f, Quaternion.LookRotation(normal, Vector3.up))
+                .transform.SetParent(col.transform);
+        }
+
+        // 地面烧痕（可选）
+        if (ScorchDecal && Physics.Raycast(center + Vector3.up * 0.2f, Vector3.down, out var rh, 2.0f, ~0, TriggerMode))
+        {
+            Instantiate(ScorchDecal, rh.point + rh.normal * 0.02f, Quaternion.LookRotation(rh.normal));
+        }
+    }
+
+
 }

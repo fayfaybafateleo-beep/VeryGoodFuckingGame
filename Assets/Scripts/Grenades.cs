@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class Grenades : MonoBehaviour
 {
+    [Header("Damage")]
+    public float Damage;
+    public int PenetrateLevel;
+
     [Header("WayToDetonate")]
     public bool IsPercussion;
     public bool StartFuze = false;
@@ -46,6 +50,7 @@ public class Grenades : MonoBehaviour
     {
         if (IsPercussion)
         {
+            Debug.Log(collision.gameObject.name);
             Explosion();
         }
         else
@@ -55,7 +60,9 @@ public class Grenades : MonoBehaviour
     }
     public void Explosion()
     {
-        Instantiate(Explosive, transform.position, transform.rotation);
+        GameObject explosion=Instantiate(Explosive, transform.position, transform.rotation);
+        explosion.GetComponent<Explosive>().Damage = Damage;
+        explosion.GetComponent<Explosive>().PenetrateLevel=PenetrateLevel;
         Destroy(gameObject, 0);
     }
 

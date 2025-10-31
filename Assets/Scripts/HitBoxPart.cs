@@ -52,11 +52,16 @@ public class HitBoxPart : MonoBehaviour
     {
 
     }
-    public void ApplyPartDamage(float baseDamage)
+    public void ApplyPartDamage(float baseDamage,int penatrateLevel)
     {
-        if (partHealth <= 0 &&  destructible == false) return;
-     
-        float final = baseDamage * damageMultiplier;
+        if (partHealth <= 0 ||  destructible == false) return;
+        //PenatrateLevelPass
+        float thoughnessMultipulier =
+       (penatrateLevel > Thoughness) ? 1.5f :
+       (penatrateLevel < Thoughness) ? 0.3f :
+        1f;
+
+        float final = baseDamage * damageMultiplier*thoughnessMultipulier;
 
         partHealth -= final;
 

@@ -275,14 +275,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1408301d66ea38541a31b4317e61bc06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsPercussion: 0
+  Damage: 10
+  PenetrateLevel: 3
+  IsPercussion: 1
   StartFuze: 0
-  FuzeTime: 3
+  FuzeTime: 0.5
   FuzeTimer: 0
   Explosive: {fileID: 5138012484018779897, guid: 8754ed88c667a704aa92dd6f75ba6bf0, type: 3}
   Velosity: 10
   launchAngle: 12
   Rigidbody: {fileID: 3772172026684285659}
-  BurstCount: 5
+  BurstCount: 3
   BurstInterval: 0.2
-  GLAnimationSpeed: 4
+  GLAnimationSpeed: 5

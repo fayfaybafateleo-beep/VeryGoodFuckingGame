@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7875906446389137564}
   - component: {fileID: 580251420116091812}
   - component: {fileID: 3139515992048490487}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5531384798641439640}
@@ -4902,7 +4902,7 @@ GameObject:
   - component: {fileID: 2379193288851525003}
   - component: {fileID: 3812016544773392257}
   - component: {fileID: 4079696673934486863}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4919,7 +4919,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5531384798641439640}
@@ -9792,7 +9792,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5531384798641439640}
   - component: {fileID: 6879356950401336922}
-  m_Layer: 0
+  - component: {fileID: 1463773983842082501}
+  m_Layer: 6
   m_Name: Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9832,6 +9833,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DestroyTime: 1
   MuzzleFlashOffset: 360
+--- !u!114 &1463773983842082501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5138012484018779897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1765a7dc86e20cd4887aa166523ccbf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 10
+  Radius: 6
+  PenetrateLevel: 3
+  ExplosionForce: 8
+  UpwardsModifier: 0.5
+  ForceAffectsMask:
+    serializedVersion: 2
+    m_Bits: 256
+  ScorchDecal: {fileID: 0}
+  HitEffect: {fileID: 4093106789292649546, guid: ad866b53836cde94984736a78cd59c35, type: 3}
+  ExtraEffectChance: 0.3
+  EnemyTag: Enemy
+  HitMarkParent: {fileID: 0}
+  HitMark: {fileID: 0}
+  ObstructionMask:
+    serializedVersion: 2
+    m_Bits: 2049
+  TriggerMode: 1
 --- !u!1 &6009824701777048786
 GameObject:
   m_ObjectHideFlags: 0
@@ -9843,7 +9874,7 @@ GameObject:
   - component: {fileID: 3032216155529177309}
   - component: {fileID: 6554025619890082683}
   - component: {fileID: 1478852036506460378}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9860,7 +9891,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5531384798641439640}
@@ -14734,7 +14765,7 @@ GameObject:
   - component: {fileID: 3858558309662601515}
   - component: {fileID: 1071116642444262291}
   - component: {fileID: 2229147758339946380}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14751,7 +14782,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5531384798641439640}
@@ -14892,8 +14923,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 20
-      minScalar: 2
+      scalar: 30
+      minScalar: 10
       maxCurve:
         serializedVersion: 2
         m_Curve:

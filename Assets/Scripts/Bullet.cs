@@ -79,7 +79,7 @@ public class Bullet : MonoBehaviour
             if (enemy)
             {
                 enemy.ApplyHit(Damage, PenatrateLevel, hb,collision.GetContact(0).point);
-                hb.ApplyPartDamage(Damage);
+                hb.ApplyPartDamage(Damage, PenatrateLevel);
                 HitMark.GetComponent<Animator>().SetTrigger("Hit");
                 HitMarkParent.AddShake(1f);
                 HitMarkParent.HitMarkHitSoundPlay();

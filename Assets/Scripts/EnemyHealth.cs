@@ -104,6 +104,7 @@ public class EnemyHealth : MonoBehaviour
         RB.constraints = RigidbodyConstraints.None;
         RB.isKinematic = false;
         EnemyAnimator.SetTrigger("Die");
+
         float impulseMag = FinalDamage * ForcePerDamage;
         Vector3 force = Dir * impulseMag;
         RB.AddForce(Vector3.up * UpwardForce*FinalDamage, ForceMode.Impulse);
