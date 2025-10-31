@@ -24,6 +24,11 @@ public class Grenades : MonoBehaviour
     public int BurstCount;
     public float BurstInterval;
     public float GLAnimationSpeed=1;
+
+    [Header("SpinSettings")]
+    public bool Spin;
+    public float TorqueAmount = 10f;
+    public Vector3 TorqueDirection = Vector3.up; 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,6 +37,10 @@ public class Grenades : MonoBehaviour
         Vector3 direction = Quaternion.Euler(-launchAngle, 0f, 0f) * transform.forward;
 
         Rigidbody.linearVelocity = direction * Velosity;
+        if (Spin)
+        {
+            Rigidbody.AddTorque(TorqueDirection * TorqueAmount, ForceMode.Force);
+        }
     }
 
     // Update is called once per frame

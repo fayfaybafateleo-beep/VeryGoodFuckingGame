@@ -36,6 +36,7 @@ public class EnemyHealth : MonoBehaviour
     public Animator EnemyAnimator;
     public float TimeToDestroy;
     public LayerMask BodiesLayer;
+    public GameObject BloodSPlash;
 
     public List<GameObject> EnemyLightList;
     public Material LightsOffMaterial;
@@ -94,7 +95,7 @@ public class EnemyHealth : MonoBehaviour
         IsDead = true;
         Debug.Log("ED");
         
-       
+        
         //Hitmark using
         HitMark.GetComponent<Animator>().SetTrigger("Kill");
         HitMarkParent.AddKillShake(10f);
@@ -104,6 +105,7 @@ public class EnemyHealth : MonoBehaviour
         RB.constraints = RigidbodyConstraints.None;
         RB.isKinematic = false;
         EnemyAnimator.SetTrigger("Die");
+        Instantiate(BloodSPlash, LastHitPoint,Quaternion.identity);
 
         float impulseMag = FinalDamage * ForcePerDamage;
         Vector3 force = Dir * impulseMag;

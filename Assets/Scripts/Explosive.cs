@@ -31,7 +31,12 @@ public class Explosive : MonoBehaviour
     public LayerMask ObstructionMask = ~0;  // ExplosionBlock
     public QueryTriggerInteraction TriggerMode = QueryTriggerInteraction.Ignore;
 
+    [Header("ExplosionSOund")]
+    public AudioSource ExplosionSoundSource;
+    public AudioClip ExplosionSound;
+
     bool exploded;
+
 
     void Start()
     {
@@ -54,6 +59,8 @@ public class Explosive : MonoBehaviour
     public void Detonate()
     {
         if (exploded) return;
+        ExplosionSoundSource.PlayOneShot(ExplosionSound);
+
         exploded = true;
 
         Vector3 center = transform.position;
