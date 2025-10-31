@@ -3,8 +3,8 @@ using UnityEngine;
 public class PlayerGetInCar : MonoBehaviour
 {
     [Header("CarDetection")]
-    public GameObject Vehicle;               
-    public KeyCode enterKey = KeyCode.V;     
+    public GameObject Car;               
+    public KeyCode Key = KeyCode.V;     
     public float mountDistance = 3f;         
 
     [Header("PlayerControl")]
@@ -23,7 +23,7 @@ public class PlayerGetInCar : MonoBehaviour
     {
        PlayerController = GetComponent<CharacterController>();
 
-       Vehicle = GameObject.FindGameObjectWithTag("Car");
+       Car = GameObject.FindGameObjectWithTag("Car");
 
        SeatPoint = GameObject.FindGameObjectWithTag("SeatPoint");
 
@@ -34,7 +34,7 @@ public class PlayerGetInCar : MonoBehaviour
     public void Update()
     {
         // Dismount
-        if (IsMounted && Input.GetKeyDown(enterKey))
+        if (IsMounted && Input.GetKeyDown(Key))
         {
             DismountVehicle();
             return;
@@ -42,11 +42,11 @@ public class PlayerGetInCar : MonoBehaviour
 
         if (IsMounted) return; 
 
-        if (Vehicle == null) return;
+        if (Car == null) return;
 
-        float distance = Vector3.Distance(transform.position, Vehicle.transform.position);
+        float distance = Vector3.Distance(transform.position, Car.transform.position);
 
-        if (distance <= mountDistance && Input.GetKeyDown(enterKey))
+        if (distance <= mountDistance && Input.GetKeyDown(Key))
         {
             MountVehicle();
         }
@@ -81,7 +81,7 @@ public class PlayerGetInCar : MonoBehaviour
             transform.SetSiblingIndex(OriginalSiblingIndex); // RecoverSerial
         }
 
-        Transform vt = Vehicle.transform;
+        Transform vt = Car.transform;
         Quaternion dropRot = Quaternion.LookRotation(vt.forward, Vector3.up);
 
         transform.position = DropPoint.transform.position;
