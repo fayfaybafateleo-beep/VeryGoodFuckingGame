@@ -98,8 +98,10 @@ public class MeleeHitScript : MonoBehaviour
                 col.TryGetComponent(out hb);
 
                 EnemyHealth enemy = null;
+                EnemyBehaviour enemyB = null;
                 if (hb != null) enemy = hb.Owner;
                 if (enemy == null) enemy = col.transform.GetComponentInParent<EnemyHealth>();
+                if (enemyB == null) enemyB = col.transform.GetComponentInParent<EnemyBehaviour>();
 
                 if (enemy != null && hitOwners.Contains(enemy)) continue;
                 if (hitColliders.Contains(col)) continue;
@@ -148,9 +150,16 @@ public class MeleeHitScript : MonoBehaviour
                     }
                     if (enemy != null)
                     {
-                        enemy.ApplyHit(Damage, PenatrateLevel, hb, mid);
+                        if (enemyB.ES == EnemyBehaviour.EnemyState.Shock)
+                        {
+                            enemy.GoreExcution();
+                        }
+                        else
+                        {
+                            enemy.ApplyHit(Damage, PenatrateLevel, hb, mid);
+                            hb.ApplyPartDamage(Damage, PenatrateLevel);
+                        }
                         Rigidbody enemyRb = enemy.GetComponent<Rigidbody>();
-                        hb.ApplyPartDamage(Damage, PenatrateLevel);
                         //ScreenShake
                         HitScreenShake(true);
                         // HitEffect

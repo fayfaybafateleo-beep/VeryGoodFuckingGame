@@ -113,4 +113,37 @@ public class HitBoxPart : MonoBehaviour
             Destroy(chunk, ChunkLife);
         }
     }
+    public void GoreExcution(Vector3 origin)
+    {
+        //Goresssssss
+        Owner.BodyPartDesctructSound();
+        GameObject bloodSplash = Instantiate(BloodSplash, this.transform.position, this.transform.rotation);
+        int count = Random.Range(MinChunks, MaxChunks + 1);
+       
+        for (int i = 0; i < count; i++)
+        {
+            // Offset
+            Vector3 spawnPos = origin + Random.insideUnitSphere * 0.1f;
+            if(meatChunkPrefab != null)
+            {
+                GameObject chunk = Instantiate(meatChunkPrefab, spawnPos, Random.rotation);
+                float scaleX = Random.Range(MinScale, MaxScale);
+                float scaleY = Random.Range(MinScale, MaxScale);
+                float scaleZ = Random.Range(MinScale, MaxScale);
+                chunk.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+                Rigidbody rb = chunk.GetComponent<Rigidbody>();
+                if (rb)
+                {
+                    Vector3 randomDir = (Random.onUnitSphere + Vector3.up * UpwardBias).normalized;
+                    float randomForce = Random.Range(Force * 0.7f, Force * 1.3f);
+                    rb.AddForce(randomDir * randomForce, ForceMode.Impulse);
+                    rb.AddTorque(Random.onUnitSphere * TorqueForce, ForceMode.Impulse);
+                }
+                Destroy(chunk, ChunkLife);
+            }
+
+        }
+
+        Destroy(gameObject, 0f);
+    }
 }

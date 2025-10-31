@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Recorder.OutputPath;
 using static UnityEngine.Rendering.DebugUI;
+using static UnityEngine.UI.Image;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -144,5 +145,16 @@ public class EnemyHealth : MonoBehaviour
             child.gameObject.layer = LayerMask.NameToLayer("AutoDestroy");
         }
         RB.AddForce(Vector3.down * 9.7f, ForceMode.Force);
+    }
+
+    public void GoreExcution()
+    {
+        Health = -10;
+        
+
+        foreach (HitBoxPart part in GetComponentsInChildren<HitBoxPart>())
+        {
+            part.GoreExcution(part.transform.position);
+        }
     }
 }

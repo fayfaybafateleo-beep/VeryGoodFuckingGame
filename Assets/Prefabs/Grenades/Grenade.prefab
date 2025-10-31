@@ -277,7 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 10
   PenetrateLevel: 3
-  IsPercussion: 0
+  IsPercussion: 1
   StartFuze: 0
   FuzeTime: 1
   FuzeTimer: 0
@@ -288,3 +288,6 @@ MonoBehaviour:
   BurstCount: 1
   BurstInterval: 0.2
   GLAnimationSpeed: 2
+  Spin: 0
+  TorqueAmount: 10
+  TorqueDirection: {x: 0, y: 1, z: 0}
