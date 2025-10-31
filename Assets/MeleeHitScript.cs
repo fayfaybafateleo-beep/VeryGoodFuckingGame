@@ -122,7 +122,7 @@ public class MeleeHitScript : MonoBehaviour
                         bh.transform.SetParent(hb.transform);
                     }
 
-                    // 命中特效（与你的判定一致）
+              
                     if (hb.Thoughness > PenatrateLevel)
                     {
                         if (HitEffect != null)
@@ -151,6 +151,7 @@ public class MeleeHitScript : MonoBehaviour
                         enemy.ApplyHit(Damage, PenatrateLevel, hb, mid);
                         Rigidbody enemyRb = enemy.GetComponent<Rigidbody>();
                         hb.ApplyPartDamage(Damage, PenatrateLevel);
+                        //ScreenShake
                         HitScreenShake(true);
                         // HitEffect
                         if (HitMark != null)
@@ -199,12 +200,12 @@ public class MeleeHitScript : MonoBehaviour
     {
         if (isHitEnemy)
         {
-            MeleeImpulseSource.ImpulseDefinition.AmplitudeGain = 1f;
-            MeleeImpulseSource.ImpulseDefinition.FrequencyGain = 1f;
+            MeleeImpulseSource.ImpulseDefinition.AmplitudeGain = 2f;
+            MeleeImpulseSource.ImpulseDefinition.FrequencyGain = 2f;
         }
         else
         {
-            MeleeImpulseSource.ImpulseDefinition.AmplitudeGain = 0.3f;
+            MeleeImpulseSource.ImpulseDefinition.AmplitudeGain = 0.5f;
             MeleeImpulseSource.ImpulseDefinition.FrequencyGain = 0.3f;
         }
         MeleeImpulseSource.GenerateImpulse();

@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,22 +9,22 @@ public class EnemyBehaviour : MonoBehaviour
     public NavMeshAgent Agent;
 
     [Header("MovementDetails")]
-    [Range(0, 100)]
+    [UnityEngine.Range(0, 100)]
     public float MoveForce = 10f;
-    [Range(0, 100)]
+    [UnityEngine.Range(0, 100)]
     public float MaxSpeed = 5f;
-    [Range(0, 360)]
+    [UnityEngine.Range(0, 360)]
     public float AngleOffset;
-    [Range(0, 100)]
+    [UnityEngine.Range(0, 100)]
     public float TurningSpeed;
 
     [Header("AnimationDetails")]
     public Animator EnemyAnimator;
 
     [Header("Combat")]
-    [Range(0, 1000)]
+    [UnityEngine.Range(0, 1000)]
     public float AttackRange = 2.0f;
-    [Range(0, 1000)]
+    [UnityEngine.Range(0, 1000)]
     public float AttackRate = 2f;
     public float AttackRateTimer =0f;
     
@@ -30,10 +32,14 @@ public class EnemyBehaviour : MonoBehaviour
 
     public Rigidbody Rigidbody;
 
+    public List<GameObject> ImportantPartList;
+
+    public bool Shocked= false;
     public enum EnemyState
     {
         Moving,
         Attack,
+        Shock,
         Die
     }
     [Header("EnemyStates")]
@@ -54,6 +60,18 @@ public class EnemyBehaviour : MonoBehaviour
         if (ES != EnemyState.Attack)
         {
             AttackRateTimer = 0;
+        }
+        //EnemyShock
+        bool allDestroyed = !ImportantPartList.Exists(p => p);
+        if (allDestroyed && !Shocked)
+        {
+            if (ES != EnemyState.Die)
+            {
+                ES = EnemyState.Shock;
+                EnemyAnimator.SetTrigger("Shock");
+            }
+
+            Shocked = true; 
         }
 
         switch (ES)
@@ -121,10 +139,14 @@ public class EnemyBehaviour : MonoBehaviour
                 {
                     QuitAttack();
                 }
-                break;
+            break;
                 //╪дак
             case EnemyState.Die:
                  Agent.enabled = false;
+            break;
+
+            case EnemyState.Shock:
+                Agent.enabled = false;
             break;
         }
        
