@@ -19,7 +19,9 @@ public class HitBoxPart : MonoBehaviour
     public EnemyHealth Owner;
 
     [Header("Gore Settings")]
-    public GameObject meatChunkPrefab;  
+    public GameObject meatChunkPrefab;
+    public GameObject ExcutionBloodSPlash;
+
     public int MinChunks = 3;           
     public int MaxChunks = 8;           
     public float MinScale = 0.3f;       
@@ -117,7 +119,7 @@ public class HitBoxPart : MonoBehaviour
     {
         //Goresssssss
         Owner.BodyPartDesctructSound();
-        GameObject bloodSplash = Instantiate(BloodSplash, this.transform.position, this.transform.rotation);
+        GameObject bloodSplash = Instantiate(ExcutionBloodSPlash, this.transform.position, this.transform.rotation);
         int count = Random.Range(MinChunks, MaxChunks + 1);
        
         for (int i = 0; i < count; i++)

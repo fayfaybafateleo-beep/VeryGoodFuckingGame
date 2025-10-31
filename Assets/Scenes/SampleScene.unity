@@ -586,6 +586,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.1
@@ -941,6 +942,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.1
@@ -1671,7 +1673,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 54e9dc45e3d7d9d44b3b5b19093cce28, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.517
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1976,6 +1978,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.3
@@ -2205,6 +2208,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 7700495684928235090, guid: bcd8bfa91fb6cdf45a7be356bfe9815a, type: 3}
   MinChunks: 1
   MaxChunks: 3
   MinScale: 0.05
@@ -2365,8 +2369,8 @@ Transform:
   m_GameObject: {fileID: 364148398}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: -1.145}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.72}
+  m_LocalPosition: {x: -0, y: -0, z: -1.44}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 2.47}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2075536255}
@@ -3129,6 +3133,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.1
@@ -3323,6 +3328,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.1
@@ -4083,6 +4089,7 @@ MonoBehaviour:
   Thoughness: 100000
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.3
@@ -4671,6 +4678,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 7700495684928235090, guid: bcd8bfa91fb6cdf45a7be356bfe9815a, type: 3}
   MinChunks: 1
   MaxChunks: 3
   MinScale: 0.05
@@ -4921,6 +4929,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 1
   MaxChunks: 3
   MinScale: 0.05
@@ -5063,6 +5072,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 1
   MaxChunks: 3
   MinScale: 0.05
@@ -5192,8 +5202,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OriginWeaponsList:
-  - {fileID: 7617261173868679732, guid: 303440436758efa4fa83c6ada48711ca, type: 3}
-  - {fileID: 7091615679065204936, guid: eb993aaaeae08394eb30edaf748abba4, type: 3}
+  - {fileID: 8494665456162348921, guid: 7141b1c048029bd4fb81fb15fca3022f, type: 3}
+  - {fileID: 7663199390295935275, guid: 65c0c2df77454044db4f81d52fefc861, type: 3}
   WeaponsOnEquipmentList: []
   GrenadeList:
   - {fileID: 5312831152365387784, guid: a84007f64609c064883967490c037a07, type: 3}
@@ -5438,6 +5448,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 1
   MaxChunks: 3
   MinScale: 0.05
@@ -5673,6 +5684,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 1
   MaxChunks: 3
   MinScale: 0.05
@@ -5908,6 +5920,7 @@ MonoBehaviour:
   Thoughness: 100000
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.3
@@ -5938,7 +5951,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &821408282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6381,6 +6394,7 @@ MonoBehaviour:
   Thoughness: 100000
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.3
@@ -6684,6 +6698,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 7700495684928235090, guid: bcd8bfa91fb6cdf45a7be356bfe9815a, type: 3}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.1
@@ -6803,6 +6818,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 1
   MaxChunks: 3
   MinScale: 0.05
@@ -7158,7 +7174,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: b926075a8932c1741b93ffc6cc5df8e8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.528
+  m_Volume: 0.19
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -7352,14 +7368,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874130629}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.024, y: 0, z: 0.244}
+  m_LocalRotation: {x: -0, y: -0, z: 0.15293112, w: 0.9882369}
+  m_LocalPosition: {x: -0.13, y: 0.287, z: 0.244}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 290644552}
   m_Father: {fileID: 2008594454}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 17.594}
 --- !u!1 &894053243
 GameObject:
   m_ObjectHideFlags: 0
@@ -7556,6 +7572,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.1
@@ -7931,6 +7948,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 7700495684928235090, guid: bcd8bfa91fb6cdf45a7be356bfe9815a, type: 3}
   MinChunks: 1
   MaxChunks: 3
   MinScale: 0.05
@@ -8517,7 +8535,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1061184262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9210,6 +9228,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 1
   MaxChunks: 3
   MinScale: 0.05
@@ -9646,7 +9665,7 @@ MonoBehaviour:
   KinematicActiveAfterDie: 3
   ForcePerDamage: 1.5
   AngularPerDamage: 1
-  UpwardForce: 1.5
+  UpwardForce: 0.1
   FinalDamage: 0
   EnemyAnimator: {fileID: 1230203611}
   TimeToDestroy: 3
@@ -9699,7 +9718,7 @@ Rigidbody:
   m_GameObject: {fileID: 1230203608}
   serializedVersion: 4
   m_Mass: 10
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 10
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -10020,7 +10039,7 @@ Transform:
   m_GameObject: {fileID: 1244492603}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.331299, y: 0.741, z: 5.09}
+  m_LocalPosition: {x: -5.58, y: 0.741, z: 5.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10048,6 +10067,7 @@ MonoBehaviour:
   Thoughness: 100000
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.3
@@ -10321,6 +10341,7 @@ MonoBehaviour:
   Thoughness: 100000
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.3
@@ -10567,6 +10588,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 1
   MaxChunks: 3
   MinScale: 0.05
@@ -11643,6 +11665,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 1
   MaxChunks: 3
   MinScale: 0.05
@@ -12451,7 +12474,7 @@ Transform:
   m_GameObject: {fileID: 1712305136}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.331299, y: 2.277, z: 5.09}
+  m_LocalPosition: {x: -5.43, y: 2.277, z: 5.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12479,6 +12502,7 @@ MonoBehaviour:
   Thoughness: 100000
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.3
@@ -12892,6 +12916,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.1
@@ -13076,6 +13101,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 1
   MaxChunks: 3
   MinScale: 0.05
@@ -13715,6 +13741,7 @@ MonoBehaviour:
   Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
+  ExcutionBloodSPlash: {fileID: 7700495684928235090, guid: bcd8bfa91fb6cdf45a7be356bfe9815a, type: 3}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.1
@@ -14792,6 +14819,7 @@ MonoBehaviour:
   Thoughness: 10000
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
+  ExcutionBloodSPlash: {fileID: 0}
   MinChunks: 3
   MaxChunks: 8
   MinScale: 0.3
@@ -15219,7 +15247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2092857039
 MonoBehaviour:
   m_ObjectHideFlags: 0
