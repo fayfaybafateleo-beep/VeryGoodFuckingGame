@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class HitBoxPart : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class HitBoxPart : MonoBehaviour
     public Transform BloodPoint;
     public GameObject Blood;
     public GameObject BloodSplash;
+    public GameObject TextObject;
+    public string Text;
+
     public int Thoughness;
     public EnemyHealth Owner;
 
@@ -82,6 +86,11 @@ public class HitBoxPart : MonoBehaviour
         GameObject bloodSplash = Instantiate(BloodSplash, BloodPoint.position, BloodPoint.rotation);
         bloodSplash.transform.SetParent(Owner.transform);
         bloodSplash.transform.localScale = Owner.transform.localScale;
+
+        GameObject text = Instantiate(TextObject, transform.position, Quaternion.identity);
+        text.GetComponentInChildren<TextMeshPro>().text = Text;
+        Destroy(text, 1f);
+
         Destroy(gameObject, 0f);
         SpawnGore(this.transform.position);
     }
