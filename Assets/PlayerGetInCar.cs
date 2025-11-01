@@ -8,8 +8,9 @@ public class PlayerGetInCar : MonoBehaviour
     public KeyCode Key = KeyCode.V;     
     public float mountDistance = 3f;         
 
-    [Header("PlayerControl")]
+    [Header("PlayerControl&Weapon")]
     public FirstPersonController PlayerController;
+    public GameObject MainCamera;
 
     [Header("Seats")]
     public GameObject SeatPoint;
@@ -30,6 +31,7 @@ public class PlayerGetInCar : MonoBehaviour
 
        DropPoint = GameObject.FindGameObjectWithTag("DropPoint");
 
+       MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     public void Update()
@@ -66,6 +68,11 @@ public class PlayerGetInCar : MonoBehaviour
         // Disable PlayerControl
         PlayerController.CS = FirstPersonController.ControllerState.StopMove;
 
+        // Disable Weapons
+        foreach (Transform child in MainCamera.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
         // SitOnSeat
         transform.SetParent(SeatPoint.transform, worldPositionStays: false);
         transform.localPosition = Vector3.zero;
@@ -88,7 +95,14 @@ public class PlayerGetInCar : MonoBehaviour
         transform.position = DropPoint.transform.position;
         transform.rotation = dropRot;
 
+
+
         PlayerController.CS = FirstPersonController.ControllerState.CanMove;
+        // Enable Weapons
+        foreach (Transform child in MainCamera.transform)
+        {
+            child.gameObject.SetActive(true);
+        }
 
         IsMounted = false;
     }

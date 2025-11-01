@@ -45,6 +45,7 @@ public class WeaponManager : MonoBehaviour
     public AudioClip FireClip;
     void Awake()
     {
+     
         foreach (GameObject GunPrefab in OriginWeaponsList)
         {
             if (GunPrefab != null)
@@ -64,7 +65,20 @@ public class WeaponManager : MonoBehaviour
         WeaponsOnEquipmentList[I + 1].GetComponent<GunScript>().GS = GunScript.GunState.CeaseFire;
       
     }
-   
+    public void OnEnable()
+    {
+        //RecoverWhileGetOffTheCar
+        CanSwap = true;
+        if (IsWeaponSwaped)
+        {
+            WeaponsOnEquipmentList[I + 1].GetComponent<GunScript>().GS = GunScript.GunState.CanFire;
+        }
+        else
+        {
+            WeaponsOnEquipmentList[I].GetComponent<GunScript>().GS = GunScript.GunState.CanFire;
+        }
+
+    }
     // Update is called once per frame
     void Update()
     {
