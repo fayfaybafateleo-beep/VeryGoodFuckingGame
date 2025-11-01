@@ -75,6 +75,15 @@ namespace StarterAssets
         private float _strafeTiltZ;
 		private float _strafeTiltVel;
 
+        public enum ControllerState
+        {
+            CanMove,
+            StopMove,
+			Shock
+        }
+        public ControllerState CS;
+
+
 #if ENABLE_INPUT_SYSTEM
         private PlayerInput _playerInput;
 #endif
@@ -122,9 +131,23 @@ namespace StarterAssets
 
 		private void Update()
 		{
-			JumpAndGravity();
-			GroundedCheck();
-			Move();
+			switch (CS)
+			{
+				case ControllerState.CanMove:
+                    JumpAndGravity();
+                    GroundedCheck();
+                    Move();
+                break;
+
+				case ControllerState.StopMove:
+
+				break;
+
+				case ControllerState.Shock:
+
+				break;
+			}
+			
 		}
 
 		private void LateUpdate()

@@ -1,3 +1,4 @@
+using StarterAssets;
 using UnityEngine;
 
 public class PlayerGetInCar : MonoBehaviour
@@ -8,7 +9,7 @@ public class PlayerGetInCar : MonoBehaviour
     public float mountDistance = 3f;         
 
     [Header("PlayerControl")]
-    public CharacterController PlayerController;
+    public FirstPersonController PlayerController;
 
     [Header("Seats")]
     public GameObject SeatPoint;
@@ -21,7 +22,7 @@ public class PlayerGetInCar : MonoBehaviour
 
     public void Start()
     {
-       PlayerController = GetComponent<CharacterController>();
+       PlayerController = GetComponent<FirstPersonController>();
 
        Car = GameObject.FindGameObjectWithTag("Car");
 
@@ -63,7 +64,7 @@ public class PlayerGetInCar : MonoBehaviour
         IsMounted = true;
 
         // Disable PlayerControl
-        PlayerController.enabled = false;
+        PlayerController.CS = FirstPersonController.ControllerState.StopMove;
 
         // SitOnSeat
         transform.SetParent(SeatPoint.transform, worldPositionStays: false);
@@ -87,7 +88,7 @@ public class PlayerGetInCar : MonoBehaviour
         transform.position = DropPoint.transform.position;
         transform.rotation = dropRot;
 
-        PlayerController.enabled = true;
+        PlayerController.CS = FirstPersonController.ControllerState.CanMove;
 
         IsMounted = false;
     }
