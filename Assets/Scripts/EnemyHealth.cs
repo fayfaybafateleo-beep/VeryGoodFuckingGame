@@ -111,11 +111,13 @@ public class EnemyHealth : MonoBehaviour
             text.GetComponentInChildren<TextMeshPro>().text = dmg.ToString();
             text.GetComponentInChildren<TextMeshPro>().color = Color.red;
             text.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            Destroy(text, 1f);
         }
         else
         {
             GameObject text = Instantiate(HitText, spawnPos, Quaternion.identity);
             text.GetComponentInChildren<TextMeshPro>().text = dmg.ToString();
+            Destroy(text, 1f);
         }
         
     }

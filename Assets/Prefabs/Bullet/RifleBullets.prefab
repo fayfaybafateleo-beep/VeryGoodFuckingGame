@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3454573842243275128}
   m_Layer: 6
   m_Name: RifleBullets
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -283,6 +283,7 @@ MonoBehaviour:
   ExtraHitEffect: {fileID: 2109820517975283450, guid: dc218c12e88114f47921d89d73ccb2f8, type: 3}
   HitEffect2: {fileID: 2600450004377640329, guid: c7dcf070368c09944aa64b1f3147e2b9, type: 3}
   Duration: 2.5
+  ExtraEffectChance: 0.3
   HitMark: {fileID: 0}
   HitMarkParent: {fileID: 0}
   EnemyTag: Enemy

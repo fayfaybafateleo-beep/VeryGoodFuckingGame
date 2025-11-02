@@ -22,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
         {
             for (int i = 0; i <InsNUm; i++)
             {
-                Vector2 offset = Random.insideUnitCircle * 2f;  
+                Vector2 offset = Random.insideUnitCircle * 1f;  
                 Vector3 spawnPos = transform.position + new Vector3(offset.x, 0f, offset.y);
 
                 Instantiate(Enemy, spawnPos, Quaternion.identity);
