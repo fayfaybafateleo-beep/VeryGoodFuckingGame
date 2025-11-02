@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5356458433496633797}
   - component: {fileID: 2841322885078589868}
-  m_Layer: 5
-  m_Name: CriticalText
+  - component: {fileID: 2920154553740071432}
+  m_Layer: 31
+  m_Name: ExecutionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,6 +56,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2920154553740071432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629695357997126060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bc36ae9d9ccba340926ea645be90b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
 --- !u!1 &5496840586076154710
 GameObject:
   m_ObjectHideFlags: 0
@@ -66,7 +80,7 @@ GameObject:
   - component: {fileID: 7853814590071068592}
   - component: {fileID: 3291335170366126942}
   - component: {fileID: 3232000802756155239}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +129,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  - {fileID: 2140032, guid: 9de2099301cdcd947b6beebb069db2bc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -159,15 +173,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: HeadShot!!!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9de2099301cdcd947b6beebb069db2bc, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: 9de2099301cdcd947b6beebb069db2bc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190309
-  m_fontColor: {r: 0.8962264, g: 0, b: 0, a: 1}
+    rgba: 4283360512
+  m_fontColor: {r: 0, g: 0.8980392, b: 0.30766878, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

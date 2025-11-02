@@ -16,8 +16,7 @@ public class MeleeHitScript : MonoBehaviour
     public int PenatrateLevel = 5;
     public float KnockBackForce;
 
-    [Header("Effects (¿ÉÑ¡)")]
-    public GameObject BulletHole;     
+    [Header("HitEffects")]    
     public GameObject HitEffect;    
     public GameObject HitEffect2;    
     public GameObject ExtraHitEffect; 
@@ -116,14 +115,6 @@ public class MeleeHitScript : MonoBehaviour
                     //The hit point
                     Vector3 mid = (s + e) * 0.5f;
                     Vector3 normal = (e - s).sqrMagnitude > 1e-6f ? (e - s).normalized : -transform.forward;
-
-                    
-                    if (BulletHole != null)
-                    {
-                        var bh = Instantiate(BulletHole, mid + normal * 0.001f, Quaternion.LookRotation(normal));
-                        bh.transform.SetParent(hb.transform);
-                    }
-
               
                     if (hb.Thoughness > PenatrateLevel)
                     {

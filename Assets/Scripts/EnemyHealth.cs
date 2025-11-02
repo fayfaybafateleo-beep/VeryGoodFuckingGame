@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using static UnityEditor.Recorder.OutputPath;
 using static UnityEngine.Rendering.DebugUI;
@@ -24,20 +25,25 @@ public class EnemyHealth : MonoBehaviour
     [Header("RidgiBody")]
     public Rigidbody RB;
 
+    [Header("HitText")]
+    public GameObject HitText;
+
     [Header("DeadEffect")]
     public bool IsDead;
     public Vector3 Dir;
     public Vector3 LastHitPoint;
 
+    public Animator EnemyAnimator;
+    public LayerMask BodiesLayer;
+    public GameObject BloodSPlash;
+    public GameObject TextObject;
+    public string Text="Brutality!!!";
+    public float TimeToDestroy;
     public float KinematicActiveAfterDie;
     public float ForcePerDamage;
     public float AngularPerDamage;
     public float UpwardForce;
     public float FinalDamage;
-    public Animator EnemyAnimator;
-    public float TimeToDestroy;
-    public LayerMask BodiesLayer;
-    public GameObject BloodSPlash;
 
     public List<GameObject> EnemyLightList;
     public Material LightsOffMaterial;
@@ -83,10 +89,27 @@ public class EnemyHealth : MonoBehaviour
         else if (toughness < penetrateLevel) dmg *= OverPenertrateRate;   
 
         Health -= dmg;
-     // Record the damage and bullet pos
-       FinalDamage = dmg;
+        // Record the damage and bullet pos
+        FinalDamage = dmg;
         LastHitPoint = hitPoint;                              
-        Dir = (transform.position - hitPoint).normalized;    
+        Dir = (transform.position - hitPoint).normalized;
+
+        Vector3 randomOffset = new Vector3(Random.Range(-0.2f, 0.2f),  Random.Range(0.01f, 0.2f),  Random.Range(-0.3f, 0.3f) );
+        Vector3 spawnPos = hitPoint + randomOffset;
+
+        if (hitbox.GetComponent<HitBoxPart>().IsCriticalPoint)
+        {
+            GameObject text = Instantiate(HitText, spawnPos, Quaternion.identity);
+            text.GetComponentInChildren<TextMeshPro>().text = dmg.ToString();
+            text.GetComponentInChildren<TextMeshPro>().color = Color.red;
+            text.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+        }
+        else
+        {
+            GameObject text = Instantiate(HitText, spawnPos, Quaternion.identity);
+            text.GetComponentInChildren<TextMeshPro>().text = dmg.ToString();
+        }
+        
     }
     void Die()
     {
@@ -150,8 +173,10 @@ public class EnemyHealth : MonoBehaviour
     public void GoreExcution()
     {
         Health = -10;
-        
 
+        GameObject text = Instantiate(TextObject, transform.position, Quaternion.identity);
+        text.GetComponentInChildren<TextMeshPro>().text =Text;
+        Destroy(text, 1f);
         foreach (HitBoxPart part in GetComponentsInChildren<HitBoxPart>())
         {
             part.GoreExcution(part.transform.position);
