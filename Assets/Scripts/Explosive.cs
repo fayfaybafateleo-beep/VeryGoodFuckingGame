@@ -78,7 +78,7 @@ public class Explosive : MonoBehaviour
         }
         var cols = Physics.OverlapSphere(center, Radius, ~0, TriggerMode);
 
-        HashSet<EnemyHealth> damagedEnemies = new HashSet<EnemyHealth>();
+        HashSet<EnemyHealth> nonDestructibleDamaged = new HashSet<EnemyHealth>();
 
         foreach (var col in Physics.OverlapSphere(center, Radius, ~0, TriggerMode))
         {
@@ -86,40 +86,40 @@ public class Explosive : MonoBehaviour
             var enemy = hb ? hb.Owner : col.GetComponentInParent<EnemyHealth>();
             if (!enemy) continue;
 
-
             Vector3 targetPoint = col.ClosestPoint(center);
             if (Physics.Linecast(center, targetPoint, out RaycastHit block, ObstructionMask, TriggerMode))
                 if (block.collider != col) continue;
 
             float dmg = Damage;
 
-            if (hb)
+            if (hb && hb.destructible && hb.partHealth > 0)
             {
-                // if Destructible
-                if (hb.destructible && hb.partHealth > 0)
-                {
-                    hb.ApplyPartDamage(dmg, PenetrateLevel);
-                    enemy.ApplyHit(dmg, PenetrateLevel, hb, targetPoint);
-                }
-                else
-                {
-                    continue;
-                }
-            }
-        
-            if (!damagedEnemies.Contains(enemy))
-            {
-                damagedEnemies.Add(enemy);
+                // Breakable
+                hb.ApplyPartDamage(dmg, PenetrateLevel);
+                enemy.ApplyHit(dmg, PenetrateLevel, hb , targetPoint);
+              
+                Vector3 normal = (targetPoint - center).normalized;
+                Instantiate(HitEffect, targetPoint + normal * 0.05f, Quaternion.LookRotation(normal, Vector3.up))
+                    .transform.SetParent(col.transform);
+
                 if (HitMark) HitMark.GetComponent<Animator>()?.SetTrigger("Hit");
                 HitMarkParent?.AddShake(1.5f);
                 HitMarkParent?.HitMarkHitSoundPlay();
 
+                continue;
+            }
+                //OtherParts
+            if (hb && nonDestructibleDamaged.Add(enemy))
+            {
+                enemy.ApplyHit(dmg, PenetrateLevel, hb, targetPoint);
 
-                enemy.ApplyHit(dmg, PenetrateLevel, null, targetPoint);
+                HitMark.GetComponent<Animator>()?.SetTrigger("Hit");
+                HitMarkParent?.AddShake(1.5f);
+                HitMarkParent?.HitMarkHitSoundPlay();
             }
 
-            Vector3 normal = (targetPoint - center).normalized;
-            Instantiate(HitEffect, targetPoint + normal * 0.05f, Quaternion.LookRotation(normal, Vector3.up))
+            Vector3 n = (targetPoint - center).normalized;
+            Instantiate(HitEffect, targetPoint + n * 0.05f, Quaternion.LookRotation(n, Vector3.up))
                 .transform.SetParent(col.transform);
         }
 

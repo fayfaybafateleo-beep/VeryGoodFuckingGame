@@ -91,11 +91,19 @@ public class EnemyHealth : MonoBehaviour
         Health -= dmg;
         // Record the damage and bullet pos
         FinalDamage = dmg;
-        LastHitPoint = hitPoint;                              
+        LastHitPoint = hitPoint;
+        Vector3 spawnPos;
         Dir = (transform.position - hitPoint).normalized;
 
         Vector3 randomOffset = new Vector3(Random.Range(-0.2f, 0.2f),  Random.Range(0.01f, 0.2f),  Random.Range(-0.3f, 0.3f) );
-        Vector3 spawnPos = hitPoint + randomOffset;
+        if (hitbox)
+        {
+            spawnPos = hitPoint + randomOffset;
+        }
+        else
+        {
+            spawnPos = transform.position + randomOffset;
+        }
 
         if (hitbox.GetComponent<HitBoxPart>().IsCriticalPoint)
         {

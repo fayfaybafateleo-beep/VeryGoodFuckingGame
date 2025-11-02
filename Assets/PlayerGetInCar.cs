@@ -71,6 +71,7 @@ public class PlayerGetInCar : MonoBehaviour
         // Disable Weapons
         foreach (Transform child in MainCamera.transform)
         {
+            if (child.name == "OverLayCamera") continue;
             child.gameObject.SetActive(false);
         }
         // SitOnSeat
@@ -101,6 +102,7 @@ public class PlayerGetInCar : MonoBehaviour
         // Enable Weapons
         foreach (Transform child in MainCamera.transform)
         {
+            if (child.name == "OverLayCamera") continue;
             child.gameObject.SetActive(true);
         }
 

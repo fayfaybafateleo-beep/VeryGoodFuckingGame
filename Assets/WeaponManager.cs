@@ -37,6 +37,8 @@ public class WeaponManager : MonoBehaviour
     public AudioClip GLFireClip;
 
     [Header("Melee")]
+    public float MeleeRate;
+    public float MeleeRateTimer;
     public Animator MeleeAnimator;
     public CinemachineImpulseSource MeleeImpulseSource;
 
@@ -82,18 +84,30 @@ public class WeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetKeyDown(Key2) && IsBursting==false)
         {
             GL.speed= GrenadeList[0].GetComponent<Grenades>().GLAnimationSpeed;
             StartCoroutine(FireGrenadeBurst());
         }
+
+        MeleeRateTimer += Time.deltaTime;
+
+        if (MeleeRateTimer >= MeleeRate)
+        {
+            MeleeRateTimer = MeleeRate;
+        }
+
         if (Input.GetKeyDown(Key3))
         {
+            if (MeleeRateTimer < MeleeRate) return;
             MeleeAnimator.SetTrigger("Fire");
             MeleeHitImpulse();
             MeleeAnimator.speed = 5;
             MeleeSound.PlayOneShot(FireClip);
+            MeleeRateTimer = 0;
         }
+
         if (Input.GetKeyDown(Key) &&CanSwap)
         {
             CanSwap = false;
