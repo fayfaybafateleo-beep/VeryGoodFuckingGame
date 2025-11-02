@@ -333,6 +333,7 @@ GameObject:
   - component: {fileID: 68194984}
   - component: {fileID: 68194983}
   - component: {fileID: 68194982}
+  - component: {fileID: 68194986}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -430,6 +431,40 @@ Transform:
   - {fileID: 1417542661}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &68194986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68194981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8224fd48bc4f9a24aa2ed403dcf1ea28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageMultiplier: 0
+  IsCriticalPoint: 0
+  destructible: 0
+  Thoughness: 1000
+  partMaxHealth: 10000
+  partHealth: 10000
+  BloodPoint: {fileID: 0}
+  Blood: {fileID: 0}
+  BloodSplash: {fileID: 0}
+  TextObject: {fileID: 0}
+  Text: 
+  Owner: {fileID: 0}
+  meatChunkPrefab: {fileID: 0}
+  ExcutionBloodSPlash: {fileID: 0}
+  MinChunks: 3
+  MaxChunks: 8
+  MinScale: 0.3
+  MaxScale: 1.2
+  Force: 8
+  UpwardBias: 0.5
+  TorqueForce: 5
+  ChunkLife: 5
 --- !u!1 &85628620
 GameObject:
   m_ObjectHideFlags: 0
@@ -1508,6 +1543,7 @@ MonoBehaviour:
   damageMultiplier: 2
   IsCriticalPoint: 0
   destructible: 1
+  Thoughness: 0
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 0}
@@ -1515,7 +1551,6 @@ MonoBehaviour:
   BloodSplash: {fileID: 0}
   TextObject: {fileID: 0}
   Text: 
-  Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
   ExcutionBloodSPlash: {fileID: 0}
@@ -1763,6 +1798,7 @@ MonoBehaviour:
   damageMultiplier: 2
   IsCriticalPoint: 1
   destructible: 1
+  Thoughness: 0
   partMaxHealth: 100
   partHealth: 0
   BloodPoint: {fileID: 1216632428}
@@ -1770,7 +1806,6 @@ MonoBehaviour:
   BloodSplash: {fileID: 1722730097017444589, guid: 1093cb16752f88c41874197b764f108a, type: 3}
   TextObject: {fileID: 629695357997126060, guid: 20e1c5bae0b8b4f46b3a913abc21c1e1, type: 3}
   Text: HEADSHOT!!!
-  Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
   ExcutionBloodSPlash: {fileID: 7700495684928235090, guid: bcd8bfa91fb6cdf45a7be356bfe9815a, type: 3}
@@ -3241,6 +3276,7 @@ MonoBehaviour:
   damageMultiplier: 2
   IsCriticalPoint: 0
   destructible: 1
+  Thoughness: 100000
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 0}
@@ -3248,7 +3284,6 @@ MonoBehaviour:
   BloodSplash: {fileID: 0}
   TextObject: {fileID: 0}
   Text: 
-  Thoughness: 100000
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
   ExcutionBloodSPlash: {fileID: 0}
@@ -3716,6 +3751,7 @@ MonoBehaviour:
   damageMultiplier: 1
   IsCriticalPoint: 0
   destructible: 1
+  Thoughness: 0
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 388491578}
@@ -3723,7 +3759,6 @@ MonoBehaviour:
   BloodSplash: {fileID: 1722730097017444589, guid: 1093cb16752f88c41874197b764f108a, type: 3}
   TextObject: {fileID: 629695357997126060, guid: 3f377e8f8e67dff409d796e5022f10d1, type: 3}
   Text: DISSECT
-  Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
   ExcutionBloodSPlash: {fileID: 7700495684928235090, guid: bcd8bfa91fb6cdf45a7be356bfe9815a, type: 3}
@@ -4414,6 +4449,7 @@ MonoBehaviour:
   damageMultiplier: 2
   IsCriticalPoint: 0
   destructible: 1
+  Thoughness: 100000
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 0}
@@ -4421,7 +4457,6 @@ MonoBehaviour:
   BloodSplash: {fileID: 0}
   TextObject: {fileID: 0}
   Text: 
-  Thoughness: 100000
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
   ExcutionBloodSPlash: {fileID: 0}
@@ -4714,6 +4749,7 @@ MonoBehaviour:
   damageMultiplier: 2
   IsCriticalPoint: 0
   destructible: 1
+  Thoughness: 100000
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 0}
@@ -4721,7 +4757,6 @@ MonoBehaviour:
   BloodSplash: {fileID: 0}
   TextObject: {fileID: 0}
   Text: 
-  Thoughness: 100000
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
   ExcutionBloodSPlash: {fileID: 0}
@@ -5021,6 +5056,7 @@ MonoBehaviour:
   damageMultiplier: 1
   IsCriticalPoint: 0
   destructible: 0
+  Thoughness: 0
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 0}
@@ -5028,7 +5064,6 @@ MonoBehaviour:
   BloodSplash: {fileID: 1722730097017444589, guid: 1093cb16752f88c41874197b764f108a, type: 3}
   TextObject: {fileID: 0}
   Text: 
-  Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
   ExcutionBloodSPlash: {fileID: 7700495684928235090, guid: bcd8bfa91fb6cdf45a7be356bfe9815a, type: 3}
@@ -6092,6 +6127,7 @@ MonoBehaviour:
   damageMultiplier: 1
   IsCriticalPoint: 0
   destructible: 1
+  Thoughness: 0
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 1475047849}
@@ -6099,7 +6135,6 @@ MonoBehaviour:
   BloodSplash: {fileID: 1722730097017444589, guid: 1093cb16752f88c41874197b764f108a, type: 3}
   TextObject: {fileID: 629695357997126060, guid: 3f377e8f8e67dff409d796e5022f10d1, type: 3}
   Text: DISSECT
-  Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
   ExcutionBloodSPlash: {fileID: 7700495684928235090, guid: bcd8bfa91fb6cdf45a7be356bfe9815a, type: 3}
@@ -7517,6 +7552,7 @@ MonoBehaviour:
   damageMultiplier: 2
   IsCriticalPoint: 0
   destructible: 1
+  Thoughness: 100000
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 0}
@@ -7524,7 +7560,6 @@ MonoBehaviour:
   BloodSplash: {fileID: 0}
   TextObject: {fileID: 0}
   Text: 
-  Thoughness: 100000
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
   ExcutionBloodSPlash: {fileID: 0}
@@ -7713,6 +7748,7 @@ MonoBehaviour:
   damageMultiplier: 2
   IsCriticalPoint: 0
   destructible: 1
+  Thoughness: 100000
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 0}
@@ -7720,7 +7756,6 @@ MonoBehaviour:
   BloodSplash: {fileID: 0}
   TextObject: {fileID: 0}
   Text: 
-  Thoughness: 100000
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
   ExcutionBloodSPlash: {fileID: 0}
@@ -7967,8 +8002,8 @@ Transform:
   m_GameObject: {fileID: 1417542660}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.992}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.618, z: -1.455}
+  m_LocalScale: {x: 3, y: 2.2, z: 2.48}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 68194985}
@@ -7990,11 +8025,12 @@ MonoBehaviour:
   - {fileID: 7663199390295935275, guid: 65c0c2df77454044db4f81d52fefc861, type: 3}
   - {fileID: 7091615679065204936, guid: eb993aaaeae08394eb30edaf748abba4, type: 3}
   - {fileID: 8494665456162348921, guid: 7141b1c048029bd4fb81fb15fca3022f, type: 3}
+  CurrentInedx: 0
   WM: {fileID: 0}
-  Key: 113
-  Key2: 101
-  Key3: 32
-  SellDetection: {fileID: 0}
+  Key5: 110
+  Key6: 109
+  Key7: 98
+  InTrigger: 0
 --- !u!65 &1417542663
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8023,7 +8059,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1417542660}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8039,7 +8075,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: a682ec08778eb314aa4f9e343da67715, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8885,6 +8921,7 @@ MonoBehaviour:
   damageMultiplier: 2
   IsCriticalPoint: 0
   destructible: 1
+  Thoughness: 100000
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 0}
@@ -8892,7 +8929,6 @@ MonoBehaviour:
   BloodSplash: {fileID: 0}
   TextObject: {fileID: 0}
   Text: 
-  Thoughness: 100000
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
   ExcutionBloodSPlash: {fileID: 0}
@@ -9707,6 +9743,7 @@ MonoBehaviour:
   damageMultiplier: 1
   IsCriticalPoint: 0
   destructible: 0
+  Thoughness: 0
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 0}
@@ -9714,7 +9751,6 @@ MonoBehaviour:
   BloodSplash: {fileID: 1722730097017444589, guid: 1093cb16752f88c41874197b764f108a, type: 3}
   TextObject: {fileID: 0}
   Text: 
-  Thoughness: 0
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 6786674196271231871, guid: b23b592b9e164464c8624413dd45fc8a, type: 3}
   ExcutionBloodSPlash: {fileID: 7700495684928235090, guid: bcd8bfa91fb6cdf45a7be356bfe9815a, type: 3}
@@ -10298,6 +10334,7 @@ MonoBehaviour:
   damageMultiplier: 2
   IsCriticalPoint: 0
   destructible: 1
+  Thoughness: 10000
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 0}
@@ -10305,7 +10342,6 @@ MonoBehaviour:
   BloodSplash: {fileID: 0}
   TextObject: {fileID: 0}
   Text: 
-  Thoughness: 10000
   Owner: {fileID: 0}
   meatChunkPrefab: {fileID: 0}
   ExcutionBloodSPlash: {fileID: 0}
@@ -11242,7 +11278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430821, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 32759
+      value: 65527
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430823, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_Name
@@ -17049,7 +17085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5393215578589016655, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5393215578589016655, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

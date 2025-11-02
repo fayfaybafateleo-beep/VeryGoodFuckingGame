@@ -196,6 +196,70 @@ public class WeaponManager : MonoBehaviour
 
         IsBursting = false;
     }
+
+    public void SpawnGuns(int activeGun)
+    {
+        //ClearAll
+        if (WeaponsOnEquipmentList != null)
+        {
+            foreach (var gun in WeaponsOnEquipmentList)
+            {
+                if (gun) Destroy(gun);
+            }
+            WeaponsOnEquipmentList.Clear();
+        }
+
+        if (OriginWeaponsList != null)
+        {
+            Transform parent = WeaponParent ? WeaponParent.transform : this.transform;
+
+            for (int count = 0; count < OriginWeaponsList.Count; count++)
+            {
+                var gunPrefab = OriginWeaponsList[count];
+                if (!gunPrefab) { WeaponsOnEquipmentList.Add(null); continue; }
+
+                GameObject newGun = Instantiate(gunPrefab, parent);
+                newGun.transform.localPosition = Vector3.zero;
+                newGun.transform.localRotation = Quaternion.identity;
+                WeaponsOnEquipmentList.Add(newGun);
+            }
+        }
+
+        // 3) ActivatedTheHolding
+        if (WeaponsOnEquipmentList.Count > 0)
+        {
+            if (activeGun < 0 || activeGun >= WeaponsOnEquipmentList.Count)
+                activeGun = 0;
+
+            for (int k = 0; k < WeaponsOnEquipmentList.Count; k++)
+            {
+                var gun = WeaponsOnEquipmentList[k];
+                bool active = (k == activeGun);
+
+                if (gun)
+                {
+                    gun.SetActive(active);
+                    var gs = gun.GetComponent<GunScript>();
+                    if (gs) gs.GS = active ? GunScript.GunState.CanFire : GunScript.GunState.CeaseFire;
+                }
+            }
+            // synqunized
+            if (activeGun == I)
+            {
+                IsWeaponSwaped = false;
+            }
+            else if (activeGun == I + 1)
+            {
+                IsWeaponSwaped = true;
+            }
+            else
+            {
+                I = activeGun;
+                IsWeaponSwaped = false;
+            }
+            CanSwap = true;
+        }
+    }
     public void GLFire()
    {
         Instantiate(GrenadeList[0], FP.position, FP.rotation);

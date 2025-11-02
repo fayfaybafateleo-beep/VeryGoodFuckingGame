@@ -8,9 +8,10 @@ public class HitBoxPart : MonoBehaviour
     public float damageMultiplier = 2.0f;
     public bool IsCriticalPoint=false;
     [Header("PartHealth")]
-    public bool destructible = false;           // 这个部位是否可被破坏
-    public float partMaxHealth = 20;             // 部位最大生命
-     public float partHealth;   // 当前生命
+    public bool destructible = false;
+    public int Thoughness;
+    public float partMaxHealth = 20;             
+     public float partHealth;   
 
     [Header("PartDestrcutionEffect")]
     public Transform BloodPoint;
@@ -19,7 +20,6 @@ public class HitBoxPart : MonoBehaviour
     public GameObject TextObject;
     public string Text;
 
-    public int Thoughness;
     public EnemyHealth Owner;
 
     [Header("Gore Settings")]
