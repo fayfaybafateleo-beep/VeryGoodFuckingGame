@@ -4,9 +4,12 @@ using Unity.Cinemachine;
 public class GunScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("WhenUcantEvenSay MYNAME")]
+    public string Name;
     [Header("Bullet")]
     public Transform FirePoint;
     public Bullet BulletPrefab;
+    public int MagazineCount;
 
     [Header("FireRate")]
     [Range(0, 3000)]

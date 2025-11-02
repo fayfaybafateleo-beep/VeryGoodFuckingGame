@@ -1160,8 +1160,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0256bb19a2b52fb42a9ed153a027c878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Pistol G114
   FirePoint: {fileID: 1898633215775109795}
   BulletPrefab: {fileID: 3454573842243275128, guid: c87df9d91869f9240b5d030728824403, type: 3}
+  MagazineCount: 10
   FireRate: 300
   SpreadAngle: 0.2
   SlugCount: 1
@@ -1173,7 +1175,7 @@ MonoBehaviour:
   AnimatorSpeed: 5
   shake: {fileID: 1979443626662996304}
   GunDamage: 10
-  GunPeneration: 1
+  GunPeneration: 2
   Camera: {fileID: 0}
   MaxDistance: 60
   HitLayers:

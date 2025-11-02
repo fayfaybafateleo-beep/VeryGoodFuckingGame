@@ -45,6 +45,13 @@ public class WeaponManager : MonoBehaviour
     [Header("MeleeSound")]
     public AudioSource MeleeSound;
     public AudioClip FireClip;
+
+    public enum FireControlState
+    {
+        AllowInput,
+        CantInput
+    }
+    public FireControlState FCS;
     void Awake()
     {
      
@@ -70,90 +77,92 @@ public class WeaponManager : MonoBehaviour
     public void OnEnable()
     {
         //RecoverWhileGetOffTheCar
-        CanSwap = true;
-        if (IsWeaponSwaped)
-        {
-            WeaponsOnEquipmentList[I + 1].GetComponent<GunScript>().GS = GunScript.GunState.CanFire;
-        }
-        else
-        {
-            WeaponsOnEquipmentList[I].GetComponent<GunScript>().GS = GunScript.GunState.CanFire;
-        }
+        EnableWeaponsWhileFinishInteract();
 
     }
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKeyDown(Key2) && IsBursting==false)
+        switch (FCS)
         {
-            GL.speed= GrenadeList[0].GetComponent<Grenades>().GLAnimationSpeed;
-            StartCoroutine(FireGrenadeBurst());
+            case FireControlState.AllowInput:
+                if (Input.GetKeyDown(Key2) && IsBursting == false)
+                {
+                    GL.speed = GrenadeList[0].GetComponent<Grenades>().GLAnimationSpeed;
+                    StartCoroutine(FireGrenadeBurst());
+                }
+
+                MeleeRateTimer += Time.deltaTime;
+
+                if (MeleeRateTimer >= MeleeRate)
+                {
+                    MeleeRateTimer = MeleeRate;
+                }
+
+                if (Input.GetKeyDown(Key3))
+                {
+                    if (MeleeRateTimer < MeleeRate) return;
+                    MeleeAnimator.SetTrigger("Fire");
+                    MeleeHitImpulse();
+                    MeleeAnimator.speed = 5;
+                    MeleeSound.PlayOneShot(FireClip);
+                    MeleeRateTimer = 0;
+                }
+            break;
+
+            case FireControlState.CantInput:
+                WeaponsOnEquipmentList[I + 1].GetComponent<GunScript>().GS = GunScript.GunState.CeaseFire;
+                WeaponsOnEquipmentList[I].GetComponent<GunScript>().GS = GunScript.GunState.CeaseFire;
+            break;
         }
 
-        MeleeRateTimer += Time.deltaTime;
-
-        if (MeleeRateTimer >= MeleeRate)
-        {
-            MeleeRateTimer = MeleeRate;
-        }
-
-        if (Input.GetKeyDown(Key3))
-        {
-            if (MeleeRateTimer < MeleeRate) return;
-            MeleeAnimator.SetTrigger("Fire");
-            MeleeHitImpulse();
-            MeleeAnimator.speed = 5;
-            MeleeSound.PlayOneShot(FireClip);
-            MeleeRateTimer = 0;
-        }
-
-        if (Input.GetKeyDown(Key) &&CanSwap)
+        if (Input.GetKeyDown(Key) && CanSwap)
         {
             CanSwap = false;
             if (IsWeaponSwaped)
             {
                 //StopSecondWeaponOnFire
-                WeaponsOnEquipmentList[I+1].GetComponent<GunScript>().GS = GunScript.GunState.CeaseFire;
+                WeaponsOnEquipmentList[I + 1].GetComponent<GunScript>().GS = GunScript.GunState.CeaseFire;
                 //SetGunActive
 
-                var oldSway = WeaponsOnEquipmentList[I+1].GetComponent<WeaponWaging>();
+                var oldSway = WeaponsOnEquipmentList[I + 1].GetComponent<WeaponWaging>();
                 if (oldSway) oldSway.LowerForReload(0.12f);
 
-                WeaponsOnEquipmentList[I ].GetComponent<GunScript>().IdleAnimation();
+                WeaponsOnEquipmentList[I].GetComponent<GunScript>().IdleAnimation();
                 WeaponsOnEquipmentList[I + 1].SetActive(false);
                 WeaponsOnEquipmentList[I].SetActive(true);
 
-                var newSwayA = WeaponsOnEquipmentList[I].GetComponent<WeaponWaging>();                 
+                var newSwayA = WeaponsOnEquipmentList[I].GetComponent<WeaponWaging>();
                 if (newSwayA) { newSwayA.SnapToLow(); newSwayA.RaiseFromLow(); }
 
-                IsWeaponSwaped =!IsWeaponSwaped;
+                IsWeaponSwaped = !IsWeaponSwaped;
                 //SwapingCD
-                StartCoroutine(SwapGun(I ));
+                StartCoroutine(SwapGun(I));
             }
             else
             {
-               
+
                 //StopFirstWeaponOnFire
-                WeaponsOnEquipmentList[I ].GetComponent<GunScript>().GS = GunScript.GunState.CeaseFire;
+                WeaponsOnEquipmentList[I].GetComponent<GunScript>().GS = GunScript.GunState.CeaseFire;
                 //SetGunActive
 
-                 var oldSway = WeaponsOnEquipmentList[I].GetComponent<WeaponWaging>();
-                 if (oldSway) oldSway.LowerForReload(0.12f);
+                var oldSway = WeaponsOnEquipmentList[I].GetComponent<WeaponWaging>();
+                if (oldSway) oldSway.LowerForReload(0.12f);
 
 
                 WeaponsOnEquipmentList[I + 1].GetComponent<GunScript>().IdleAnimation();
                 WeaponsOnEquipmentList[I].SetActive(false);
                 WeaponsOnEquipmentList[I + 1].SetActive(true);
 
-                var newSwayB = WeaponsOnEquipmentList[I + 1].GetComponent<WeaponWaging>();             
+                var newSwayB = WeaponsOnEquipmentList[I + 1].GetComponent<WeaponWaging>();
                 if (newSwayB) { newSwayB.SnapToLow(); newSwayB.RaiseFromLow(); }
                 IsWeaponSwaped = !IsWeaponSwaped;
                 //SwapingCD
-                StartCoroutine(SwapGun( I+1));
+                StartCoroutine(SwapGun(I + 1));
             }
         }
-  
+
+
     }
     IEnumerator SwapGun(int gunSelected)
     {
@@ -272,5 +281,18 @@ public class WeaponManager : MonoBehaviour
         MeleeImpulseSource.ImpulseDefinition.AmplitudeGain = 0.5f;
         MeleeImpulseSource.ImpulseDefinition.FrequencyGain = 0.5f;
         MeleeImpulseSource.GenerateImpulse();
+    }
+
+    public void EnableWeaponsWhileFinishInteract()
+    {
+        CanSwap = true;
+        if (IsWeaponSwaped)
+        {
+            WeaponsOnEquipmentList[I + 1].GetComponent<GunScript>().GS = GunScript.GunState.CanFire;
+        }
+        else
+        {
+            WeaponsOnEquipmentList[I].GetComponent<GunScript>().GS = GunScript.GunState.CanFire;
+        }
     }
 }

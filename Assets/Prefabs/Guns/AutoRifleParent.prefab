@@ -2168,8 +2168,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0256bb19a2b52fb42a9ed153a027c878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: AutoRifle HCR-10
   FirePoint: {fileID: 845230208096818263}
   BulletPrefab: {fileID: 3454573842243275128, guid: 76f080b9e636179488875a1923e804fd, type: 3}
+  MagazineCount: 25
   FireRate: 550
   SpreadAngle: 0.8
   SlugCount: 1
@@ -2181,7 +2183,7 @@ MonoBehaviour:
   AnimatorSpeed: 5
   shake: {fileID: 8266180076864470332}
   GunDamage: 25
-  GunPeneration: 4
+  GunPeneration: 3
   Camera: {fileID: 0}
   MaxDistance: 10000
   HitLayers:

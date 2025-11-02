@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class WeaponSeller : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class WeaponSeller : MonoBehaviour
     public int CurrentInedx;
     [Header(" WeaponManager")]
     public WeaponManager WM;
+    [Header(" WeaponInfo")]
+    public TextMeshPro NameText;
+    public TextMeshPro DataText;
+
     [Header(" InputSettings")]
     public KeyCode Key5 = KeyCode.N;
     public KeyCode Key6 = KeyCode.M;
@@ -21,7 +26,14 @@ public class WeaponSeller : MonoBehaviour
 
     // Update is called once per frame
      void  Update()
-    {
+     {
+        //Info SHowing
+        NameText.text = AllWeaponList[CurrentInedx].GetComponent<GunScript>().Name;
+        DataText.text = "Dmage:" + AllWeaponList[CurrentInedx].GetComponent<GunScript>().GunDamage +
+            "  RPM:" + AllWeaponList[CurrentInedx].GetComponent<GunScript>().FireRate + "\n"+
+            "Magazine:" + AllWeaponList[CurrentInedx].GetComponent<GunScript>().MagazineCount +
+            "  AP:" + AllWeaponList[CurrentInedx].GetComponent<GunScript>().GunPeneration;
+
         //ChoosingGun
         if (Input.GetKeyDown(Key5) && InTrigger) CurrentInedx++;
 
@@ -54,6 +66,7 @@ public class WeaponSeller : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             InTrigger = true;
+            WM.FCS = WeaponManager.FireControlState.CantInput;
         }
     }
 
@@ -62,6 +75,8 @@ public class WeaponSeller : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             InTrigger = false;
+            WM.FCS = WeaponManager.FireControlState.AllowInput;
+            WM.EnableWeaponsWhileFinishInteract();
         }
     }
     

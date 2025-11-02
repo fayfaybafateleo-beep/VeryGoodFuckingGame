@@ -2067,9 +2067,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0256bb19a2b52fb42a9ed153a027c878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: SMG PPP43
   FirePoint: {fileID: 6791072409368940482}
   BulletPrefab: {fileID: 3454573842243275128, guid: c87df9d91869f9240b5d030728824403, type: 3}
-  FireRate: 600
+  MagazineCount: 35
+  FireRate: 650
   SpreadAngle: 1
   SlugCount: 1
   AudioSource: {fileID: 4704583663905359528}
@@ -2080,7 +2082,7 @@ MonoBehaviour:
   AnimatorSpeed: 5
   shake: {fileID: 6570069078564711955}
   GunDamage: 15
-  GunPeneration: 4
+  GunPeneration: 2
   Camera: {fileID: 0}
   MaxDistance: 60
   HitLayers:

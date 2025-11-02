@@ -7,6 +7,7 @@ public class HitBoxPart : MonoBehaviour
     [Header("HeadShotDamage")]
     public float damageMultiplier = 2.0f;
     public bool IsCriticalPoint=false;
+
     [Header("PartHealth")]
     public bool destructible = false;
     public int Thoughness;
