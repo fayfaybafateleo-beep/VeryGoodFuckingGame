@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static UnityEditor.Recorder.OutputPath;
 using static UnityEngine.Rendering.DebugUI;
 using static UnityEngine.UI.Image;
 
