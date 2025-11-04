@@ -1,5 +1,9 @@
 using UnityEngine;
 using Unity.Cinemachine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Profiling;
+
 
 public class GunScript : MonoBehaviour
 {
@@ -44,10 +48,11 @@ public class GunScript : MonoBehaviour
     public float MaxDistance;
     public LayerMask HitLayers = ~0;         
     public LayerMask IgnoreLayers = 0;   
-    public float Offset = 0.1f;          
-    // Slug Count//
+    public float Offset = 0.1f;
 
-   
+    [Header("ZeroTheFirePoint")]
+    public Volume GlobalVolume;     
+    public MotionBlur MotionBlur;  
 
     public GameObject GunModel;
     public GameObject MuzzleFlash;
@@ -63,6 +68,9 @@ public class GunScript : MonoBehaviour
     void Start()
     {
         Camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+
+        GlobalVolume = GameObject.FindGameObjectWithTag("GlobalVolume").GetComponent<Volume>();
+        GlobalVolume.profile.TryGet(out MotionBlur);
     }
     void Update()
     {
@@ -99,6 +107,7 @@ public class GunScript : MonoBehaviour
                 // Mouse pressed
                 if (Input.GetMouseButton(0))
                 {
+                    SetBlur(1);
                     // Gun not ready to shoot yet
                     if (FireTimer > 0)
                     {
@@ -115,8 +124,8 @@ public class GunScript : MonoBehaviour
                     //SlugCount
                     for (int i = 0; i < SlugCount; i++)
                     {
-                        Vector2 c = Random.insideUnitCircle; // x,y ∈ unit circle
-                                                             // 可选：sqrt 分布让中心更密集： c *= Mathf.Sqrt(Random.value);
+                        Vector2 c = Random.insideUnitCircle; 
+                                                            
                         float yaw = c.x * SpreadAngle;
                         float pitch = c.y * SpreadAngle;
 
@@ -141,12 +150,23 @@ public class GunScript : MonoBehaviour
                 }
                 break;
             case GunState.CeaseFire:
-                break;
+                SetBlur(0);
+            break;
+
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            SetBlur(0);
         }
         
     }
     public void IdleAnimation()
     {
         GunAnimator.SetTrigger("Idle");
+    }
+
+    public void SetBlur(float intensity)
+    {
+      MotionBlur.intensity.Override(intensity);
     }
 }
