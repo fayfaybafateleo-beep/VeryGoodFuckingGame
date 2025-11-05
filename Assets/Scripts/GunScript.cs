@@ -25,6 +25,8 @@ public class GunScript : MonoBehaviour
 
     [Header("SlugNumber")]
     public int SlugCount;
+    public GameObject Shell;
+    public Transform ShellPoint;
 
     [Header("Sound")]
     public AudioSource AudioSource;
@@ -140,7 +142,8 @@ public class GunScript : MonoBehaviour
                     // Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
                     GameObject muzzleFlash = Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
                     muzzleFlash.transform.SetParent(FirePoint);
-
+                    //Shell//
+                    ShellEject();
                     //Animations
                     shake.AddRecoil(1f);
                     GunAnimator.SetTrigger("Fire");
@@ -168,5 +171,19 @@ public class GunScript : MonoBehaviour
     public void SetBlur(float intensity)
     {
       MotionBlur.intensity.Override(intensity);
+    }
+    public void ShellEject()
+    {
+        if (Shell == null) return;
+        GameObject shell = Instantiate(Shell, ShellPoint.position, Quaternion.identity);
+
+        Rigidbody rb = shell.GetComponent<Rigidbody>();
+
+        Vector3 ejectDir = (-ShellPoint.right + ShellPoint.up).normalized; 
+        rb.AddForce(ejectDir * Random.Range(1f, 2f), ForceMode.Impulse);
+
+        rb.AddTorque(Random.insideUnitSphere * 2f, ForceMode.Impulse);
+
+        Destroy(shell, 5f);
     }
 }
