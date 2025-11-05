@@ -1216,6 +1216,8 @@ MonoBehaviour:
   FireRate: 800
   SpreadAngle: 0.1
   SlugCount: 1
+  Shell: {fileID: 1239073040038692928, guid: c6f699da20ae3724f8c4929474df0832, type: 3}
+  ShellPoint: {fileID: 1344331635264295586}
   AudioSource: {fileID: 7715191549969324064}
   ClipShooting: {fileID: 8300000, guid: 257f46a6e348f1b4da0b4ac535cc6d73, type: 3}
   ClipCocking: {fileID: 8300000, guid: 257f46a6e348f1b4da0b4ac535cc6d73, type: 3}
@@ -1651,6 +1653,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7028461944810074596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1344331635264295586}
+  m_Layer: 0
+  m_Name: ShellPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1344331635264295586
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7028461944810074596}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.01866667, y: 0.003733332, z: -0.06466667}
+  m_LocalScale: {x: 1.3333334, y: 1.3333334, z: 1.3333334}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3047199214545161147}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7070760567013950939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1897,6 +1930,7 @@ Transform:
   - {fileID: 3014056181729531186}
   - {fileID: 1452790117146972369}
   - {fileID: 914631496495590508}
+  - {fileID: 1344331635264295586}
   m_Father: {fileID: 6469345400335742285}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8553228536731924806

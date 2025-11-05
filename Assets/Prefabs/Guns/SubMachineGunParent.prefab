@@ -762,6 +762,7 @@ Transform:
   - {fileID: 4347721245464132757}
   - {fileID: 3875499242517319062}
   - {fileID: 3869015281798898573}
+  - {fileID: 4387775027494184069}
   m_Father: {fileID: 4847522824298966538}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4020096839490716719
@@ -1109,6 +1110,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &4956899444374848101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4387775027494184069}
+  m_Layer: 0
+  m_Name: ShellPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4387775027494184069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4956899444374848101}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.022, y: 0.1778, z: 0.3228}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5004394571427201234}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5093068752344862803
 GameObject:
   m_ObjectHideFlags: 0
@@ -2074,6 +2106,8 @@ MonoBehaviour:
   FireRate: 650
   SpreadAngle: 1
   SlugCount: 1
+  Shell: {fileID: 1239073040038692928, guid: 8e45f7da3ff1242428b1b45cb4012815, type: 3}
+  ShellPoint: {fileID: 4387775027494184069}
   AudioSource: {fileID: 4704583663905359528}
   ClipShooting: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
   ClipCocking: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
@@ -2092,6 +2126,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   Offset: 0.1
+  GlobalVolume: {fileID: 0}
+  MotionBlur: {fileID: 0}
   GunModel: {fileID: 7663199390295935275}
   MuzzleFlash: {fileID: 2933326327969011748, guid: 50fc41b127b11eb4996696968d995375, type: 3}
   WeaponWagingScript: {fileID: 4390834956886434075}

@@ -1007,8 +1007,8 @@ Transform:
   m_GameObject: {fileID: 3833647752355425909}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.14405596, y: -0.3104195, z: 2.940004}
-  m_LocalScale: {x: 1.8, y: 1.4999994, z: 1.0416665}
+  m_LocalPosition: {x: -0.14405596, y: -0.31, z: 2.67}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1.0416665}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6932409895549283511}
@@ -1152,6 +1152,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &4240866612925623328
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7421615968426401682}
+  m_Layer: 0
+  m_Name: ShellPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7421615968426401682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4240866612925623328}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.0583, y: 0.0286, z: -0.249}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1882631221622584612}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4416872648399130913
 GameObject:
   m_ObjectHideFlags: 0
@@ -2281,6 +2312,7 @@ Transform:
   - {fileID: 7169348324332748942}
   - {fileID: 6328008716768508170}
   - {fileID: 6932409895549283511}
+  - {fileID: 7421615968426401682}
   m_Father: {fileID: 1478694289444399562}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7091615679065204936
@@ -2340,6 +2372,8 @@ MonoBehaviour:
   FireRate: 94
   SpreadAngle: 3
   SlugCount: 6
+  Shell: {fileID: 1239073040038692928, guid: cd9b760feaf19c340b9bce50b1750df7, type: 3}
+  ShellPoint: {fileID: 7421615968426401682}
   AudioSource: {fileID: 5296983058485635032}
   ClipShooting: {fileID: 8300000, guid: 3ea6d1406d9d46740904d994b63016c7, type: 3}
   ClipCocking: {fileID: 8300000, guid: 3ea6d1406d9d46740904d994b63016c7, type: 3}
@@ -2358,6 +2392,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   Offset: 0.1
+  GlobalVolume: {fileID: 0}
+  MotionBlur: {fileID: 0}
   GunModel: {fileID: 7091615679065204936}
   MuzzleFlash: {fileID: 2933326327969011748, guid: 6600eb2f57e0f714b8b06d8f4f40220d, type: 3}
   WeaponWagingScript: {fileID: 5892280404342120024}

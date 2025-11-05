@@ -12189,6 +12189,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2164209106003670409, guid: 801c8d856b3664c4595e5f145562e313, type: 3}
+      propertyPath: AllWeaponList.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2164209106003670409, guid: 801c8d856b3664c4595e5f145562e313, type: 3}
+      propertyPath: 'AllWeaponList.Array.data[4]'
+      value: 
+      objectReference: {fileID: 5914898984465226578, guid: cd19ee0c2d0df9345a91258e7e63739e, type: 3}
     - target: {fileID: 3534025645630419049, guid: 801c8d856b3664c4595e5f145562e313, type: 3}
       propertyPath: m_Name
       value: WeaponBuyingMachineParent
@@ -17333,6 +17341,8 @@ MonoBehaviour:
   FireRate: 100
   SpreadAngle: 0.2
   SlugCount: 1
+  Shell: {fileID: 0}
+  ShellPoint: {fileID: 0}
   AudioSource: {fileID: 4334857088557468831}
   ClipShooting: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
   ClipCocking: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}

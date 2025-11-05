@@ -175,7 +175,7 @@ public class GunScript : MonoBehaviour
     public void ShellEject()
     {
         if (Shell == null) return;
-        GameObject shell = Instantiate(Shell, ShellPoint.position, Quaternion.identity);
+        GameObject shell = Instantiate(Shell, ShellPoint.position, Quaternion.Euler(90,0,0));
 
         Rigidbody rb = shell.GetComponent<Rigidbody>();
 
