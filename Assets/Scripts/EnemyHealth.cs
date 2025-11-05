@@ -112,6 +112,13 @@ public class EnemyHealth : MonoBehaviour
             text.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
             Destroy(text, 1f);
         }
+        else if(Thougthness> penetrateLevel)
+        {//IfThoughther,GreyNum
+            GameObject text = Instantiate(HitText, spawnPos, Quaternion.identity);
+            text.GetComponentInChildren<TextMeshPro>().text = dmg.ToString();
+            text.GetComponentInChildren<TextMeshPro>().color = new Color(0.5f, 0.5f, 0.5f);
+            Destroy(text, 1f);
+        }
         else
         {
             GameObject text = Instantiate(HitText, spawnPos, Quaternion.identity);
