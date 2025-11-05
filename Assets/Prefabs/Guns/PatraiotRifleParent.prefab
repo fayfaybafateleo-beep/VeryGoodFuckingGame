@@ -377,7 +377,7 @@ Transform:
   m_GameObject: {fileID: 2123742697850505426}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.0006, y: 0, z: 0.1321}
+  m_LocalPosition: {x: 0.0006, y: -0, z: 0.227}
   m_LocalScale: {x: 0.025, y: 0.16, z: 0.025}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1212,13 +1212,13 @@ MonoBehaviour:
   Name: AutoRifle Patraiot
   FirePoint: {fileID: 6736261893501121073}
   BulletPrefab: {fileID: 3454573842243275128, guid: 76f080b9e636179488875a1923e804fd, type: 3}
-  MagazineCount: 75
+  MagazineCount: 100
   FireRate: 800
   SpreadAngle: 0.1
   SlugCount: 1
   AudioSource: {fileID: 7715191549969324064}
-  ClipShooting: {fileID: 8300000, guid: 60df33820567b4745ab09a4264710729, type: 3}
-  ClipCocking: {fileID: 8300000, guid: 60df33820567b4745ab09a4264710729, type: 3}
+  ClipShooting: {fileID: 8300000, guid: 257f46a6e348f1b4da0b4ac535cc6d73, type: 3}
+  ClipCocking: {fileID: 8300000, guid: 257f46a6e348f1b4da0b4ac535cc6d73, type: 3}
   Impulse: {fileID: 2315604725746549557}
   GunAnimator: {fileID: 5480749461538715529}
   AnimatorSpeed: 5
@@ -1395,7 +1395,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.06
+  m_Volume: 0.12
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1676,7 +1676,7 @@ Transform:
   m_GameObject: {fileID: 7070760567013950939}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0.015499197, y: 0.001, z: 0.3118}
+  m_LocalPosition: {x: 0.015499197, y: 0.001, z: 0.3915}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
