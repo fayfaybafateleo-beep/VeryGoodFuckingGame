@@ -1212,9 +1212,14 @@ MonoBehaviour:
   Name: AutoRifle Patraiot
   FirePoint: {fileID: 6736261893501121073}
   BulletPrefab: {fileID: 3454573842243275128, guid: 76f080b9e636179488875a1923e804fd, type: 3}
-  MagazineCount: 100
   FireRate: 800
-  SpreadAngle: 0.1
+  MagazineCount: 100
+  MagazineCounter: 0
+  ReloadTime: 4
+  ReloadTimer: 0
+  NeedReload: 0
+  VerticalSpreadAngle: 0.1
+  HorizontalSpreadAngle: 0.1
   SlugCount: 1
   Shell: {fileID: 1239073040038692928, guid: c6f699da20ae3724f8c4929474df0832, type: 3}
   ShellPoint: {fileID: 1344331635264295586}

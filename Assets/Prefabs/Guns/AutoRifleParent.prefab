@@ -2289,9 +2289,14 @@ MonoBehaviour:
   Name: AutoRifle HCR-10
   FirePoint: {fileID: 845230208096818263}
   BulletPrefab: {fileID: 3454573842243275128, guid: 76f080b9e636179488875a1923e804fd, type: 3}
-  MagazineCount: 25
   FireRate: 550
-  SpreadAngle: 0.8
+  MagazineCount: 25
+  MagazineCounter: 0
+  ReloadTime: 3
+  ReloadTimer: 0
+  NeedReload: 0
+  VerticalSpreadAngle: 0.2
+  HorizontalSpreadAngle: 0.2
   SlugCount: 1
   Shell: {fileID: 1239073040038692928, guid: e6becbf1748b9554681d5d32858f2be2, type: 3}
   ShellPoint: {fileID: 4994722336390779143}

@@ -13,15 +13,22 @@ public class GunScript : MonoBehaviour
     [Header("Bullet")]
     public Transform FirePoint;
     public Bullet BulletPrefab;
-    public int MagazineCount;
 
     [Header("FireRate")]
     [Range(0, 3000)]
-    public float FireRate; // RPM
-    private float FireTimer; // seconds
+    public float FireRate; 
+    private float FireTimer;
+
+    [Header("Reload")]
+    public int MagazineCount;
+    public int MagazineCounter;
+    public float ReloadTime;
+    public float ReloadTimer;
+    public bool NeedReload;
 
     [Header("MOA")]
-    public float SpreadAngle = 6f;
+    public float VerticalSpreadAngle = 6f;
+    public float HorizontalSpreadAngle = 6f;
 
     [Header("SlugNumber")]
     public int SlugCount;
@@ -63,7 +70,8 @@ public class GunScript : MonoBehaviour
     public enum GunState
     {
        CanFire,
-       CeaseFire
+       CeaseFire,
+       Reload
     }
     public GunState GS;
     // Update is called once per frame
@@ -73,6 +81,8 @@ public class GunScript : MonoBehaviour
 
         GlobalVolume = GameObject.FindGameObjectWithTag("GlobalVolume").GetComponent<Volume>();
         GlobalVolume.profile.TryGet(out MotionBlur);
+
+        MagazineCounter = MagazineCount;
     }
     void Update()
     {
@@ -99,8 +109,26 @@ public class GunScript : MonoBehaviour
         Quaternion aim = Quaternion.LookRotation(DirFromMuzzle, Vector3.up);
         FirePoint.rotation = aim;
 
-        Debug.DrawRay(RayOrigin, RayDir * MaxDistance, Color.cyan);             // 相机射线
-        Debug.DrawRay(FirePoint.position, DirFromMuzzle * MaxDistance, Color.red); // 枪口方向
+        Debug.DrawRay(RayOrigin, RayDir * MaxDistance, Color.cyan);             
+        Debug.DrawRay(FirePoint.position, DirFromMuzzle * MaxDistance, Color.red);
+
+        if (MagazineCounter <= 0)
+        {
+     
+            NeedReload = true;
+        }
+
+        if (NeedReload == false)
+        {
+            ReloadTimer = 0;
+        }
+
+        //Reload
+        if (NeedReload)
+        {
+            GS = GunState.Reload;
+        }
+
         switch (GS)
         {
             case GunState.CanFire:
@@ -128,8 +156,8 @@ public class GunScript : MonoBehaviour
                     {
                         Vector2 c = Random.insideUnitCircle; 
                                                             
-                        float yaw = c.x * SpreadAngle;
-                        float pitch = c.y * SpreadAngle;
+                        float yaw = c.x * HorizontalSpreadAngle;
+                        float pitch = c.y * VerticalSpreadAngle;
 
                         Quaternion spreadRot = FirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
 
@@ -139,22 +167,48 @@ public class GunScript : MonoBehaviour
                     }
 
                     //muzzleFlash//
-                    // Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
                     GameObject muzzleFlash = Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
                     muzzleFlash.transform.SetParent(FirePoint);
+
                     //Shell//
                     ShellEject();
+
                     //Animations
                     shake.AddRecoil(1f);
                     GunAnimator.SetTrigger("Fire");
 
+                    //ammo
+                    MagazineCounter -= 1;
+
                     // Screenshake
                     Impulse.GenerateImpulse();
+
+                    
                 }
                 break;
             case GunState.CeaseFire:
                 SetBlur(0);
-            break;
+
+                //Reload
+                if (MagazineCounter <= 0)
+                {
+                    GS = GunState.Reload;
+                }
+                break;
+
+            case GunState.Reload:
+                if (NeedReload)
+                {
+                    ReloadTimer += Time.deltaTime;
+                }
+
+                if (ReloadTimer >= ReloadTime)
+                {
+                
+                    FinishReloading();
+                }
+
+                break;
 
         }
         if (Input.GetMouseButtonUp(0))
@@ -185,5 +239,13 @@ public class GunScript : MonoBehaviour
         rb.AddTorque(Random.insideUnitSphere * 2f, ForceMode.Impulse);
 
         Destroy(shell, 5f);
+    }
+    public void FinishReloading()
+    {
+        if (NeedReload==false) return;
+        MagazineCounter = MagazineCount;
+        GS = GunState.CanFire;
+        NeedReload = false;
+        ReloadTimer = 0;
     }
 }

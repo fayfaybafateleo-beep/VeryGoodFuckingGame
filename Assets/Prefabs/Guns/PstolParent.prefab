@@ -1426,9 +1426,14 @@ MonoBehaviour:
   Name: Pistol G114
   FirePoint: {fileID: 1898633215775109795}
   BulletPrefab: {fileID: 3454573842243275128, guid: c87df9d91869f9240b5d030728824403, type: 3}
-  MagazineCount: 10
   FireRate: 300
-  SpreadAngle: 0.2
+  MagazineCount: 10
+  MagazineCounter: 0
+  ReloadTime: 2
+  ReloadTimer: 0
+  NeedReload: 0
+  VerticalSpreadAngle: 0.1
+  HorizontalSpreadAngle: 0.1
   SlugCount: 1
   Shell: {fileID: 1239073040038692928, guid: 8e45f7da3ff1242428b1b45cb4012815, type: 3}
   ShellPoint: {fileID: 7711691061333343623}

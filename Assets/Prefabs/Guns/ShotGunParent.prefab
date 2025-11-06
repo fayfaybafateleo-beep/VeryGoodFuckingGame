@@ -2368,9 +2368,14 @@ MonoBehaviour:
   Name: ShotGun UltraShorty
   FirePoint: {fileID: 6328008716768508170}
   BulletPrefab: {fileID: 6506540414330150620, guid: 3163e6c9d4a31084089e044304871cfd, type: 3}
-  MagazineCount: 4
   FireRate: 94
-  SpreadAngle: 3
+  MagazineCount: 4
+  MagazineCounter: 0
+  ReloadTime: 2
+  ReloadTimer: 0
+  NeedReload: 0
+  VerticalSpreadAngle: 1
+  HorizontalSpreadAngle: 1
   SlugCount: 6
   Shell: {fileID: 1239073040038692928, guid: cd9b760feaf19c340b9bce50b1750df7, type: 3}
   ShellPoint: {fileID: 7421615968426401682}
