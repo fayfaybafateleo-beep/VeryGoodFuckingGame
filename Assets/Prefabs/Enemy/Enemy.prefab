@@ -976,6 +976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EBehaviour: {fileID: 1162388349482639301}
+  MaxHealth: 100
   Health: 100
   Thougthness: 1
   HitMark: {fileID: 0}
@@ -1012,6 +1013,10 @@ MonoBehaviour:
   Upper: {fileID: 7085949298545758025}
   AudioSource: {fileID: 5144821902404702106}
   Destruction: {fileID: 8300000, guid: fb8bf2e26ef0ac640802ef685cea26e3, type: 3}
+  ShockPercentage: 0.2
+  ThresholdPercentage: 0.2
+  ShockChance: 0.1
+  MoralTest: 0
 --- !u!95 &5161086026593443594
 Animator:
   serializedVersion: 7
@@ -1135,6 +1140,7 @@ MonoBehaviour:
   - {fileID: 614570285501882510}
   Shocked: 0
   ES: 0
+  EH: {fileID: 0}
   StrafeBeginDistance: 6
   StrafeStrength: 1
   StrafeChangeIntervalMin: 1.2

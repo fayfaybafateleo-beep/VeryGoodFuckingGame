@@ -9,6 +9,7 @@ public class EnemyHealth : MonoBehaviour
     [Header("EnemyBehaviourContorl")]
     public EnemyBehaviour EBehaviour;
     [Header(" EnemyData")]
+    public float MaxHealth;
     public float Health;
     public int Thougthness;
 
@@ -55,12 +56,19 @@ public class EnemyHealth : MonoBehaviour
     [Header("Audio")]
     public AudioSource AudioSource;
     public AudioClip Destruction;
+
+    [Header("ThresholdOfShock")]
+    public float ShockPercentage;
+    public float ThresholdPercentage;
+    public float ShockChance;
+    public bool MoralTest;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         HitMark = GameObject.FindGameObjectWithTag("HitMark");
         HitMarkParent = HitMark.GetComponentInParent<CrossHairGenral>();
-  
+
+        Health = MaxHealth;
     }
 
     // Update is called once per frame
@@ -71,6 +79,14 @@ public class EnemyHealth : MonoBehaviour
             Die();
         }
 
+        if(MoralTest==false && Health / MaxHealth <= ThresholdPercentage && IsDead == false)
+        {
+            if (Random.value <= ShockChance) 
+            {
+                EBehaviour.EnemyShock();
+            }
+            MoralTest = true;
+        }
        
     }
     public void ApplyHit(float baseDamage, int penetrateLevel, HitBoxPart hitbox,Vector3 hitPoint)
@@ -197,5 +213,11 @@ public class EnemyHealth : MonoBehaviour
         {
             part.GoreExcution(part.transform.position);
         }
+    }
+    public void ShockedText()
+    {
+        GameObject text = Instantiate(TextObject, transform.position, Quaternion.identity);
+        text.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+        text.GetComponentInChildren<TextMeshPro>().text = "PANIC!!!";
     }
 }

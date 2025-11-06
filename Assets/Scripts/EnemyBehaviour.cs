@@ -32,9 +32,17 @@ public class EnemyBehaviour : MonoBehaviour
 
     public bool Shocked = false;
 
-    public enum EnemyState { Moving, Attack, Shock, Die }
-    [Header("EnemyState")]
+    public enum EnemyState 
+    {
+        Moving, 
+        Attack, 
+        Shock, 
+        Die
+    }
     public EnemyState ES;
+
+    [Header("EnemyHealth")]
+    public EnemyHealth EH;
 
     [Header("SmartMovement")]
     [UnityEngine.Range(0, 100)] 
@@ -63,22 +71,24 @@ public class EnemyBehaviour : MonoBehaviour
         Agent.updatePosition = false;
         Agent.updateRotation = false;
         Agent.avoidancePriority = Random.Range(20, 80);
+
+        EH = GetComponent<EnemyHealth>();
     }
 
     void FixedUpdate()
     {
         // Reset attack timer when not attacking
         if (ES != EnemyState.Attack)
+        {
             AttackRateTimer = 0;
-
+        }
         // Shocked check
         bool allDestroyed = !ImportantPartList.Exists(p => p);
         if (allDestroyed && !Shocked)
         {
             if (ES != EnemyState.Die)
             {
-                ES = EnemyState.Shock;
-                EnemyAnimator.SetTrigger("Shock");
+                EnemyShock();
             }
             Shocked = true;
         }
@@ -207,5 +217,13 @@ public class EnemyBehaviour : MonoBehaviour
             float range = Mathf.Max(StrafeBeginDistance, AttackRange * 1.25f);
             Gizmos.DrawWireSphere(Target.transform.position, range);
         }
+    }
+
+    public void EnemyShock()
+    {
+        if (Shocked) return;
+        EH.ShockedText();
+        ES = EnemyState.Shock;
+        EnemyAnimator.SetTrigger("Shock");
     }
 }
