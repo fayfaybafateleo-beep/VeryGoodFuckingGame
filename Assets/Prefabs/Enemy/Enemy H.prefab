@@ -1232,6 +1232,15 @@ MonoBehaviour:
   - {fileID: 614570285501882510}
   Shocked: 0
   ES: 0
+  StrafeBeginDistance: 6
+  StrafeStrength: 1
+  StrafeChangeIntervalMin: 1.2
+  StrafeChangeIntervalMax: 2.5
+  SeparationRadius: 1.2
+  SeparationStrength: 3
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &4752524910610644522
 GameObject:
   m_ObjectHideFlags: 0
