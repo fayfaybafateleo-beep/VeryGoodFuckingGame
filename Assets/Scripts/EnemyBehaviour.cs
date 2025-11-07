@@ -187,6 +187,11 @@ public class EnemyBehaviour : MonoBehaviour
                 break;
 
             case EnemyState.Shock:
+                if (EH.Health <= 0)
+                {
+                    EnemyAnimator.SetTrigger("Die");
+                    ES = EnemyState.Die;
+                }
                 Agent.enabled = false;
                 break;
         }

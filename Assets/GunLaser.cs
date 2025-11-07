@@ -38,7 +38,21 @@ public class GunLaser : MonoBehaviour
         DotPos.gameObject.SetActive(false);
       
     }
+    public void OnDisable()
+    {
+        if (DotPos != null)
+        {
+            DotPos.gameObject.SetActive(false);
 
+        }
+    }
+    public void OnEnable()
+    {
+        if (DotPos != null)
+        {
+            DotPos.gameObject.SetActive(true);
+        }
+    }
     void LateUpdate()
     {
         Vector3 rayOrigin = MainCamera.transform.position + MainCamera.transform.forward * Offset;
