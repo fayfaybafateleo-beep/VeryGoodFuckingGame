@@ -67,6 +67,8 @@ public class GunScript : MonoBehaviour
     public GameObject MuzzleFlash;
     public WeaponWaging WeaponWagingScript;
 
+    [Header("ReloadHint")]
+    public GameObject Reminder;
     public KeyCode ReloadKey ;
     public enum GunState
     {
@@ -84,6 +86,8 @@ public class GunScript : MonoBehaviour
         GlobalVolume.profile.TryGet(out MotionBlur);
 
         MagazineCounter = MagazineCount;
+
+        Reminder.SetActive(false);
     }
     void Update()
     {
@@ -128,6 +132,11 @@ public class GunScript : MonoBehaviour
         if (NeedReload)
         {
             GS = GunState.Reload;
+        }
+
+        if (GS == GunState.Reload)
+        {
+            Reminder.SetActive(true);
         }
 
         switch (GS)
@@ -183,14 +192,14 @@ public class GunScript : MonoBehaviour
 
                     // Screenshake
                     Impulse.GenerateImpulse();
+                }
 
-                    //Reload
-                    if (Input.GetKey(ReloadKey))
-                    {
-                        NeedReload = true;
-                        GS = GunState.Reload;
-                    }
-                    
+                //Reload
+                if (Input.GetKeyDown(ReloadKey)&& MagazineCounter<MagazineCount)
+                {
+                    NeedReload = true;
+                    Reminder.GetComponent<Animator>().SetTrigger("Start");
+                    GS = GunState.Reload;
                 }
                 break;
             case GunState.CeaseFire:
@@ -254,5 +263,7 @@ public class GunScript : MonoBehaviour
         GS = GunState.CanFire;
         NeedReload = false;
         ReloadTimer = 0;
+        //Animation
+        Reminder.GetComponent<Animator>().SetTrigger("End");
     }
 }

@@ -56,7 +56,10 @@ public class GunLaser : MonoBehaviour
     }
     public void OnDestroy()
     {
-        Destroy(DotPos.gameObject, 0f);
+        if (DotPos != null)
+        {
+            Destroy(DotPos.gameObject, 0f);
+        }
     }
     void LateUpdate()
     {
