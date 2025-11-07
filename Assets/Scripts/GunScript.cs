@@ -67,6 +67,7 @@ public class GunScript : MonoBehaviour
     public GameObject MuzzleFlash;
     public WeaponWaging WeaponWagingScript;
 
+    public KeyCode ReloadKey ;
     public enum GunState
     {
        CanFire,
@@ -183,6 +184,12 @@ public class GunScript : MonoBehaviour
                     // Screenshake
                     Impulse.GenerateImpulse();
 
+                    //Reload
+                    if (Input.GetKey(ReloadKey))
+                    {
+                        NeedReload = true;
+                        GS = GunState.Reload;
+                    }
                     
                 }
                 break;
