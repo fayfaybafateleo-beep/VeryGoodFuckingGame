@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GunLaser : MonoBehaviour
@@ -52,6 +53,10 @@ public class GunLaser : MonoBehaviour
         {
             DotPos.gameObject.SetActive(true);
         }
+    }
+    public void OnDestroy()
+    {
+        Destroy(DotPos.gameObject, 0f);
     }
     void LateUpdate()
     {

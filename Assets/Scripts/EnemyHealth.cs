@@ -219,5 +219,6 @@ public class EnemyHealth : MonoBehaviour
         GameObject text = Instantiate(TextObject, transform.position, Quaternion.identity);
         text.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
         text.GetComponentInChildren<TextMeshPro>().text = "PANIC!!!";
+        Destroy(text, 1f);
     }
 }
