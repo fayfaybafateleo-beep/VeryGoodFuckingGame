@@ -3,6 +3,7 @@ using Unity.Cinemachine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Profiling;
+using TMPro;
 
 
 public class GunScript : MonoBehaviour
@@ -70,6 +71,13 @@ public class GunScript : MonoBehaviour
     [Header("ReloadHint")]
     public GameObject Reminder;
     public KeyCode ReloadKey ;
+    public TextMeshPro ReloadText;
+
+    [Header("AmmunitionSystem")]
+    public float InitialCapasityRate;
+    public int MaxCapasity;
+    public int CurrentCapasity;
+    public float AmmoConvertRate;
     public enum GunState
     {
        CanFire,
@@ -88,6 +96,10 @@ public class GunScript : MonoBehaviour
         MagazineCounter = MagazineCount;
 
         Reminder.SetActive(false);
+
+        CurrentCapasity = Mathf.RoundToInt( InitialCapasityRate* MaxCapasity);
+
+        ReloadText = Reminder.GetComponentInChildren<TextMeshPro>();
     }
     void Update()
     {
@@ -139,6 +151,22 @@ public class GunScript : MonoBehaviour
             Reminder.SetActive(true);
         }
 
+        //BackupAmmo
+        if (CurrentCapasity <= 0)
+        {
+            CurrentCapasity = 0;
+
+            ReloadText.text = "NO AMMO";
+        }
+        else
+        {
+            ReloadText.text = "RELOADING";
+        }
+
+        if(CurrentCapasity >= MaxCapasity)
+        {
+            CurrentCapasity = MaxCapasity;
+        }
         switch (GS)
         {
             case GunState.CanFire:
@@ -195,7 +223,7 @@ public class GunScript : MonoBehaviour
                 }
 
                 //Reload
-                if (Input.GetKeyDown(ReloadKey)&& MagazineCounter<MagazineCount)
+                if (Input.GetKeyDown(ReloadKey)&& MagazineCounter<MagazineCount && CurrentCapasity > 0)
                 {
                     NeedReload = true;
                     Reminder.GetComponent<Animator>().SetTrigger("Start");
@@ -213,7 +241,7 @@ public class GunScript : MonoBehaviour
                 break;
 
             case GunState.Reload:
-                if (NeedReload)
+                if (NeedReload && CurrentCapasity > 0)
                 {
                     ReloadTimer += Time.deltaTime;
                 }
@@ -258,12 +286,29 @@ public class GunScript : MonoBehaviour
     }
     public void FinishReloading()
     {
-        if (NeedReload==false) return;
-        MagazineCounter = MagazineCount;
+        if (NeedReload==false || CurrentCapasity<=0) return;
+
+        //Ammo
+        if (CurrentCapasity+MagazineCounter <= MagazineCount)
+        {
+            int addonAmmo = CurrentCapasity;
+            CurrentCapasity -= CurrentCapasity;
+            MagazineCounter += addonAmmo;
+        }
+        else
+        {
+            CurrentCapasity -= (MagazineCount - MagazineCounter);
+            MagazineCounter = MagazineCount;
+        }
         GS = GunState.CanFire;
         NeedReload = false;
         ReloadTimer = 0;
         //Animation
         Reminder.GetComponent<Animator>().SetTrigger("End");
+    }
+
+    public void GetBackUpAmmo(float ammoBoxMultiPulier)
+    {
+        CurrentCapasity += Mathf.RoundToInt(ammoBoxMultiPulier * AmmoConvertRate * MagazineCount);
     }
 }

@@ -37,7 +37,7 @@ public class MagazineCounterUI : MonoBehaviour
         if (IsSecondGun)
         {
             gs = firstGun.GetComponent<GunScript>();
-            Text.text = gs.MagazineCounter.ToString() + "/" + gs.MagazineCount.ToString();
+            Text.text = gs.MagazineCounter.ToString() + "/" + gs.CurrentCapasity.ToString();
             if (gs.GS == GunScript.GunState.Reload)
             {
                 ReloadBar.fillAmount = gs.ReloadTimer / gs.ReloadTime;
@@ -46,7 +46,7 @@ public class MagazineCounterUI : MonoBehaviour
         else
         {
             gs = secondGun.GetComponent<GunScript>();
-            Text.text = gs.MagazineCounter.ToString() + "/" + gs.MagazineCount.ToString();
+            Text.text = gs.MagazineCounter.ToString() + "/" + gs.CurrentCapasity.ToString();
             if (gs.GS == GunScript.GunState.Reload)
             {
                 ReloadBar.fillAmount = gs.ReloadTimer / gs.ReloadTime;

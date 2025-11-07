@@ -1341,7 +1341,7 @@ MonoBehaviour:
   FirePoint: {fileID: 1898633215775109795}
   BulletPrefab: {fileID: 3454573842243275128, guid: c87df9d91869f9240b5d030728824403, type: 3}
   FireRate: 300
-  MagazineCount: 10
+  MagazineCount: 15
   MagazineCounter: 0
   ReloadTime: 0.5
   ReloadTimer: 0
@@ -1376,6 +1376,10 @@ MonoBehaviour:
   WeaponWagingScript: {fileID: 4658939131199449416}
   Reminder: {fileID: 6716970320986638993}
   ReloadKey: 114
+  InitialCapasityRate: 0.8
+  MaxCapasity: 200
+  CurrentCapasity: 0
+  AmmoConvertRate: 0
   GS: 0
 --- !u!95 &227658081199487082
 Animator:
