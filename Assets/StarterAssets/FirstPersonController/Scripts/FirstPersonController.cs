@@ -75,6 +75,39 @@ namespace StarterAssets
         private float _strafeTiltZ;
 		private float _strafeTiltVel;
 
+        // ====================== 关键修改开始 ======================
+        [Header("Slide Settings")] // [MOD]
+        public KeyCode SlideKey = KeyCode.LeftControl; // 触发滑铲的按键
+        public float SlideSpeed = 10f; // 滑铲初速度
+        public float SlideTime = 0.5f; // 滑铲持续时间
+        private bool _isSliding = false; // 是否正在滑铲
+        private float _slideTimer = 0f;
+        private Vector3 _slideDirection;
+
+        [Header("SlideCD")]
+        public float SlideCoolDown;
+		public float SlideCoolDownTimer=0;
+		public bool CanSlide=true;
+
+        // [MOD] 镜头下沉部分
+        [Header("Slide Camera Effect")]
+        public Transform CameraRoot;               // 你的相机根物体
+		public bool EnableSlide;
+		public float SlideFriction;
+        public float SlideCameraOffset = -0.6f;    // 滑铲时相机下沉距离（负值向下）
+        public float CameraLerpSpeed = 8f;         // 镜头移动平滑速度
+        private Vector3 _originalCamLocalPos;      // 原始相机位置
+        private Vector3 _targetCamLocalPos;        // 当前目标相机位置
+        private float _currentSlideSpeed = 0f;
+
+		[Header("Slide Collider Change")]
+		public CapsuleCollider CapsuleCollider;
+		public Vector3 NormalSize;
+		public Vector3 SlideSize;
+		public float NormalHeight;
+		public float SlideHeight;
+        // ====================== 关键修改结束 ======================
+
         public enum ControllerState
         {
             CanMove,
@@ -127,21 +160,57 @@ namespace StarterAssets
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
-		}
+			//CamPosRecord
+            _originalCamLocalPos = CameraRoot.localPosition;
+            _targetCamLocalPos = _originalCamLocalPos;
+			//SlideCoolDown
+			SlideCoolDownTimer = SlideCoolDown;
+			//Capusle ReCORD
+			NormalSize = CapsuleCollider.center;
+			NormalHeight = CapsuleCollider.height;
+        }
 
 		private void Update()
 		{
+			
 			switch (CS)
 			{
 				case ControllerState.CanMove:
+                    // [MOD] 更新滑铲（不移动）
+                    if (EnableSlide)
+                    {
+                        if (Input.GetKeyDown(SlideKey) && Grounded && _input.move.sqrMagnitude > 0.1f && !_isSliding && CanSlide)
+                            StartSlide();
+
+                        if (_isSliding) HandleSlide();
+                    }
+
+                    if (SlideCoolDownTimer >= SlideCoolDown)
+                    {
+                        SlideCoolDownTimer = SlideCoolDown;
+                        CanSlide = true;
+                    }
+
+					if (_isSliding == false && CanSlide == false)
+					{
+						SlideCoolDownTimer += Time.deltaTime;
+					}
+                    // [MOD] 始终走 Move()，由 Move() 统一结算滑铲/常规
+                    Move();
                     JumpAndGravity();
                     GroundedCheck();
-                    Move();
-                break;
+                    // 镜头平滑
+                    UpdateCameraSlideEffect();
+                    break;
 
 				case ControllerState.StopMove:
+					//ReplaceCamera
+                    _targetCamLocalPos = _originalCamLocalPos;
+					UpdateCameraSlideEffect();
 
-				break;
+                    CapsuleCollider.center = NormalSize;
+                    CapsuleCollider.height = NormalHeight;
+                    break;
 
 				case ControllerState.Shock:
 
@@ -221,19 +290,25 @@ namespace StarterAssets
 				_speed = targetSpeed;
 			}
 
-			// normalise input direction
-			Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+            // normalise input direction
+            Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+            if (_input.move != Vector2.zero)
+                inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
 
-			// note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-			// if there is a move input rotate player when the player is moving
-			if (_input.move != Vector2.zero)
-			{
-				// move
-				inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
-			}
+            // [MOD] 滑铲时用滑铲方向，并以“滑铲当前速度 vs 普通速度”二者取大
+            Vector3 moveDir = inputDirection.normalized;
+            float moveSpeed = _speed;
 
-			// move the player
-			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+            if (_isSliding)
+            {
+                moveDir = _slideDirection;                              // 锁定滑铲方向
+                moveSpeed = Mathf.Max(_speed, _currentSlideSpeed);       // 速度平滑衔接
+            }
+
+            _controller.Move(
+                moveDir * (moveSpeed * Time.deltaTime) +
+                new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime
+            );
         }
 
 		private void JumpAndGravity()
@@ -303,5 +378,76 @@ namespace StarterAssets
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
 
+        // ====================== 滑铲核心 ======================
+
+        // [MOD] 开始滑铲
+        private void StartSlide()
+        {
+            _isSliding = true;
+            _slideTimer = SlideTime;
+
+            _slideDirection = (transform.right * _input.move.x + transform.forward * _input.move.y).normalized;
+            if (_slideDirection.sqrMagnitude < 0.01f)
+                _slideDirection = transform.forward;
+
+            // [MOD] 不要清空输入，保持玩家可随时转向；速度用“滑铲速度”叠加控制
+            _currentSlideSpeed = SlideSpeed;
+
+            // [MOD] 镜头目标下沉位置
+            if (CameraRoot != null)
+                _targetCamLocalPos = _originalCamLocalPos + new Vector3(0, SlideCameraOffset, 0);
+
+			CanSlide = false;
+			SlideCoolDownTimer = 0;
+
+			//Collider
+			CapsuleCollider.center = SlideSize;
+			CapsuleCollider.height = SlideHeight;
+        }
+
+
+        // [MOD] 滑铲中逻辑
+        private void HandleSlide()
+        {
+            // [MOD] 只做计时与速度衰减，不直接 Move（避免和 Move() 冲突导致顿挫）
+            _slideTimer -= Time.deltaTime;
+
+            // 速度按“摩擦”衰减（可用 MoveTowards 更线性）
+            _currentSlideSpeed = Mathf.Max(0f, _currentSlideSpeed - SlideFriction * Time.deltaTime);
+
+            // 结束条件
+            if (_slideTimer <= 0f || !Grounded || _currentSlideSpeed < 0.1f)
+            {
+                EndSlide();
+            }
+        }
+
+
+        // [MOD] 结束滑铲
+        private void EndSlide()
+        {
+            _isSliding = false;
+            _currentSlideSpeed = 0f; // [MOD] 收尾清零
+
+            if (CameraRoot != null)
+                _targetCamLocalPos = _originalCamLocalPos; // 镜头恢复高度
+
+            CapsuleCollider.center = NormalSize;
+            CapsuleCollider.height = NormalHeight;
+        }
+
+
+        // [MOD] 平滑更新镜头下沉/回弹效果
+        private void UpdateCameraSlideEffect()
+        {
+            if (CameraRoot != null)
+            {
+                CameraRoot.localPosition = Vector3.Lerp(
+                    CameraRoot.localPosition,
+                    _targetCamLocalPos,
+                    Time.deltaTime * CameraLerpSpeed
+                );
+            }
+        }
     }
 }
