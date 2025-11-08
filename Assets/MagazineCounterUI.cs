@@ -9,6 +9,8 @@ public class MagazineCounterUI : MonoBehaviour
     [Header("WeaponManager")]
     public GameObject WeaponManager;
     public WeaponManager WMScript;
+    public GameObject Player;
+    public PlayerGetInCar PIC;
 
     [Header("UI")]
     public TextMeshProUGUI Text;
@@ -20,12 +22,27 @@ public class MagazineCounterUI : MonoBehaviour
     {
         WeaponManager = GameObject.FindGameObjectWithTag("WeaponManager");
         WMScript = WeaponManager.GetComponent<WeaponManager>();
+
+        Player = GameObject.FindGameObjectWithTag("Player");
+        PIC = Player.GetComponent<PlayerGetInCar>();
     }
 
     // Update is called once per frame
     void Update()
     {
         IsSecondGun = !WMScript.IsWeaponSwaped;
+
+        //DIsableWhenInCar
+        if (PIC.IsMounted)
+        {
+            Text.gameObject.SetActive(false);
+            ReloadBar.gameObject.SetActive(false);
+        }
+        else
+        {
+            Text.gameObject.SetActive(true);
+            ReloadBar.gameObject.SetActive(true);
+        }
 
         //Get child
         Transform parent = WeaponManager.transform; 

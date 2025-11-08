@@ -155,8 +155,10 @@ public class GunScript : MonoBehaviour
         if (CurrentCapasity <= 0)
         {
             CurrentCapasity = 0;
-
-            ReloadText.text = "NO AMMO";
+            if (MagazineCounter <= 0)
+            {
+                ReloadText.text = "NO AMMO";
+            }
         }
         else
         {

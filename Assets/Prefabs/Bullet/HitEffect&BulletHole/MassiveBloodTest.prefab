@@ -3826,7 +3826,7 @@ ParticleSystem:
     subEmitters:
     - serializedVersion: 3
       emitter: {fileID: 5446548099499384885}
-      type: 2
+      type: 1
       properties: 0
       emitProbability: 1
   LightsModule:
@@ -4951,7 +4951,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0

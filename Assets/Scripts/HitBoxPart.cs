@@ -135,9 +135,9 @@ public class HitBoxPart : MonoBehaviour
             if(meatChunkPrefab != null)
             {
                 GameObject chunk = Instantiate(meatChunkPrefab, spawnPos, Random.rotation);
-                float scaleX = Random.Range(MinScale, MaxScale + 0.5f);
-                float scaleY = Random.Range(MinScale , MaxScale + 0.5f);
-                float scaleZ = Random.Range(MinScale , MaxScale + 0.5f);
+                float scaleX = Random.Range(MinScale, MaxScale + 0.2f);
+                float scaleY = Random.Range(MinScale , MaxScale + 0.2f);
+                float scaleZ = Random.Range(MinScale , MaxScale + 0.2f);
                 chunk.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
                 Rigidbody rb = chunk.GetComponent<Rigidbody>();
                 if (rb)
