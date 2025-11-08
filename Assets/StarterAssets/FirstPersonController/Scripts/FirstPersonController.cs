@@ -101,12 +101,24 @@ namespace StarterAssets
         private float _currentSlideSpeed = 0f;
 
 		[Header("Slide Collider Change")]
-		public CapsuleCollider CapsuleCollider;
-		public Vector3 NormalSize;
-		public Vector3 SlideSize;
+		public CharacterController Controller;
+		public Vector3 NormalCenter;
+		public Vector3 SlideCenter;
+		public Vector3 TargetCenter;
 		public float NormalHeight;
 		public float SlideHeight;
+        public float TargetHeight;
+        public float CapsuleLerpSpeed = 10f;
         // ====================== 关键修改结束 ======================
+
+        [Header("CameraWalkingWagingPos")]
+        public Vector3 pointA = new Vector3(0, 1.375f, 0);
+        public Vector3 pointB = new Vector3(0, 1, 0);
+
+        [Header("SpeedOfWagging")]
+        public float speed = 1f;
+        public bool useLocalPosition = true;
+
 
         public enum ControllerState
         {
@@ -166,8 +178,11 @@ namespace StarterAssets
 			//SlideCoolDown
 			SlideCoolDownTimer = SlideCoolDown;
 			//Capusle ReCORD
-			NormalSize = CapsuleCollider.center;
-			NormalHeight = CapsuleCollider.height;
+			NormalCenter = Controller.center;
+			NormalHeight = Controller.height;
+
+			TargetCenter = NormalCenter;
+			TargetHeight = NormalHeight;
         }
 
 		private void Update()
@@ -201,6 +216,7 @@ namespace StarterAssets
                     GroundedCheck();
                     // 镜头平滑
                     UpdateCameraSlideEffect();
+                    UpdateCapsuleSize();
                     break;
 
 				case ControllerState.StopMove:
@@ -208,8 +224,6 @@ namespace StarterAssets
                     _targetCamLocalPos = _originalCamLocalPos;
 					UpdateCameraSlideEffect();
 
-                    CapsuleCollider.center = NormalSize;
-                    CapsuleCollider.height = NormalHeight;
                     break;
 
 				case ControllerState.Shock:
@@ -265,18 +279,37 @@ namespace StarterAssets
 
 			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 			float targetSpeed = MoveSpeed;
-            // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-            // if there is no input, set the target speed to 0
-            if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+			// note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+			// if there is no input, set the target speed to 0
+			if (_input.move == Vector2.zero)
+			{
+				targetSpeed = 0.0f;
+/*
+                //CamWagging
+                float t = (Mathf.Sin(Time.time * speed) + 1f) / 2f;
+                Vector3 newPosition = Vector3.Lerp(pointA, pointB, t);
 
-			// a reference to the players current horizontal velocity
-			float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+                // Apply
+                if (useLocalPosition)
+                {
+                    CameraRoot.localPosition = newPosition;
+                }
+                else
+                {
+                    CameraRoot.position = newPosition;
+                }*/
+            }
+
+				// a reference to the players current horizontal velocity
+				float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
 			float speedOffset = 0.1f;
 			float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
-			// accelerate or decelerate to target speed
-			if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
+           
+
+            // accelerate or decelerate to target speed
+            if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
 			{
 				// creates curved result rather than a linear one giving a more organic speed change
 				// note T in Lerp is clamped, so we don't need to clamp our speed
@@ -289,6 +322,7 @@ namespace StarterAssets
 			{
 				_speed = targetSpeed;
 			}
+
 
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
@@ -393,6 +427,13 @@ namespace StarterAssets
             // [MOD] 不要清空输入，保持玩家可随时转向；速度用“滑铲速度”叠加控制
             _currentSlideSpeed = SlideSpeed;
 
+            TargetHeight = SlideHeight;
+            TargetCenter = new Vector3(
+                NormalCenter.x,
+                SlideHeight / 2f, // 中心保持在脚上方
+                NormalCenter.z
+            );
+
             // [MOD] 镜头目标下沉位置
             if (CameraRoot != null)
                 _targetCamLocalPos = _originalCamLocalPos + new Vector3(0, SlideCameraOffset, 0);
@@ -401,8 +442,7 @@ namespace StarterAssets
 			SlideCoolDownTimer = 0;
 
 			//Collider
-			CapsuleCollider.center = SlideSize;
-			CapsuleCollider.height = SlideHeight;
+
         }
 
 
@@ -429,25 +469,55 @@ namespace StarterAssets
             _isSliding = false;
             _currentSlideSpeed = 0f; // [MOD] 收尾清零
 
+            TargetHeight = NormalHeight;
+            TargetCenter = NormalCenter;
+
             if (CameraRoot != null)
                 _targetCamLocalPos = _originalCamLocalPos; // 镜头恢复高度
 
-            CapsuleCollider.center = NormalSize;
-            CapsuleCollider.height = NormalHeight;
         }
 
 
         // [MOD] 平滑更新镜头下沉/回弹效果
         private void UpdateCameraSlideEffect()
         {
-            if (CameraRoot != null)
+            if (CameraRoot == null) return;
+
+            // 1) 滑铲/站立等逻辑的基础目标位
+            Vector3 baseTarget = _targetCamLocalPos;
+
+            // 2) 用“实际水平速度”判定是否在移动（更可靠）
+            Vector2 vel2D = new Vector2(_controller.velocity.x, _controller.velocity.z);
+            bool isMoving = vel2D.sqrMagnitude > 0.01f && Grounded && !_isSliding;  // ← 这里改了
+
+            // 3) 目标位：默认用基础目标；移动时叠加你的往返摆动
+            Vector3 target = baseTarget;
+            if (isMoving)
             {
-                CameraRoot.localPosition = Vector3.Lerp(
-                    CameraRoot.localPosition,
-                    _targetCamLocalPos,
-                    Time.deltaTime * CameraLerpSpeed
-                );
+                // 你的镜头移动代码（保持原样）
+                float t = (Mathf.Sin(Time.time * speed) + 1f) / 2f;
+                Vector3 newPosition = Vector3.Lerp(pointA, pointB, t);
+
+                // 与基础目标合成，避免与滑铲“抢权”
+                target = Vector3.Lerp(baseTarget, newPosition, 0.5f);
+                // 如果 pointA/pointB 是“绝对局部坐标”且你想在 baseTarget 周围摆动，
+                // 也可以用： target = baseTarget + (newPosition - pointA);
             }
+
+            // 4) 统一 Lerp 到目标，确保可“归位”
+            CameraRoot.localPosition = Vector3.Lerp(
+                CameraRoot.localPosition,
+                target,
+                Time.deltaTime * CameraLerpSpeed
+            );
+        }
+
+			void UpdateCapsuleSize()
+        {
+            
+            Controller.height = Mathf.Lerp(_controller.height, TargetHeight, Time.deltaTime * CapsuleLerpSpeed);
+            
+            Controller.center = Vector3.Lerp(_controller.center, TargetCenter, Time.deltaTime * CapsuleLerpSpeed);
         }
     }
 }

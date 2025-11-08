@@ -2140,6 +2140,7 @@ MonoBehaviour:
   WeaponWagingScript: {fileID: 4390834956886434075}
   Reminder: {fileID: 8135622365984857750}
   ReloadKey: 114
+  ReloadText: {fileID: 0}
   InitialCapasityRate: 0.6
   MaxCapasity: 200
   CurrentCapasity: 0
@@ -2268,7 +2269,7 @@ MonoBehaviour:
   positionTarget: {fileID: 4847522824298966538}
   rotationTarget: {fileID: 4847522824298966538}
   walkFrequency: 8
-  walkPosAmplitude: {x: -0.05, y: -0.012, z: -0.4}
+  walkPosAmplitude: {x: -0.05, y: 0.2, z: -0.4}
   walkRotAmplitude: {x: -0.5, y: 2, z: -20}
   blendSmoothTime: 0.12
   referenceMoveSpeed: 4
