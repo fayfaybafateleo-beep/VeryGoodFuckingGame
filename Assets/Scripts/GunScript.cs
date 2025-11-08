@@ -177,7 +177,6 @@ public class GunScript : MonoBehaviour
                 // Mouse pressed
                 if (Input.GetMouseButton(0))
                 {
-                    SetBlur(1);
                     // Gun not ready to shoot yet
                     if (FireTimer > 0)
                     {
@@ -192,6 +191,7 @@ public class GunScript : MonoBehaviour
                     // Fire
                     WeaponWagingScript.SuppressSwayOnFire();
                     //SlugCount
+                    SetBlur(1);
                     for (int i = 0; i < SlugCount; i++)
                     {
                         Vector2 c = Random.insideUnitCircle; 
@@ -205,7 +205,6 @@ public class GunScript : MonoBehaviour
                         bullet.GetComponent<Bullet>().Damage = GunDamage;
                         bullet.GetComponent<Bullet>().PenatrateLevel = GunPeneration;
                     }
-
                     //muzzleFlash//
                     GameObject muzzleFlash = Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
                     muzzleFlash.transform.SetParent(FirePoint);
@@ -247,7 +246,7 @@ public class GunScript : MonoBehaviour
                 {
                     ReloadTimer += Time.deltaTime;
                 }
-
+                SetBlur(0);
                 if (ReloadTimer >= ReloadTime)
                 {
                 

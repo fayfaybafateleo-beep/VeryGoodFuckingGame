@@ -23,10 +23,8 @@ public class CarControl : MonoBehaviour
     public float AngularDamping = 0.5f;
     public Rigidbody RB;
 
+    [Header("Refs")]
     public GameObject Player;
-
-   
-
     void Awake()
     {
         RB = GetComponent<Rigidbody>();
@@ -44,6 +42,8 @@ public class CarControl : MonoBehaviour
     {
         if (Player.GetComponent<PlayerGetInCar>().IsMounted)
         {
+            RB.linearDamping = 1;
+
             //Forwar&Backward
             float move = Input.GetAxis("Vertical");
             Vector3 fwd = transform.forward;
@@ -92,6 +92,10 @@ public class CarControl : MonoBehaviour
                 RB.AddTorque(Vector3.up * (-yawVel * ExtraYawDamp), ForceMode.Acceleration);
             }
         }
-     
+        else
+        {
+            RB.linearDamping = Mathf.MoveTowards(RB.linearDamping, 100, 20f * Time.deltaTime);
+        }
+
     }
 }

@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using Unity.VisualScripting;
+
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
@@ -119,7 +121,12 @@ namespace StarterAssets
         public float speed = 1f;
         public bool useLocalPosition = true;
 
+		[Header("SpeedLine")]
+        public float SpeedThreshold = 20f;
+        private float CurrentSpeed;
 
+        private Vector3 LastPos;
+        public ParticleSystem SpeedLine;
         public enum ControllerState
         {
             CanMove,
@@ -128,7 +135,7 @@ namespace StarterAssets
         }
         public ControllerState CS;
 
-
+		public bool Lock;
 #if ENABLE_INPUT_SYSTEM
         private PlayerInput _playerInput;
 #endif
@@ -183,12 +190,36 @@ namespace StarterAssets
 
 			TargetCenter = NormalCenter;
 			TargetHeight = NormalHeight;
+
+			SpeedLine = GameObject.FindGameObjectWithTag("SpeedLine").GetComponent<ParticleSystem>();
+			SpeedLine.Stop();
+
+            LastPos = transform.position;
         }
 
 		private void Update()
 		{
-			
-			switch (CS)
+			//SpeedDetection
+            Vector3 delta = transform.position - LastPos;
+            CurrentSpeed = delta.magnitude / Time.deltaTime;
+
+			// 达到阈值就启用物品
+		
+                if (CurrentSpeed >= SpeedThreshold )
+                {
+                    SpeedLine.Play();
+                }
+                else
+                {
+                    SpeedLine.Stop();
+                }
+
+            
+            
+
+            LastPos = transform.position;
+
+            switch (CS)
 			{
 				case ControllerState.CanMove:
                     // [MOD] 更新滑铲（不移动）
@@ -210,11 +241,11 @@ namespace StarterAssets
 					{
 						SlideCoolDownTimer += Time.deltaTime;
 					}
-                    // [MOD] 始终走 Move()，由 Move() 统一结算滑铲/常规
+                    
                     Move();
                     JumpAndGravity();
                     GroundedCheck();
-                    // 镜头平滑
+
                     UpdateCameraSlideEffect();
                     UpdateCapsuleSize();
                     break;
@@ -224,6 +255,7 @@ namespace StarterAssets
                     _targetCamLocalPos = _originalCamLocalPos;
 					UpdateCameraSlideEffect();
 
+                    //SpeedLine.Stop();
                     break;
 
 				case ControllerState.Shock:
@@ -434,9 +466,13 @@ namespace StarterAssets
                 NormalCenter.z
             );
 
-            // [MOD] 镜头目标下沉位置
+            //CmaeraEffect
             if (CameraRoot != null)
+			{
                 _targetCamLocalPos = _originalCamLocalPos + new Vector3(0, SlideCameraOffset, 0);
+            }
+
+			//SpeedLine.Play();
 
 			CanSlide = false;
 			SlideCoolDownTimer = 0;
@@ -473,7 +509,11 @@ namespace StarterAssets
             TargetCenter = NormalCenter;
 
             if (CameraRoot != null)
-                _targetCamLocalPos = _originalCamLocalPos; // 镜头恢复高度
+			{
+                _targetCamLocalPos = _originalCamLocalPos;
+            }
+
+         //   SpeedLine.Stop();
 
         }
 
@@ -494,14 +534,16 @@ namespace StarterAssets
             Vector3 target = baseTarget;
             if (isMoving)
             {
-                // 你的镜头移动代码（保持原样）
-                float t = (Mathf.Sin(Time.time * speed) + 1f) / 2f;
-                Vector3 newPosition = Vector3.Lerp(pointA, pointB, t);
+				if (CS == ControllerState.CanMove)
+				{
+                    float t = (Mathf.Sin(Time.time * speed) + 1f) / 2f;
+                    Vector3 newPosition = Vector3.Lerp(pointA, pointB, t);
+                    target = Vector3.Lerp(baseTarget, newPosition, 0.5f);
+                    // 如果 pointA/pointB 是“绝对局部坐标”且你想在 baseTarget 周围摆动，
+                    // 也可以用： target = baseTarget + (newPosition - pointA);
+                }
 
-                // 与基础目标合成，避免与滑铲“抢权”
-                target = Vector3.Lerp(baseTarget, newPosition, 0.5f);
-                // 如果 pointA/pointB 是“绝对局部坐标”且你想在 baseTarget 周围摆动，
-                // 也可以用： target = baseTarget + (newPosition - pointA);
+
             }
 
             // 4) 统一 Lerp 到目标，确保可“归位”
@@ -512,7 +554,7 @@ namespace StarterAssets
             );
         }
 
-			void UpdateCapsuleSize()
+		void UpdateCapsuleSize()
         {
             
             Controller.height = Mathf.Lerp(_controller.height, TargetHeight, Time.deltaTime * CapsuleLerpSpeed);
