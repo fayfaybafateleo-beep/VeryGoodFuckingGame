@@ -9,6 +9,8 @@ public class Drops : MonoBehaviour
     [Header("Reference")]
     public WeaponManager WMScript;
     public GameObject WM;
+    public GunScript GS1;
+    public GunScript GS2;
 
     [Header("DropsData")]
     public float GainMultipulier;
@@ -18,6 +20,9 @@ public class Drops : MonoBehaviour
     {
         WM = GameObject.FindGameObjectWithTag("WeaponManager");
         WMScript = WM.GetComponent<WeaponManager>();
+
+        GS1 = WM.transform.GetChild(0).GetComponent<GunScript>();
+        GS2 = WM.transform.GetChild(1).GetComponent<GunScript>();
     }
 
     // Update is called once per frame
@@ -34,11 +39,11 @@ public class Drops : MonoBehaviour
             //DifferentTypes,DifferentEffect
             if (Type == "Ammo1")
             {
-                WM.transform.GetChild(0).GetComponent<GunScript>().GetBackUpAmmo(GainMultipulier);
+                GS1.GetBackUpAmmo(GainMultipulier);
             }
             if (Type == "Ammo2")
             {
-                WM.transform.GetChild(1).GetComponent<GunScript>().GetBackUpAmmo(GainMultipulier);
+                GS2.GetBackUpAmmo(GainMultipulier);
             }
             if (Type == "AmmoG")
             {
