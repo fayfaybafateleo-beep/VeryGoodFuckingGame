@@ -2092,11 +2092,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 364148398}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &386757948 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5393215578589016642, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
-  m_PrefabInstance: {fileID: 8204767107036194194}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &388980730
 GameObject:
   m_ObjectHideFlags: 0
@@ -4868,7 +4863,7 @@ MonoBehaviour:
   - {fileID: 5914898984465226578, guid: cd19ee0c2d0df9345a91258e7e63739e, type: 3}
   WeaponsOnEquipmentList: []
   GrenadeList:
-  - {fileID: 5312831152365387784, guid: a84007f64609c064883967490c037a07, type: 3}
+  - {fileID: 5312831152365387784, guid: ff4f9f510820a5f4a95e6a161c580a4b, type: 3}
   Key: 113
   Key2: 101
   Key3: 102
@@ -6042,6 +6037,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 874130630}
+  - component: {fileID: 874130631}
   m_Layer: 0
   m_Name: MeleeMainParent
   m_TagString: Untagged
@@ -6065,6 +6061,40 @@ Transform:
   - {fileID: 290644552}
   m_Father: {fileID: 5126527961168575169}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 17.594}
+--- !u!114 &874130631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874130629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d1bc8ba0aa39c041bf4f0a0314e3ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionTarget: {fileID: 0}
+  rotationTarget: {fileID: 0}
+  walkFrequency: 7
+  walkPosAmplitude: {x: -0.05, y: 0.2, z: 0.004}
+  walkRotAmplitude: {x: 1.4, y: 2, z: 0.8}
+  blendSmoothTime: 0.12
+  referenceMoveSpeed: 4
+  adsWeight: 0.444
+  idlePosAmplitude: {x: 0.0015, y: 0.003, z: 0.001}
+  idleRotAmplitude: {x: 0.35, y: 0.45, z: 0.2}
+  idleFrequency: 2.2
+  stopSwayOnFire: 1
+  fireSuppressTime: 0.12
+  fireRecoverTime: 0.1
+  useUnscaledTime: 1
+  characterController: {fileID: 30780175}
+  externalMoveSpeed: 0
+  externalGrounded: 1
+  lowerDistance: 0.12
+  animPitchDeg: -8
+  lowerDuration: 0.18
+  raiseDuration: 0.2
 --- !u!1 &903053407
 GameObject:
   m_ObjectHideFlags: 0
@@ -14822,33 +14852,6 @@ CapsuleCollider:
   m_CorrespondingSourceObject: {fileID: 5393215578589016640, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
   m_PrefabInstance: {fileID: 8204767107036194194}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &1731346478
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 386757948}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1732494553
 GameObject:
   m_ObjectHideFlags: 0
@@ -23686,6 +23689,10 @@ PrefabInstance:
       value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      propertyPath: pointB.x
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: pointB.y
       value: 0.8
       objectReference: {fileID: 0}
@@ -23770,6 +23777,18 @@ PrefabInstance:
       value: -0.9
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      propertyPath: SlideCapsuleHeight
+      value: 1.199292
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      propertyPath: NormalCapsuleHeight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      propertyPath: SlideCapsuleCenter.y
+      value: -0.4003542
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: StrafeTiltSmoothTime
       value: 0.08
       objectReference: {fileID: 0}
@@ -23851,9 +23870,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8616685848737228372, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       insertIndex: -1
       addedObject: {fileID: 30780182}
-    - targetCorrespondingSourceObject: {fileID: 5393215578589016642, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1731346478}
   m_SourcePrefab: {fileID: 100100000, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
 --- !u!4 &8321144074284446543
 Transform:

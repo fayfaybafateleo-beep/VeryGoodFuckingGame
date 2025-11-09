@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.19677481, w: 0.9804487}
   m_LocalPosition: {x: 0.424, y: 0.911, z: 0.08100033}
-  m_LocalScale: {x: 0.2, y: 0.29999998, z: 0.2}
+  m_LocalScale: {x: 0.3, y: 0.29999998, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5916576565604369336}
@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 1583876691402340251}
   - component: {fileID: 4946261112685424797}
   - component: {fileID: 5060997258405511938}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BodyLightR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -937,11 +937,11 @@ GameObject:
   - component: {fileID: 5161086026593443594}
   - component: {fileID: 1900214545859322635}
   - component: {fileID: 8303567636159749735}
-  - component: {fileID: 3769724873530068150}
   - component: {fileID: 2417986734043512879}
   - component: {fileID: 1162388349482639301}
+  - component: {fileID: 5144821902404702106}
   m_Layer: 9
-  m_Name: Enemy M
+  m_Name: EnemyH
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -978,7 +978,7 @@ MonoBehaviour:
   EBehaviour: {fileID: 1162388349482639301}
   MaxHealth: 100
   Health: 100
-  Thougthness: 2
+  Thougthness: 3
   HitMark: {fileID: 0}
   HitMarkParent: {fileID: 0}
   RB: {fileID: 1900214545859322635}
@@ -1011,11 +1011,11 @@ MonoBehaviour:
   Head: {fileID: 3206654840511858543}
   Lower: {fileID: 6164167150907843305}
   Upper: {fileID: 7085949298545758025}
-  AudioSource: {fileID: 3769724873530068150}
+  AudioSource: {fileID: 5144821902404702106}
   Destruction: {fileID: 8300000, guid: fb8bf2e26ef0ac640802ef685cea26e3, type: 3}
   ShockPercentage: 0.2
   ThresholdPercentage: 0.2
-  ShockChance: 0.5
+  ShockChance: 0.1
   MoralTest: 0
 --- !u!95 &5161086026593443594
 Animator:
@@ -1089,7 +1089,79 @@ CapsuleCollider:
   m_Height: 1.7993296
   m_Direction: 1
   m_Center: {x: 0, y: -0.5692188, z: 0}
---- !u!82 &3769724873530068150
+--- !u!195 &2417986734043512879
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4499031727440548263}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.8
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1162388349482639301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4499031727440548263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a216a0018b6c10b41a78a7ba0a6c3952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 4499031727440548263}
+  Agent: {fileID: 2417986734043512879}
+  MoveForce: 5
+  MaxSpeed: 10
+  AngleOffset: 180
+  TurningSpeed: 30
+  EnemyAnimator: {fileID: 5161086026593443594}
+  AttackRange: 10
+  AttackRate: 2
+  AttackRateTimer: 0
+  Damage: 0
+  SlugCount: 6
+  FirePoint: {fileID: 7672260323938616294}
+  EnemyBullet: {fileID: 56932041484218793, guid: 6b9d485cb290d7f47abbb182122b2aaa, type: 3}
+  Lock: 0
+  FacingAngleTolerance: 12
+  XiaoTou: 1
+  LineOfSightMask:
+    serializedVersion: 2
+    m_Bits: 10241
+  VerticalSpreadAngle: 6
+  HorizontalSpreadAngle: 6
+  Rigidbody: {fileID: 1900214545859322635}
+  ImportantPartList:
+  - {fileID: 4752524910610644522}
+  - {fileID: 614570285501882510}
+  Shocked: 0
+  ES: 0
+  EH: {fileID: 0}
+  StrafeBeginDistance: 6
+  StrafeStrength: 1
+  StrafeChangeIntervalMin: 1.2
+  StrafeChangeIntervalMax: 2.5
+  SeparationRadius: 1.2
+  SeparationStrength: 3
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+--- !u!82 &5144821902404702106
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1186,67 +1258,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!195 &2417986734043512879
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4499031727440548263}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.8
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!114 &1162388349482639301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4499031727440548263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a216a0018b6c10b41a78a7ba0a6c3952, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Target: {fileID: 4499031727440548263}
-  Agent: {fileID: 2417986734043512879}
-  MoveForce: 5
-  MaxSpeed: 10
-  AngleOffset: 180
-  TurningSpeed: 30
-  EnemyAnimator: {fileID: 5161086026593443594}
-  AttackRange: 10
-  AttackRate: 2
-  AttackRateTimer: 0
-  Damage: 0
-  Rigidbody: {fileID: 1900214545859322635}
-  ImportantPartList:
-  - {fileID: 4752524910610644522}
-  - {fileID: 614570285501882510}
-  Shocked: 0
-  ES: 0
-  EH: {fileID: 0}
-  StrafeBeginDistance: 6
-  StrafeStrength: 1
-  StrafeChangeIntervalMin: 1.2
-  StrafeChangeIntervalMax: 2.5
-  SeparationRadius: 1.2
-  SeparationStrength: 3
-  EnemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!1 &4752524910610644522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,14 +1286,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4752524910610644522}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.64183396, y: -0, z: -0, w: 0.76684374}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.395, y: 1.091, z: -0.2460003}
-  m_LocalScale: {x: 0.2, y: 0.30000004, z: 0.20000002}
+  m_LocalScale: {x: 0.3, y: 0.30000004, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5574617363313379482}
   m_Father: {fileID: 5916576565604369336}
-  m_LocalEulerAnglesHint: {x: 79.857, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &8026216293214400473
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1529,7 +1540,7 @@ GameObject:
   - component: {fileID: 8483798475169382395}
   - component: {fileID: 7089235940894598382}
   - component: {fileID: 3483335894743624988}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BodyLightL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1690,6 +1701,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6057152575727498442
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7672260323938616294}
+  m_Layer: 9
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7672260323938616294
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6057152575727498442}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1.03, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 724863782175367524}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &6164167150907843305
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,7 +1932,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.06, z: -0.446}
   m_LocalScale: {x: 0.3333333, y: 0.33333334, z: 0.8333335}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7672260323938616294}
   m_Father: {fileID: 5574617363313379482}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &7640880947425358540

@@ -112,6 +112,12 @@ namespace StarterAssets
 		public float SlideHeight;
         public float TargetHeight;
         public float CapsuleLerpSpeed = 10f;
+
+        public CapsuleCollider CapsuleCollider;
+        public Vector3 NormalCapsuleCenter;
+        public Vector3 SlideCapsuleCenter;
+        public float NormalCapsuleHeight;
+        public float SlideCapsuleHeight;
         // ====================== 关键修改结束 ======================
 
         [Header("CameraWalkingWagingPos")]
@@ -256,7 +262,7 @@ namespace StarterAssets
 					//ReplaceCamera
                     _targetCamLocalPos = _originalCamLocalPos;
 					UpdateCameraSlideEffect();
-
+                    if (CapsuleCollider.center != NormalCapsuleCenter) ChangeToNormalCapsule();
                     //SpeedLine.Stop();
                     break;
 
@@ -480,7 +486,7 @@ namespace StarterAssets
 			SlideCoolDownTimer = 0;
 
             //Collider
-
+            ChangeToSlideCapsule();
             //ScreenShake
             SlideScreenShake.GenerateImpulse();
 
@@ -517,7 +523,7 @@ namespace StarterAssets
 			{
                 _targetCamLocalPos = _originalCamLocalPos;
             }
-
+            ChangeToNormalCapsule();
          //   SpeedLine.Stop();
 
         }
@@ -566,5 +572,17 @@ namespace StarterAssets
             
             Controller.center = Vector3.Lerp(_controller.center, TargetCenter, Time.deltaTime * CapsuleLerpSpeed);
         }
+
+        public void ChangeToNormalCapsule()
+        {
+            CapsuleCollider.center = NormalCapsuleCenter;
+            CapsuleCollider.height = NormalCapsuleHeight;
+        }
+        public void ChangeToSlideCapsule()
+        {
+            CapsuleCollider.center = SlideCapsuleCenter;
+            CapsuleCollider.height = SlideCapsuleHeight;
+        }
+
     }
 }

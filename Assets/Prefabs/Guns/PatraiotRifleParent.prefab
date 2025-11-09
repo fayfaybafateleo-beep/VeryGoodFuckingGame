@@ -1248,6 +1248,7 @@ MonoBehaviour:
   WeaponWagingScript: {fileID: 225816600939689786}
   Reminder: {fileID: 6292190028200947738}
   ReloadKey: 114
+  ReloadText: {fileID: 0}
   InitialCapasityRate: 0.3
   MaxCapasity: 300
   CurrentCapasity: 0
@@ -1327,7 +1328,7 @@ MonoBehaviour:
     DissipationMode: 2
     DissipationDistance: 100
     PropagationSpeed: 343
-  DefaultVelocity: {x: -0.01, y: 0.01, z: -0.15}
+  DefaultVelocity: {x: -0.01, y: 0.01, z: -0.2}
 --- !u!114 &1057738087423309964
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -391,18 +391,21 @@ MonoBehaviour:
   PenetrateLevel: 5
   IsPercussion: 0
   StartFuze: 0
-  FuzeTime: 2
+  FuzeTime: 1.5
   FuzeTimer: 0
   Explosive: {fileID: 5138012484018779897, guid: ff5ca3ccddbb3ba4a82bf73b52c7354e, type: 3}
   Velosity: 20
   launchAngle: 12
   Rigidbody: {fileID: 3772172026684285659}
-  BurstCount: 1
+  BurstCount: 3
   BurstInterval: 0.2
   GLAnimationSpeed: 2
   Spin: 1
   TorqueAmount: 10
   TorqueDirection: {x: 0, y: 1, z: 0}
+  MaxAmmo: 5
+  InitialAmmo: 2
+  RecoverCount: 1
 --- !u!1 &7594225645031468576
 GameObject:
   m_ObjectHideFlags: 0

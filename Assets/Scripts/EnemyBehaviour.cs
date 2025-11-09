@@ -23,6 +23,18 @@ public class EnemyBehaviour : MonoBehaviour
     [UnityEngine.Range(0, 1000)] public float AttackRate = 2f;
     public float AttackRateTimer = 0f;
     public float Damage;
+    public int SlugCount=1;
+    public Transform FirePoint;
+    public GameObject EnemyBullet;
+    public bool Lock=false;
+
+    public float FacingAngleTolerance = 12f;
+    public bool XiaoTou = true;
+    public LayerMask LineOfSightMask = ~0; 
+
+    [Header("MOA")]
+    public float VerticalSpreadAngle = 6f;
+    public float HorizontalSpreadAngle = 6f;
 
     [Header("Rigidbody")]
     public Rigidbody Rigidbody;
@@ -164,17 +176,75 @@ public class EnemyBehaviour : MonoBehaviour
             case EnemyState.Attack:
                 EnemyAnimator.SetBool("Run", false);
 
+                //Facing To Player
                 Vector3 dir2 = Target.transform.position - transform.position;
                 dir2.y = 0f;
                 float angle2 = Mathf.Atan2(dir2.x, dir2.z) * Mathf.Rad2Deg + 180f;
                 Quaternion rot2 = Quaternion.Euler(0f, angle2, 0f);
                 transform.rotation = Quaternion.Slerp(transform.rotation, rot2, Time.unscaledDeltaTime * TurningSpeed);
 
+                //FirePointAimming
+                if (FirePoint != null && Target != null)
+                {
+                    Vector3 targetPos = Target.transform.position + Vector3.up * 0.9f;
+                    Vector3 aimDir = targetPos - FirePoint.position;
+
+                    //InCasePlayerIsTooClose
+                    if (aimDir.sqrMagnitude > 0.0001f)
+                    {
+                        Quaternion aimRot = Quaternion.LookRotation(aimDir.normalized, Vector3.up);
+                        FirePoint.rotation = aimRot;
+                    }
+                }
+
+                if (Target != null && FirePoint!=null)
+                {
+                    //CheckIsFacing
+                    Vector3 toTarget = Target.transform.position - transform.position;
+                    toTarget.y = 0f;
+                    Vector3 forward = -transform.forward;
+
+                    float dot = Vector3.Dot(forward.normalized, toTarget.normalized);
+                    float cosThreshold = Mathf.Cos(30f * Mathf.Deg2Rad); 
+
+                    if (dot >= cosThreshold)
+                    {
+                        Lock = true;
+                    }
+                    else
+                    {
+                        Lock = false;
+                    }
+                }
+                else
+                {
+                    Lock = false;
+                }
+
+                //FireCountDown
                 AttackRateTimer += Time.deltaTime;
-                if (AttackRateTimer >= AttackRate && Target != null)
+
+                if (AttackRateTimer >= AttackRate && Target != null && Lock)
                 {
                     AttackRateTimer = 0;
                     EnemyAnimator.SetTrigger("Fire");
+
+                    for (int i = 0; i < SlugCount; i++)
+                    {
+                        Vector2 c = Random.insideUnitCircle;
+
+                        float yaw = c.x * HorizontalSpreadAngle;
+                        float pitch = c.y * VerticalSpreadAngle;
+
+                        Quaternion spreadRot = FirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
+
+                        GameObject bullet = Instantiate(EnemyBullet, FirePoint.position, spreadRot);
+                        bullet.GetComponent<EnemyBullet>().Damage = Damage;
+                    }
+                    //muzzleFlash//
+                 //   GameObject muzzleFlash = Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
+                  //  muzzleFlash.transform.SetParent(FirePoint);
+
                 }
 
                 float qtaDist = (Target.transform.position - transform.position).sqrMagnitude;
