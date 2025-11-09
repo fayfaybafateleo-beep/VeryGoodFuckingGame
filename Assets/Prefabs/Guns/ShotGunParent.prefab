@@ -2406,6 +2406,7 @@ MonoBehaviour:
   WeaponWagingScript: {fileID: 5892280404342120024}
   Reminder: {fileID: 202786840410927832}
   ReloadKey: 114
+  ReloadText: {fileID: 0}
   InitialCapasityRate: 0.8
   MaxCapasity: 40
   CurrentCapasity: 0
@@ -2447,7 +2448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ImpulseDefinition:
     ImpulseChannel: 1
-    ImpulseShape: 1
+    ImpulseShape: 3
     CustomImpulseShape:
       serializedVersion: 2
       m_Curve: []
@@ -2485,7 +2486,7 @@ MonoBehaviour:
     DissipationMode: 2
     DissipationDistance: 100
     PropagationSpeed: 343
-  DefaultVelocity: {x: 0, y: 0, z: -0.4}
+  DefaultVelocity: {x: 0, y: 0, z: -0.2}
 --- !u!82 &5296983058485635032
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2597,8 +2598,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionTarget: {fileID: 1882631221622584612}
   rotationTarget: {fileID: 1882631221622584612}
-  kickBackDistance: 0.5
-  kickPitchYaw: {x: 0.4, y: 0.4}
+  kickBackDistance: 1
+  kickPitchYaw: {x: -10, y: 0.4}
   kickRandomYawSignChance: 0.5
   posSpringStiffness: 500
   rotSpringStiffness: 300

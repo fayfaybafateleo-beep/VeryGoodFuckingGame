@@ -205,7 +205,7 @@ namespace StarterAssets
 
 			// 达到阈值就启用物品
 		
-                if (CurrentSpeed >= SpeedThreshold )
+                if (CurrentSpeed >= SpeedThreshold && Lock==false)
                 {
                     SpeedLine.Play();
                 }
