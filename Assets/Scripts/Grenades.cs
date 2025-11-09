@@ -28,7 +28,12 @@ public class Grenades : MonoBehaviour
     [Header("SpinSettings")]
     public bool Spin;
     public float TorqueAmount = 10f;
-    public Vector3 TorqueDirection = Vector3.up; 
+    public Vector3 TorqueDirection = Vector3.up;
+
+    [Header("Ammo")]
+    public int MaxAmmo;
+    public int InitialAmmo;
+    public int RecoverCount;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

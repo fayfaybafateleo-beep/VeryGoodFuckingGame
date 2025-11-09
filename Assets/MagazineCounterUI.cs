@@ -14,6 +14,7 @@ public class MagazineCounterUI : MonoBehaviour
 
     [Header("UI")]
     public TextMeshProUGUI Text;
+    public TextMeshProUGUI GLAmmoText;
     public Image ReloadBar;
     public bool IsSecondGun;
     public bool IsReloading;
@@ -37,11 +38,13 @@ public class MagazineCounterUI : MonoBehaviour
         {
             Text.gameObject.SetActive(false);
             ReloadBar.gameObject.SetActive(false);
+            GLAmmoText.gameObject.SetActive(false);
         }
         else
         {
             Text.gameObject.SetActive(true);
             ReloadBar.gameObject.SetActive(true);
+            GLAmmoText.gameObject.SetActive(true);
         }
 
         //Get child
@@ -78,5 +81,8 @@ public class MagazineCounterUI : MonoBehaviour
         {
             ReloadBar.enabled = false;
         }
+
+        //GL UI
+        GLAmmoText.text = WMScript.CurrentCount.ToString();
     }
 }

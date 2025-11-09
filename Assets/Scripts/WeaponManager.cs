@@ -32,6 +32,12 @@ public class WeaponManager : MonoBehaviour
     public CinemachineImpulseSource Impulse;
     public bool IsBursting = false;
     public GameObject MuzzelFlash;
+
+    [Header("GrenadeLaucherData")]
+    public int CurrentCount;
+    public int RecoverCount;
+    public int InitialCount;
+    public int MaxCount;
     //sound
     public AudioSource GLsound;
     public AudioClip GLFireClip;
@@ -72,7 +78,7 @@ public class WeaponManager : MonoBehaviour
     {
         WeaponsOnEquipmentList[I + 1].SetActive(false);
         WeaponsOnEquipmentList[I + 1].GetComponent<GunScript>().GS = GunScript.GunState.CeaseFire;
-      
+        SynchronizeGLData();
     }
     public void OnEnable()
     {
@@ -83,13 +89,18 @@ public class WeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //GLcount
+        if (CurrentCount >= MaxCount) CurrentCount = MaxCount;
+        if (CurrentCount <= 0) CurrentCount = 0;
+
         switch (FCS)
         {
             case FireControlState.AllowInput:
-                if (Input.GetKeyDown(Key2) && IsBursting == false)
+                if (Input.GetKeyDown(Key2) && IsBursting == false && CurrentCount>0)
                 {
                     GL.speed = GrenadeList[0].GetComponent<Grenades>().GLAnimationSpeed;
                     StartCoroutine(FireGrenadeBurst());
+                    CurrentCount -= 1;
                 }
 
                 MeleeRateTimer += Time.deltaTime;
@@ -294,5 +305,18 @@ public class WeaponManager : MonoBehaviour
         {
             WeaponsOnEquipmentList[I].GetComponent<GunScript>().GS = GunScript.GunState.CanFire;
         }
+    }
+
+    public void SynchronizeGLData()
+    {
+        MaxCount= GrenadeList[0].GetComponent<Grenades>().MaxAmmo;
+        RecoverCount = GrenadeList[0].GetComponent<Grenades>().RecoverCount;
+        InitialCount=GrenadeList[0].GetComponent<Grenades>().InitialAmmo;
+        CurrentCount = InitialCount;
+    }
+
+    public void AddGrenadeCount()
+    {
+        CurrentCount += RecoverCount;
     }
 }

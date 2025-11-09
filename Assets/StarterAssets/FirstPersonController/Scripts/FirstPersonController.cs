@@ -101,6 +101,7 @@ namespace StarterAssets
         private Vector3 _originalCamLocalPos;      // 原始相机位置
         private Vector3 _targetCamLocalPos;        // 当前目标相机位置
         private float _currentSlideSpeed = 0f;
+        public CinemachineImpulseSource SlideScreenShake;
 
 		[Header("Slide Collider Change")]
 		public CharacterController Controller;
@@ -123,7 +124,7 @@ namespace StarterAssets
 
 		[Header("SpeedLine")]
         public float SpeedThreshold = 20f;
-        private float CurrentSpeed;
+        public float CurrentSpeed;
 
         private Vector3 LastPos;
         public ParticleSystem SpeedLine;
@@ -192,32 +193,30 @@ namespace StarterAssets
 			TargetHeight = NormalHeight;
 
 			SpeedLine = GameObject.FindGameObjectWithTag("SpeedLine").GetComponent<ParticleSystem>();
-			SpeedLine.Stop();
+            SpeedLine.Stop();
 
             LastPos = transform.position;
+			SpeedThreshold = 17;
         }
 
 		private void Update()
 		{
-			//SpeedDetection
-            Vector3 delta = transform.position - LastPos;
-            CurrentSpeed = delta.magnitude / Time.deltaTime;
 
-			// 达到阈值就启用物品
-		
-                if (CurrentSpeed >= SpeedThreshold && Lock==false)
-                {
+            // 达到阈值就启用物品
+            if (CurrentSpeed >= SpeedThreshold)
+            {
+                if (!SpeedLine.isPlaying)
+				{
                     SpeedLine.Play();
                 }
-                else
+            }
+            else
+            {
+                if (SpeedLine.isPlaying)
                 {
                     SpeedLine.Stop();
                 }
-
-            
-            
-
-            LastPos = transform.position;
+            }
 
             switch (CS)
 			{
@@ -248,6 +247,9 @@ namespace StarterAssets
 
                     UpdateCameraSlideEffect();
                     UpdateCapsuleSize();
+
+                    float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0, _controller.velocity.z).magnitude;
+                    CurrentSpeed = currentHorizontalSpeed;
                     break;
 
 				case ControllerState.StopMove:
@@ -477,7 +479,10 @@ namespace StarterAssets
 			CanSlide = false;
 			SlideCoolDownTimer = 0;
 
-			//Collider
+            //Collider
+
+            //ScreenShake
+            SlideScreenShake.GenerateImpulse();
 
         }
 
