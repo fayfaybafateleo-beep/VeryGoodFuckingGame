@@ -315,7 +315,7 @@ public class WeaponManager : MonoBehaviour
         CurrentCount = InitialCount;
     }
 
-    public void AddGrenadeCount()
+    public void GetBackUpGrenade()
     {
         CurrentCount += RecoverCount;
     }
