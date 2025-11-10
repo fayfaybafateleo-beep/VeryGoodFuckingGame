@@ -19,6 +19,9 @@ public class GunScript : MonoBehaviour
     [Range(0, 3000)]
     public float FireRate; 
     private float FireTimer;
+    public bool IsBurstFire;
+    public bool BurstRate;
+
 
     [Header("Reload")]
     public int MagazineCount;

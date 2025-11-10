@@ -2925,6 +2925,10 @@ MonoBehaviour:
   FirePoint: {fileID: 2254931753132474022}
   BulletPrefab: {fileID: 3454573842243275128, guid: 76f080b9e636179488875a1923e804fd, type: 3}
   FireRate: 60
+  BurstRate: 100
+  IsBurstFire: 0
+  IsBursting: 0
+  BurstCount: 4
   MagazineCount: 10
   MagazineCounter: 0
   ReloadTime: 1
@@ -3056,7 +3060,7 @@ MonoBehaviour:
   positionTarget: {fileID: 6706182761081732975}
   rotationTarget: {fileID: 6706182761081732975}
   kickBackDistance: 1
-  kickPitchYaw: {x: 1, y: 0.4}
+  kickPitchYaw: {x: -10, y: 0.4}
   kickRandomYawSignChance: 0.5
   posSpringStiffness: 500
   rotSpringStiffness: 300

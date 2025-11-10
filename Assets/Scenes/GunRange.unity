@@ -23895,6 +23895,8 @@ MonoBehaviour:
   FirePoint: {fileID: 0}
   BulletPrefab: {fileID: 3454573842243275128, guid: c87df9d91869f9240b5d030728824403, type: 3}
   FireRate: 100
+  IsBurstFire: 0
+  BurstRate: 0
   MagazineCount: 0
   MagazineCounter: 0
   ReloadTime: 0
@@ -24503,7 +24505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5393215578589016655, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5393215578589016655, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -24615,7 +24617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: StrafeTiltMax
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: SpeedThreshold
