@@ -144,7 +144,7 @@ MonoBehaviour:
   Car: {fileID: 0}
   Key: 118
   mountDistance: 4
-  PlayerController: {fileID: 30780175}
+  PlayerController: {fileID: 30780186}
   MainCamera: {fileID: 0}
   SeatPoint: {fileID: 0}
   DropPoint: {fileID: 0}
@@ -204,6 +204,17 @@ MonoBehaviour:
     DissipationDistance: 100
     PropagationSpeed: 343
   DefaultVelocity: {x: 0, y: -0.1, z: 0}
+--- !u!114 &30780186 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+  m_PrefabInstance: {fileID: 8204767107036194194}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30780162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55919ac34a26952479f3fc91f777b2fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &39175640
 GameObject:
   m_ObjectHideFlags: 0
@@ -5353,7 +5364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OriginWeaponsList:
-  - {fileID: 7663199390295935275, guid: 65c0c2df77454044db4f81d52fefc861, type: 3}
+  - {fileID: 8252787098904650708, guid: 94f7e68595af7964f959a0f1cbccd6e3, type: 3}
   - {fileID: 5914898984465226578, guid: cd19ee0c2d0df9345a91258e7e63739e, type: 3}
   WeaponsOnEquipmentList: []
   GrenadeList:
@@ -14266,7 +14277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1377539571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24511,6 +24522,22 @@ PrefabInstance:
       value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      propertyPath: PointA.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      propertyPath: PointB.x
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      propertyPath: PointC.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      propertyPath: PointC.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: SlideKey
       value: 99
       objectReference: {fileID: 0}
@@ -24608,7 +24635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: SlideCapsuleHeight
-      value: 1.199292
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: NormalCapsuleHeight
@@ -24616,7 +24643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: SlideCapsuleCenter.y
-      value: -0.4003542
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: StrafeTiltSmoothTime

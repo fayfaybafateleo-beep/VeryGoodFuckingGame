@@ -121,8 +121,8 @@ namespace StarterAssets
         // ====================== 关键修改结束 ======================
 
         [Header("CameraWalkingWagingPos")]
-        public Vector3 pointA = new Vector3(0, 1.375f, 0);
-        public Vector3 pointB = new Vector3(0, 1, 0);
+        public Vector3 PointA = new Vector3(0, 1.375f, 0);
+        public Vector3 PointB = new Vector3(0, 1, 0);
 
         [Header("SpeedOfWagging")]
         public float speed = 1f;
@@ -548,7 +548,7 @@ namespace StarterAssets
 				if (CS == ControllerState.CanMove)
 				{
                     float t = (Mathf.Sin(Time.time * speed) + 1f) / 2f;
-                    Vector3 newPosition = Vector3.Lerp(pointA, pointB, t);
+                    Vector3 newPosition = Vector3.Lerp(PointA, PointB, t);
                     target = Vector3.Lerp(baseTarget, newPosition, 0.5f);
                     // 如果 pointA/pointB 是“绝对局部坐标”且你想在 baseTarget 周围摆动，
                     // 也可以用： target = baseTarget + (newPosition - pointA);

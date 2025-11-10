@@ -26,6 +26,7 @@ public class EnemyBehaviour : MonoBehaviour
     public int SlugCount=1;
     public Transform FirePoint;
     public GameObject EnemyBullet;
+    public GameObject EnemyMuzzleFlash;
     public bool Lock=false;
 
     public float FacingAngleTolerance = 12f;
@@ -186,7 +187,7 @@ public class EnemyBehaviour : MonoBehaviour
                 //FirePointAimming
                 if (FirePoint != null && Target != null)
                 {
-                    Vector3 targetPos = Target.transform.position + Vector3.up * 0.9f;
+                    Vector3 targetPos = Target.transform.position + Vector3.up * 1.15f;
                     Vector3 aimDir = targetPos - FirePoint.position;
 
                     //InCasePlayerIsTooClose
@@ -242,8 +243,8 @@ public class EnemyBehaviour : MonoBehaviour
                         bullet.GetComponent<EnemyBullet>().Damage = Damage;
                     }
                     //muzzleFlash//
-                 //   GameObject muzzleFlash = Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
-                  //  muzzleFlash.transform.SetParent(FirePoint);
+                    GameObject muzzleFlash = Instantiate(EnemyMuzzleFlash, FirePoint.position, FirePoint.rotation);
+                    muzzleFlash.transform.SetParent(FirePoint);
 
                 }
 

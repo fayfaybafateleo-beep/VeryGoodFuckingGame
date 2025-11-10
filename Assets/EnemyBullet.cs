@@ -12,7 +12,6 @@ public class EnemyBullet : MonoBehaviour
     public float Damage;
 
     [Header("HitEffect")]
-    public GameObject BulletHole;
     public GameObject HitEffect;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,8 +29,6 @@ public class EnemyBullet : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         var hit = collision.GetContact(0);
-        GameObject bulletHole = Instantiate(BulletHole, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
-        bulletHole.transform.SetParent(collision.transform);
         //HitEffecT
         GameObject hitEffect1 = Instantiate(HitEffect, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
         hitEffect1.transform.SetParent(collision.transform);
