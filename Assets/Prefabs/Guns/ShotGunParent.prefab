@@ -2371,6 +2371,8 @@ MonoBehaviour:
   FirePoint: {fileID: 6328008716768508170}
   BulletPrefab: {fileID: 6506540414330150620, guid: 3163e6c9d4a31084089e044304871cfd, type: 3}
   FireRate: 94
+  IsBurstFire: 0
+  BurstRate: 0
   MagazineCount: 4
   MagazineCounter: 0
   ReloadTime: 0.75
@@ -2389,7 +2391,7 @@ MonoBehaviour:
   AnimatorSpeed: 4
   shake: {fileID: 4404955300069377803}
   GunDamage: 15
-  GunPeneration: 1
+  GunPeneration: 2
   Camera: {fileID: 0}
   MaxDistance: 60
   HitLayers:

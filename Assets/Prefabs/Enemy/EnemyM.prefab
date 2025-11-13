@@ -992,6 +992,7 @@ MonoBehaviour:
     m_Bits: 0
   BloodSPlash: {fileID: 1722730097017444589, guid: 1093cb16752f88c41874197b764f108a, type: 3}
   TextObject: {fileID: 629695357997126060, guid: 20e1c5bae0b8b4f46b3a913abc21c1e1, type: 3}
+  MassiveBlood: {fileID: 0}
   Text: Brutality!!!
   TimeToDestroy: 3
   KinematicActiveAfterDie: 3
@@ -1008,9 +1009,12 @@ MonoBehaviour:
   - {fileID: 5829083965768424206}
   - {fileID: 2101993914729372683}
   LightsOffMaterial: {fileID: 2100000, guid: 761510b4ae776524ea692a37c85dc1d1, type: 2}
+  IsGore: 0
   Head: {fileID: 3206654840511858543}
   Lower: {fileID: 6164167150907843305}
   Upper: {fileID: 7085949298545758025}
+  LimbsList: []
+  MultiHitMergeTime: 0.01
   AudioSource: {fileID: 5144821902404702106}
   Destruction: {fileID: 8300000, guid: fb8bf2e26ef0ac640802ef685cea26e3, type: 3}
   ShockPercentage: 0.2

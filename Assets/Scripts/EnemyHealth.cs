@@ -37,6 +37,7 @@ public class EnemyHealth : MonoBehaviour
     public LayerMask BodiesLayer;
     public GameObject BloodSPlash;
     public GameObject TextObject;
+    public GameObject MassiveBlood;
     public string Text="Brutality!!!";
     public float TimeToDestroy;
     public float KinematicActiveAfterDie;
@@ -48,10 +49,18 @@ public class EnemyHealth : MonoBehaviour
     public List<GameObject> EnemyLightList;
     public Material LightsOffMaterial;
 
+    public bool IsGore = false;
+
     [Header("BodyParts")]
     public GameObject Head;
     public GameObject Lower;
     public GameObject Upper;
+    public List<GameObject> LimbsList;
+
+    [Header("Multi Hit (Shotgun)")]
+    public float MultiHitMergeTime = 0.01f; 
+    private float LastDamageTime;
+    private float AccumulatedDamageForExecution;
 
     [Header("Audio")]
     public AudioSource AudioSource;
@@ -107,6 +116,14 @@ public class EnemyHealth : MonoBehaviour
         // Record the damage and bullet pos
         FinalDamage = dmg;
         LastHitPoint = hitPoint;
+
+        if (Time.time - LastDamageTime > MultiHitMergeTime)
+        {
+            AccumulatedDamageForExecution = 0f;
+        }
+        AccumulatedDamageForExecution += dmg;
+        LastDamageTime = Time.time;
+
         Vector3 spawnPos;
         Dir = (transform.position - hitPoint).normalized;
 
@@ -120,7 +137,7 @@ public class EnemyHealth : MonoBehaviour
             spawnPos = transform.position + randomOffset;
         }
 
-        if (hitbox.GetComponent<HitBoxPart>().IsCriticalPoint)
+        if (hitbox && hitbox.IsCriticalPoint)
         {
             GameObject text = Instantiate(HitText, spawnPos, Quaternion.identity);
             text.GetComponentInChildren<TextMeshPro>().text = dmg.ToString();
@@ -141,7 +158,13 @@ public class EnemyHealth : MonoBehaviour
             text.GetComponentInChildren<TextMeshPro>().text = dmg.ToString();
             Destroy(text, 1f);
         }
-        
+
+        if (IsDead==false&&AccumulatedDamageForExecution >= MaxHealth&& IsGore==false)
+        {
+            GoreExcution();
+            IsGore=true;
+        }
+
     }
     void Die()
     {
@@ -209,10 +232,35 @@ public class EnemyHealth : MonoBehaviour
         GameObject text = Instantiate(TextObject, transform.position, Quaternion.identity);
         text.GetComponentInChildren<TextMeshPro>().text =Text;
         Destroy(text, 1f);
+        foreach (var obj in LimbsList)
+        {
+            if (obj == null) continue;
+
+            var limbs = Instantiate(obj, transform.position, Quaternion.identity);
+            var massiveBlood = Instantiate(MassiveBlood, transform.position, Quaternion.identity);
+            massiveBlood.transform.SetParent(limbs.transform);
+            massiveBlood.transform.localScale=new Vector3(0.5f,0.5f,0.5f);
+            HitBoxPart hbp = limbs.GetComponent<HitBoxPart>();
+            Rigidbody rb = limbs.AddComponent<Rigidbody>();
+
+            rb.mass = 1f;
+            float force = 4f;
+            float upForce = 4f;
+
+            Vector3 randomDir = Random.onUnitSphere;
+            rb.AddForce(randomDir * force, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * upForce, ForceMode.Impulse);
+            rb.AddTorque(Random.insideUnitSphere, ForceMode.Impulse);
+            if (hbp) hbp.enabled = false;
+
+            Destroy(limbs, 5f);
+        }
         foreach (HitBoxPart part in GetComponentsInChildren<HitBoxPart>())
         {
             part.GoreExcution(part.transform.position);
         }
+
+       
     }
     public void ShockedText()
     {

@@ -153,6 +153,10 @@ public class GunScript : MonoBehaviour
         {
             Reminder.SetActive(true);
         }
+        else
+        {
+            Reminder.SetActive(false);
+        }
 
         //BackupAmmo
         if (CurrentCapasity <= 0)
@@ -178,7 +182,7 @@ public class GunScript : MonoBehaviour
                 FireTimer -= Time.deltaTime;
                 GunAnimator.speed = AnimatorSpeed;
                 // Mouse pressed
-                if (Input.GetMouseButton(0))
+                if (Input.GetMouseButton(0)&& MagazineCounter>0)
                 {
                     // Gun not ready to shoot yet
                     if (FireTimer > 0)
@@ -189,41 +193,7 @@ public class GunScript : MonoBehaviour
 
                     // Starts CountDown in RPM rate
                     FireTimer = 60 / FireRate;
-                    // Sound
-                    AudioSource.PlayOneShot(ClipShooting);
-                    // Fire
-                    WeaponWagingScript.SuppressSwayOnFire();
-                    //SlugCount
-                    SetBlur(1);
-                    for (int i = 0; i < SlugCount; i++)
-                    {
-                        Vector2 c = Random.insideUnitCircle; 
-                                                            
-                        float yaw = c.x * HorizontalSpreadAngle;
-                        float pitch = c.y * VerticalSpreadAngle;
-
-                        Quaternion spreadRot = FirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
-
-                        Bullet bullet = Instantiate(BulletPrefab, FirePoint.position, spreadRot);
-                        bullet.GetComponent<Bullet>().Damage = GunDamage;
-                        bullet.GetComponent<Bullet>().PenatrateLevel = GunPeneration;
-                    }
-                    //muzzleFlash//
-                    GameObject muzzleFlash = Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
-                    muzzleFlash.transform.SetParent(FirePoint);
-
-                    //Shell//
-                    ShellEject();
-
-                    //Animations
-                    shake.AddRecoil(1f);
-                    GunAnimator.SetTrigger("Fire");
-
-                    //ammo
-                    MagazineCounter -= 1;
-
-                    // Screenshake
-                    Impulse.GenerateImpulse();
+                    GunFire();
                 }
 
                 //Reload
@@ -314,5 +284,44 @@ public class GunScript : MonoBehaviour
     public void GetBackUpAmmo(float ammoBoxMultiPulier)
     {
         CurrentCapasity += Mathf.RoundToInt(ammoBoxMultiPulier * AmmoConvertRate * MagazineCount);
+    }
+
+    public void GunFire()
+    {
+        // Sound
+        AudioSource.PlayOneShot(ClipShooting);
+        // Fire
+        WeaponWagingScript.SuppressSwayOnFire();
+        //SlugCount
+        SetBlur(1);
+        for (int i = 0; i < SlugCount; i++)
+        {
+            Vector2 c = Random.insideUnitCircle;
+
+            float yaw = c.x * HorizontalSpreadAngle;
+            float pitch = c.y * VerticalSpreadAngle;
+
+            Quaternion spreadRot = FirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
+
+            Bullet bullet = Instantiate(BulletPrefab, FirePoint.position, spreadRot);
+            bullet.GetComponent<Bullet>().Damage = GunDamage;
+            bullet.GetComponent<Bullet>().PenatrateLevel = GunPeneration;
+        }
+        //muzzleFlash//
+        GameObject muzzleFlash = Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
+        muzzleFlash.transform.SetParent(FirePoint);
+
+        //Shell//
+        ShellEject();
+
+        //Animations
+        shake.AddRecoil(1f);
+        GunAnimator.SetTrigger("Fire");
+
+        //ammo
+        MagazineCounter -= 1;
+
+        // Screenshake
+        Impulse.GenerateImpulse();
     }
 }
