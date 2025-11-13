@@ -2924,11 +2924,12 @@ MonoBehaviour:
   Name: Rifle M2043
   FirePoint: {fileID: 2254931753132474022}
   BulletPrefab: {fileID: 3454573842243275128, guid: 76f080b9e636179488875a1923e804fd, type: 3}
-  FireRate: 60
+  FireRate: 100
   BurstRate: 100
   IsBurstFire: 0
-  IsBursting: 0
   BurstCount: 4
+  IsBursting: 0
+  BurstInterval: 0
   MagazineCount: 10
   MagazineCounter: 0
   ReloadTime: 1
@@ -2940,13 +2941,13 @@ MonoBehaviour:
   Shell: {fileID: 1239073040038692928, guid: 1b9379f1bbe0b224b9e55ec1cf7e62f0, type: 3}
   ShellPoint: {fileID: 1913455227330099184}
   AudioSource: {fileID: 5774887406003297238}
-  ClipShooting: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
-  ClipCocking: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
+  ClipShooting: {fileID: 8300000, guid: 0df5a3f171e0f974f858a7586e70747c, type: 3}
+  ClipCocking: {fileID: 8300000, guid: 0df5a3f171e0f974f858a7586e70747c, type: 3}
   Impulse: {fileID: 4865430496110159313}
   GunAnimator: {fileID: 6801892309137895546}
   AnimatorSpeed: 2
   shake: {fileID: 8684527944397318317}
-  GunDamage: 75
+  GunDamage: 50
   GunPeneration: 4
   Camera: {fileID: 0}
   MaxDistance: 100

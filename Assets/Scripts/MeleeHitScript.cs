@@ -143,7 +143,7 @@ public class MeleeHitScript : MonoBehaviour
                     {
                         if (enemyB.ES == EnemyBehaviour.EnemyState.Shock)
                         {
-                            enemy.GoreExcution();
+                            enemy.GoreExcution(true);
                         }
                         else
                         {

@@ -78,6 +78,8 @@ public class EnemyHealth : MonoBehaviour
         HitMarkParent = HitMark.GetComponentInParent<CrossHairGenral>();
 
         Health = MaxHealth;
+
+        
     }
 
     // Update is called once per frame
@@ -103,6 +105,13 @@ public class EnemyHealth : MonoBehaviour
         float dmg = baseDamage;
         int toughness = Thougthness;
 
+        if (Time.time - LastDamageTime > MultiHitMergeTime)
+        {
+            AccumulatedDamageForExecution = 0f;
+        }
+        AccumulatedDamageForExecution += dmg;
+        LastDamageTime = Time.time;
+
         if (hitbox)
         {
             dmg *= hitbox.damageMultiplier;
@@ -117,12 +126,7 @@ public class EnemyHealth : MonoBehaviour
         FinalDamage = dmg;
         LastHitPoint = hitPoint;
 
-        if (Time.time - LastDamageTime > MultiHitMergeTime)
-        {
-            AccumulatedDamageForExecution = 0f;
-        }
-        AccumulatedDamageForExecution += dmg;
-        LastDamageTime = Time.time;
+        
 
         Vector3 spawnPos;
         Dir = (transform.position - hitPoint).normalized;
@@ -161,7 +165,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (IsDead==false&&AccumulatedDamageForExecution >= MaxHealth&& IsGore==false)
         {
-            GoreExcution();
+            GoreExcution(false);
             IsGore=true;
         }
 
@@ -199,6 +203,7 @@ public class EnemyHealth : MonoBehaviour
             if (lights == null) continue;
             lights.GetComponent<Renderer>().material = LightsOffMaterial;
         }
+        KillFeed.Instance.AddKillLIst("Kill", 5,1, new Vector3(1f, 1f, 1f));
     }
     public void EnemyKinematic()
     {
@@ -225,9 +230,11 @@ public class EnemyHealth : MonoBehaviour
         RB.AddForce(Vector3.down * 9.7f, ForceMode.Force);
     }
 
-    public void GoreExcution()
+    public void GoreExcution(bool isGolory)
     {
         Health = -10;
+
+        KillFeed.Instance.AddKillLIst("GloryKill", 25, 1.3f, new Vector3(1f, 0.84f, 0f));
 
         GameObject text = Instantiate(TextObject, transform.position, Quaternion.identity);
         text.GetComponentInChildren<TextMeshPro>().text =Text;
@@ -253,6 +260,8 @@ public class EnemyHealth : MonoBehaviour
             rb.AddTorque(Random.insideUnitSphere, ForceMode.Impulse);
             if (hbp) hbp.enabled = false;
 
+            
+
             Destroy(limbs, 5f);
         }
         foreach (HitBoxPart part in GetComponentsInChildren<HitBoxPart>())
@@ -267,6 +276,9 @@ public class EnemyHealth : MonoBehaviour
         GameObject text = Instantiate(TextObject, transform.position, Quaternion.identity);
         text.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
         text.GetComponentInChildren<TextMeshPro>().text = "PANIC!!!";
+
+        KillFeed.Instance.AddKillLIst("Panic", 5, 1f, new Vector3(0f, 0.8980392f, 0.3076688f));
+
         Destroy(text, 1f);
     }
 }

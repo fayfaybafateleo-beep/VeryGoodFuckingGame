@@ -87,8 +87,17 @@ public class HitBoxPart : MonoBehaviour
         GameObject bloodSplash = Instantiate(BloodSplash, BloodPoint.position, BloodPoint.rotation);
         bloodSplash.transform.SetParent(Owner.transform);
         bloodSplash.transform.localScale = Owner.transform.localScale;
+        if (IsCriticalPoint)
+        {
+            KillFeed.Instance.AddKillLIst("Critical kill", 20, 1.15f, new Vector3(1f, 0f, 0f));
+        }
+        else
+        {
+            KillFeed.Instance.AddKillLIst("Dissect", 15, 1f, new Vector3(1f, 0f, 0f));
+        }
 
-        Destroy(gameObject, 0f);
+
+            Destroy(gameObject, 0f);
         SpawnGore(this.transform.position);
     }
     public void SpawnGore(Vector3 origin)
