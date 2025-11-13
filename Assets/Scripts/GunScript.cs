@@ -4,6 +4,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Profiling;
 using TMPro;
+using System.Collections;
 
 
 public class GunScript : MonoBehaviour
@@ -11,6 +12,7 @@ public class GunScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("WhenUcantEvenSay MYNAME")]
     public string Name;
+
     [Header("Bullet")]
     public Transform FirePoint;
     public Bullet BulletPrefab;
@@ -19,9 +21,15 @@ public class GunScript : MonoBehaviour
     [Range(0, 3000)]
     public float FireRate; 
     private float FireTimer;
+    [Range(0, 3000)]
+    public float BurstRate;
     public bool IsBurstFire;
-    public bool BurstRate;
 
+
+    [Header("Burst Fire")]
+    [Range(2, 30)] public int BurstCount = 3;  
+    public bool IsBursting = false;
+    public float BurstInterval;
 
     [Header("Reload")]
     public int MagazineCount;
@@ -103,6 +111,8 @@ public class GunScript : MonoBehaviour
         CurrentCapasity = Mathf.RoundToInt( InitialCapasityRate* MaxCapasity);
 
         ReloadText = Reminder.GetComponentInChildren<TextMeshPro>();
+
+        BurstInterval = 60 / BurstRate ;
     }
     void Update()
     {
@@ -182,18 +192,27 @@ public class GunScript : MonoBehaviour
                 FireTimer -= Time.deltaTime;
                 GunAnimator.speed = AnimatorSpeed;
                 // Mouse pressed
-                if (Input.GetMouseButton(0)&& MagazineCounter>0)
+                if (IsBurstFire)
                 {
-                    // Gun not ready to shoot yet
-                    if (FireTimer > 0)
+                    if (Input.GetMouseButton(0) && MagazineCounter > 0 && !IsBursting)
                     {
-                        // AudioSource.PlayOneShot(ClipCocking);
-                        return;
-                    }
+                        if (FireTimer > 0f) break;  
 
-                    // Starts CountDown in RPM rate
-                    FireTimer = 60 / FireRate;
-                    GunFire();
+                        FireTimer = 60f / FireRate;
+
+                        StartCoroutine(BurstRoutine());
+                    }
+                }
+                else
+                {
+                    if (Input.GetMouseButton(0) && MagazineCounter > 0)
+                    {
+                        if (FireTimer > 0f) break;
+
+                        FireTimer = 60f / FireRate;
+
+                        GunFire();
+                    }
                 }
 
                 //Reload
@@ -323,5 +342,26 @@ public class GunScript : MonoBehaviour
 
         // Screenshake
         Impulse.GenerateImpulse();
+    }
+
+    public IEnumerator BurstRoutine()
+    {
+        IsBursting = true;
+
+        int shots = Mathf.Min(BurstCount, MagazineCounter);
+
+        for (int i = 0; i < shots; i++)
+        {
+            if (GS != GunState.CanFire || MagazineCounter <= 0) break;
+
+            GunFire();  
+
+            if (i < shots - 1)
+            {
+                yield return new WaitForSeconds(BurstInterval);
+            }
+        }
+
+        IsBursting = false;
     }
 }

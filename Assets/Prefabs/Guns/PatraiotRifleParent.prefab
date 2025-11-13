@@ -1213,10 +1213,11 @@ MonoBehaviour:
   FirePoint: {fileID: 6736261893501121073}
   BulletPrefab: {fileID: 3454573842243275128, guid: 76f080b9e636179488875a1923e804fd, type: 3}
   FireRate: 800
-  BurstRate: 0
+  BurstRate: 1200
   IsBurstFire: 0
+  BurstCount: 20
   IsBursting: 0
-  BurstCount: 0
+  BurstInterval: 0
   MagazineCount: 100
   MagazineCounter: 0
   ReloadTime: 2.5
