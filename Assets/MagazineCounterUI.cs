@@ -11,10 +11,12 @@ public class MagazineCounterUI : MonoBehaviour
     public WeaponManager WMScript;
     public GameObject Player;
     public PlayerGetInCar PIC;
+   
 
     [Header("UI")]
     public TextMeshProUGUI Text;
     public TextMeshProUGUI GLAmmoText;
+    public TextMeshProUGUI GunNumber;
     public Image ReloadBar;
     public bool IsSecondGun;
     public bool IsReloading;
@@ -39,12 +41,14 @@ public class MagazineCounterUI : MonoBehaviour
             Text.gameObject.SetActive(false);
             ReloadBar.gameObject.SetActive(false);
             GLAmmoText.gameObject.SetActive(false);
+            GunNumber.gameObject.SetActive(false);
         }
         else
         {
             Text.gameObject.SetActive(true);
             ReloadBar.gameObject.SetActive(true);
             GLAmmoText.gameObject.SetActive(true);
+            GunNumber.gameObject.SetActive(true);
         }
 
         //Get child
@@ -56,6 +60,8 @@ public class MagazineCounterUI : MonoBehaviour
         //Detect WhichGun
         if (IsSecondGun)
         {
+            GunNumber.text = "1";
+
             gs = firstGun.GetComponent<GunScript>();
             Text.text = gs.MagazineCounter.ToString() + "/" + gs.CurrentCapasity.ToString();
             if (gs.GS == GunScript.GunState.Reload)
@@ -65,6 +71,8 @@ public class MagazineCounterUI : MonoBehaviour
         }
         else
         {
+            GunNumber.text = "2";
+
             gs = secondGun.GetComponent<GunScript>();
             Text.text = gs.MagazineCounter.ToString() + "/" + gs.CurrentCapasity.ToString();
             if (gs.GS == GunScript.GunState.Reload)
