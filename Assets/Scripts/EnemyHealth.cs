@@ -177,7 +177,7 @@ public class EnemyHealth : MonoBehaviour
         EBehaviour.ES = EnemyBehaviour.EnemyState.Die;
         IsDead = true;
         Debug.Log("ED");
-        
+        KillCount.Instance.AddKill();
         
         //Hitmark using
         HitMark.GetComponent<Animator>().SetTrigger("Kill");
