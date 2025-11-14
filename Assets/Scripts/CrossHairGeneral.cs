@@ -15,6 +15,7 @@ public class CrossHairGenral : MonoBehaviour
 
     [Header("ShakeHoldTime")]
     public float ShakeHoldTime;
+    public float KillShakeHoldTime = 0.2f;
     [Header("ShakeFadeOut")]
     public float FadeOut;
 
@@ -111,8 +112,8 @@ public class CrossHairGenral : MonoBehaviour
 
     public void AddKillShake(float strength = 1f)
     {
-        _holdTimer = ShakeHoldTime;
-        _strength = Mathf.Clamp01(Mathf.Max(_strength, 10f * strength)); 
+        _holdTimer = KillShakeHoldTime;
+        _strength = Mathf.Clamp01(Mathf.Max(_strength, 100f * strength)); 
         _fadeVel = 0f; 
     }
     public void HitMarkKillSoundPlay()
