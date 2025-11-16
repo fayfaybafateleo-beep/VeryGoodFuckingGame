@@ -13,6 +13,7 @@ public class KillListing : MonoBehaviour
     private Vector3 OriginalPos;
     private float Timer;
 
+    public Animator Animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -39,6 +40,11 @@ public class KillListing : MonoBehaviour
         {
             // 抖完回到原位
             TextBoject.transform.localPosition = OriginalPos;
+        }
+
+        if(transform.GetSiblingIndex() != 0)
+        {
+            Animator.SetBool("End", true);
         }
     }
     public void SetName (string what,int score, float size, Vector3 color)

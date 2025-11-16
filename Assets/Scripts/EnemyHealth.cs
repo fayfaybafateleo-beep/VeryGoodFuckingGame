@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -234,8 +235,14 @@ public class EnemyHealth : MonoBehaviour
     {
         Health = -10;
 
-        KillFeed.Instance.AddKillLIst("GloryKill", 25, 1.3f, new Vector3(1f, 0.84f, 0f));
+        //DelayOnKillList
+        StartCoroutine(DelayCall());
 
+        IEnumerator DelayCall()
+        {
+            yield return new WaitForSeconds(0.1f);
+            KillFeed.Instance.AddKillLIst("GloryKill", 25, 1.3f, new Vector3(1f, 0.84f, 0f));
+        }
         GameObject text = Instantiate(TextObject, transform.position, Quaternion.identity);
         text.GetComponentInChildren<TextMeshPro>().text =Text;
         Destroy(text, 1f);

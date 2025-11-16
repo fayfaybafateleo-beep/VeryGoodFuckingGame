@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class HitBoxPart : MonoBehaviour
 {
@@ -89,7 +90,14 @@ public class HitBoxPart : MonoBehaviour
         bloodSplash.transform.localScale = Owner.transform.localScale;
         if (IsCriticalPoint)
         {
-            KillFeed.Instance.AddKillLIst("Critical kill", 20, 1.15f, new Vector3(1f, 0f, 0f));
+            StartCoroutine(DelayCall());
+
+            IEnumerator DelayCall()
+            {
+                yield return new WaitForSeconds(0.1f);
+                KillFeed.Instance.AddKillLIst("Critical kill", 20, 1.15f, new Vector3(1f, 0f, 0f));
+            }
+           
         }
         else
         {
@@ -97,7 +105,7 @@ public class HitBoxPart : MonoBehaviour
         }
 
 
-            Destroy(gameObject, 0f);
+            Destroy(gameObject, 0.2f);
         SpawnGore(this.transform.position);
     }
     public void SpawnGore(Vector3 origin)
