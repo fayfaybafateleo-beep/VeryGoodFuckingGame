@@ -288,4 +288,21 @@ public class EnemyHealth : MonoBehaviour
 
         Destroy(text, 1f);
     }
+
+
+    public void AddDIssect()
+    {
+        KillFeed.Instance.AddKillLIst("Dissect", 15, 1f, new Vector3(1f, 0f, 0f));
+    }
+
+    public void AddCritical()
+    {
+        Invoke(nameof(AddCriticalDelay), 0.1f);
+    }
+
+    private void AddCriticalDelay()
+    {
+        KillFeed.Instance.AddKillLIst("Critical kill", 20, 1.15f, new Vector3(1f, 0f, 0f));
+    }
+
 }

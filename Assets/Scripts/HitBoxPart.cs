@@ -90,23 +90,17 @@ public class HitBoxPart : MonoBehaviour
         bloodSplash.transform.localScale = Owner.transform.localScale;
         if (IsCriticalPoint)
         {
-            StartCoroutine(DelayCall());
-
-            IEnumerator DelayCall()
-            {
-                yield return new WaitForSeconds(0.1f);
-                KillFeed.Instance.AddKillLIst("Critical kill", 20, 1.15f, new Vector3(1f, 0f, 0f));
-            }
-           
+            Owner.AddCritical();
         }
         else
         {
-            KillFeed.Instance.AddKillLIst("Dissect", 15, 1f, new Vector3(1f, 0f, 0f));
+            Owner.AddDIssect();
         }
 
-
-            Destroy(gameObject, 0.2f);
+           
         SpawnGore(this.transform.position);
+
+        Destroy(gameObject);
     }
     public void SpawnGore(Vector3 origin)
     {
@@ -171,4 +165,5 @@ public class HitBoxPart : MonoBehaviour
 
         Destroy(gameObject, 0f);
     }
+
 }
