@@ -20859,12 +20859,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2164209106003670409, guid: 801c8d856b3664c4595e5f145562e313, type: 3}
       propertyPath: AllWeaponList.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2164209106003670409, guid: 801c8d856b3664c4595e5f145562e313, type: 3}
       propertyPath: 'AllWeaponList.Array.data[4]'
       value: 
       objectReference: {fileID: 5914898984465226578, guid: cd19ee0c2d0df9345a91258e7e63739e, type: 3}
+    - target: {fileID: 2164209106003670409, guid: 801c8d856b3664c4595e5f145562e313, type: 3}
+      propertyPath: 'AllWeaponList.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8252787098904650708, guid: 94f7e68595af7964f959a0f1cbccd6e3, type: 3}
     - target: {fileID: 3534025645630419049, guid: 801c8d856b3664c4595e5f145562e313, type: 3}
       propertyPath: m_Name
       value: WeaponBuyingMachineParent
@@ -26334,7 +26338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5081582628032921918, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -268
+      value: -23
       objectReference: {fileID: 0}
     - target: {fileID: 5081582628032921918, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
       propertyPath: m_LocalPosition.y
