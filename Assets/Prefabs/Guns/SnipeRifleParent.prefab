@@ -2947,7 +2947,7 @@ MonoBehaviour:
   GunAnimator: {fileID: 6801892309137895546}
   AnimatorSpeed: 2
   shake: {fileID: 8684527944397318317}
-  GunDamage: 100
+  GunDamage: 50
   GunPeneration: 4
   Camera: {fileID: 0}
   MaxDistance: 100
@@ -3060,8 +3060,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionTarget: {fileID: 6706182761081732975}
   rotationTarget: {fileID: 6706182761081732975}
-  kickBackDistance: 1
-  kickPitchYaw: {x: -10, y: 0.4}
+  kickBackDistance: 0.65
+  kickPitchYaw: {x: -4, y: 0.4}
   kickRandomYawSignChance: 0.5
   posSpringStiffness: 500
   rotSpringStiffness: 300
