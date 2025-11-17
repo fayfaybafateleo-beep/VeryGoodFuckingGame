@@ -976,8 +976,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EBehaviour: {fileID: 1162388349482639301}
-  MaxHealth: 50
-  Health: 50
+  MaxHealth: 100
+  Health: 100
   Thougthness: 1
   HitMark: {fileID: 0}
   HitMarkParent: {fileID: 0}
@@ -1026,6 +1026,15 @@ MonoBehaviour:
   ThresholdPercentage: 0.2
   ShockChance: 0.1
   MoralTest: 0
+  SecondClass:
+  - {fileID: 3476787668436087256, guid: af59abd832e89e14a8073719be906340, type: 3}
+  - {fileID: 5119130494902639668, guid: e9945489618ae6345892ec9eeca6a6b5, type: 3}
+  FirstClass:
+  - {fileID: 6666830113318450386, guid: 2d8b0d2bbdbd4ce4883fd44a6c87160e, type: 3}
+  - {fileID: 2484064925702399884, guid: 77bf6ac273167d546a7f874c0d70b8c2, type: 3}
+  - {fileID: 987435135784451071, guid: 64f55c6948d327543a6f86921ff72714, type: 3}
+  Coin: {fileID: 8850797187182654025, guid: b60384feeecd94b4cbb136117f0fd03a, type: 3}
+  DropChance: 0.15
 --- !u!95 &5161086026593443594
 Animator:
   serializedVersion: 7

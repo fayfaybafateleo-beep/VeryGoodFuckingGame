@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -6,6 +8,8 @@ public class EnemySpawner : MonoBehaviour
     [Header("EnemyType")]
     public GameObject Enemy;
     public int InsNUm;
+
+    public List<GameObject> ObjectList;
     void Start()
     {
         
@@ -22,10 +26,14 @@ public class EnemySpawner : MonoBehaviour
         {
             for (int i = 0; i <InsNUm; i++)
             {
+
                 Vector2 offset = Random.insideUnitCircle * 1f;  
                 Vector3 spawnPos = transform.position + new Vector3(offset.x, 0f, offset.y);
 
-                Instantiate(Enemy, spawnPos, Quaternion.identity);
+                int index = Random.Range(0, ObjectList.Count);
+                GameObject prefabToSpawn = ObjectList[index];
+
+                Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
 
             }
         }

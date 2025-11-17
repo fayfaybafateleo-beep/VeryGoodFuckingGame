@@ -9,7 +9,15 @@ public class GameLevelControl : MonoBehaviour
     public LevelTriggers EndTrigger;
 
     [Header("Bools")]
+    public bool IsSeleted;
     public bool IsActive;
+
+    [Header("SeprateZones")]
+    public GameObject Zone1;
+    public GameObject Zone2;
+    public GameObject Zone3;
+
+
     public enum LevelState
     { 
         NotActive,
@@ -27,7 +35,10 @@ public class GameLevelControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        if (IsSeleted == false)
+        {
+            return;
+        }
 
         switch (LS) 
         {

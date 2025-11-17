@@ -1,9 +1,11 @@
+using System.Runtime.CompilerServices;
+using System.Threading;
 using UnityEngine;
 
 public class Drops : MonoBehaviour
 {
     [Header("ObjectType")]
-    [Tooltip("Ammo1,Ammo2,AmmoG,Health,Gold")]
+    [Tooltip("Ammo1,Ammo2,AmmoG,Health,Coin")]
     public string Type;
 
     [Header("Reference")]
@@ -11,15 +13,22 @@ public class Drops : MonoBehaviour
     public GameObject WM;
     public GunScript GS1;
     public GunScript GS2;
+    public GameObject Player;
+    public PlayerData PD;
 
     [Header("DropsData")]
     public float GainMultipulier;
+    public int CoinCount;
     public bool IsUsed=false;
+    public float Timer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         WM = GameObject.FindGameObjectWithTag("WeaponManager");
         WMScript = WM.GetComponent<WeaponManager>();
+
+        Player= GameObject.FindGameObjectWithTag("Player");
+        PD=Player.GetComponent<PlayerData>();
 
         GS1 = WM.transform.GetChild(0).GetComponent<GunScript>();
         GS2 = WM.transform.GetChild(1).GetComponent<GunScript>();
@@ -28,7 +37,18 @@ public class Drops : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!IsUsed && Type == "Coin")
+        {
+            Timer += Time.unscaledDeltaTime;
+
+            if (Timer >= 3f)
+            {
+                PD.Coins += CoinCount;
+
+                IsUsed = true;
+                Destroy(transform.parent.gameObject);
+            }
+        }
     }
     public void OnTriggerEnter(Collider other)
     {
@@ -49,7 +69,13 @@ public class Drops : MonoBehaviour
             {
                 WMScript.GetBackUpGrenade();
             }
-            Destroy(gameObject, 0f);
+            if(Type == "Coin")
+            {
+                PD.Coins += CoinCount;
+            }
+
+            var parent = transform.parent;
+            Destroy(parent.gameObject, 0f);
         }
     }
 }

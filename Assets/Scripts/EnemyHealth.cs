@@ -72,6 +72,12 @@ public class EnemyHealth : MonoBehaviour
     public float ThresholdPercentage;
     public float ShockChance;
     public bool MoralTest;
+
+    [Header("Drops")]
+    public List<GameObject> SecondClass;
+    public List<GameObject> FirstClass;
+    public GameObject Coin;
+    public float DropChance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -80,7 +86,7 @@ public class EnemyHealth : MonoBehaviour
 
         Health = MaxHealth;
 
-        
+        DropChance = 0.15f;
     }
 
     // Update is called once per frame
@@ -199,6 +205,9 @@ public class EnemyHealth : MonoBehaviour
         //BodyStationary
         Invoke("EnemyKinematic", KinematicActiveAfterDie);
         //lightsOff
+
+        //Drops
+        KillDrop();
         foreach (GameObject lights in EnemyLightList)
         {
             if (lights == null) continue;
@@ -276,6 +285,14 @@ public class EnemyHealth : MonoBehaviour
             part.GoreExcution(part.transform.position);
         }
 
+        if (isGolory)
+        {
+            GloryKillDrop();
+        }
+        else
+        {
+            KillDrop();
+        }
        
     }
     public void ShockedText()
@@ -293,16 +310,123 @@ public class EnemyHealth : MonoBehaviour
     public void AddDIssect()
     {
         KillFeed.Instance.AddKillLIst("Dissect", 15, 1f, new Vector3(1f, 0f, 0f));
+        DropChance += 0.15f;
+
+        DissectDrop();
     }
 
     public void AddCritical()
     {
         Invoke(nameof(AddCriticalDelay), 0.1f);
+        DropChance += 0.25f;
+        DissectDrop();
+        InstanCoin(3);
     }
 
     private void AddCriticalDelay()
     {
         KillFeed.Instance.AddKillLIst("Critical kill", 20, 1.15f, new Vector3(1f, 0f, 0f));
+    }
+
+    public void DissectDrop()
+    {
+        for (int i = 0; i < 1; i++)
+        {
+            if (Random.value > DropChance)
+                continue;
+            int index2 = Random.Range(0, SecondClass.Count);
+            GameObject prefab2 = SecondClass[index2];
+
+            GameObject inst2 = Instantiate(prefab2, transform.position, Quaternion.identity);
+
+            Rigidbody rb2 = inst2.GetComponent<Rigidbody>();
+            if (rb2 != null)
+            {
+                Vector3 randomDir2 = (Random.onUnitSphere + Vector3.up * 0.5f).normalized;
+                float randomForce2 = Random.Range(3f, 5f);
+                rb2.AddForce(randomDir2 * randomForce2, ForceMode.Impulse);
+                rb2.AddTorque(Random.onUnitSphere * 0.5f, ForceMode.Impulse);
+            }
+        }
+        InstanCoin(1);
+    }
+
+    public void KillDrop()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            if (Random.value > DropChance)
+                continue; 
+            int index2 = Random.Range(0, SecondClass.Count);
+            GameObject prefab2 = SecondClass[index2];
+
+            GameObject inst2 = Instantiate(prefab2, transform.position, Quaternion.identity);
+
+            Rigidbody rb2 = inst2.GetComponent<Rigidbody>();
+            if (rb2 != null)
+            {
+                Vector3 randomDir2 = (Random.onUnitSphere + Vector3.up * 0.5f).normalized;
+                float randomForce2 = Random.Range(3f, 5f);
+                rb2.AddForce(randomDir2 * randomForce2, ForceMode.Impulse);
+                rb2.AddTorque(Random.onUnitSphere * 0.5f, ForceMode.Impulse);
+            }
+        }
+        InstanCoin(3);
+    }
+
+    public void GloryKillDrop()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            //  FirstClassDrop
+            int index1 = Random.Range(0, FirstClass.Count);
+            GameObject prefab1 = FirstClass[index1];
+
+            GameObject inst1 = Instantiate(prefab1, transform.position, Quaternion.identity);
+
+            Rigidbody rb1 = inst1.GetComponent<Rigidbody>();
+            if (rb1 != null)
+            {
+                Vector3 randomDir1 = (Random.onUnitSphere + Vector3.up * 0.5f).normalized;
+                float randomForce1 = Random.Range(3f, 5f);
+                rb1.AddForce(randomDir1 * randomForce1, ForceMode.Impulse);
+                rb1.AddTorque(Random.onUnitSphere * 0.5f, ForceMode.Impulse);
+            }
+
+            //  ScondClassDrop
+            int index2 = Random.Range(0, SecondClass.Count);
+            GameObject prefab2 = SecondClass[index2]; 
+
+            GameObject inst2 = Instantiate(prefab2, transform.position, Quaternion.identity);
+
+            Rigidbody rb2 = inst2.GetComponent<Rigidbody>();
+            if (rb2 != null)
+            {
+                Vector3 randomDir2 = (Random.onUnitSphere + Vector3.up * 0.5f).normalized;
+                float randomForce2 = Random.Range(3f, 5f);
+                rb2.AddForce(randomDir2 * randomForce2, ForceMode.Impulse);
+                rb2.AddTorque(Random.onUnitSphere * 0.5f, ForceMode.Impulse);
+            }
+        }
+        InstanCoin(6);
+
+    }
+
+    public void InstanCoin(int multipulier)
+    {
+        for (int i = 0; i < 1*multipulier; i++)
+        {
+            GameObject coin = Instantiate(Coin, transform.position, Quaternion.identity);
+
+            Rigidbody rb= coin.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                Vector3 randomDir1 = (Random.onUnitSphere + Vector3.up * 0.3f).normalized;
+                float randomForce1 = Random.Range(1f, 3f);
+                rb.AddForce(randomDir1 * randomForce1, ForceMode.Impulse);
+                rb.AddTorque(Random.onUnitSphere * 0.5f, ForceMode.Impulse);
+            }
+        }
     }
 
 }
