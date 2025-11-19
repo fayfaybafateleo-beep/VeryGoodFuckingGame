@@ -134,6 +134,21 @@ namespace StarterAssets
 
         private Vector3 LastPos;
         public ParticleSystem SpeedLine;
+
+        [Header("DualJump")]
+        public bool IsDualJump;
+        public int MaxJumps = 2;
+        public int CurrentjumpCount = 0;
+        public bool WasGrounded;
+        public float FirstJumpSpeed;
+        public float SecondJumpSpeed;
+
+        public float DoubleJumpMaxHeight = 1.5f;
+        private float DoubleJumpStartY;
+        // IsHeightLimitation
+        public bool LimitDoubleJumpHeight = false;
+        public CinemachineImpulseSource DualJumpScreenShake;
+
         public enum ControllerState
         {
             CanMove,
@@ -254,8 +269,8 @@ namespace StarterAssets
                     UpdateCameraSlideEffect();
                     UpdateCapsuleSize();
 
-                    float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0, _controller.velocity.z).magnitude;
-                    CurrentSpeed = currentHorizontalSpeed;
+                    float currentSpeed = Mathf.Sqrt( _controller.velocity.x * _controller.velocity.x + _verticalVelocity * _verticalVelocity +    _controller.velocity.z * _controller.velocity.z);
+                    CurrentSpeed = currentSpeed;
                     break;
 
 				case ControllerState.StopMove:
@@ -280,10 +295,26 @@ namespace StarterAssets
 
 		private void GroundedCheck()
 		{
-			// set sphere position, with offset
-			Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
-			Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
-		}
+            WasGrounded = Grounded;
+
+            // set sphere position, with offset
+            Vector3 spherePosition = new Vector3(
+                transform.position.x,
+                transform.position.y - GroundedOffset,
+                transform.position.z);
+
+            Grounded = Physics.CheckSphere(
+                spherePosition,
+                GroundedRadius,
+                GroundLayers,
+                QueryTriggerInteraction.Ignore
+            );
+            if (Grounded && !WasGrounded)
+            {
+                CurrentjumpCount = 0;    
+                _fallTimeoutDelta = FallTimeout;
+            }
+        }
 
         private void CameraRotation()
         {
@@ -389,8 +420,8 @@ namespace StarterAssets
 		{
 			if (Grounded)
 			{
-				// reset the fall timeout timer
-				_fallTimeoutDelta = FallTimeout;
+                // reset the fall timeout timer
+                _fallTimeoutDelta = FallTimeout;
 
 				// stop our velocity dropping infinitely when grounded
 				if (_verticalVelocity < 0.0f)
@@ -398,15 +429,15 @@ namespace StarterAssets
 					_verticalVelocity = -2f;
 				}
 
-				// Jump
-				if (_input.jump && _jumpTimeoutDelta <= 0.0f)
-				{
-					// the square root of H * -2 * G = how much velocity needed to reach desired height
-					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-				}
+                // Jump
+                if (_input.jump && _jumpTimeoutDelta <= 0.0f && CurrentjumpCount < MaxJumps)
+                {
+                    DoJump(FirstJumpSpeed,false);
+                  
+                }
 
-				// jump timeout
-				if (_jumpTimeoutDelta >= 0.0f)
+                // jump timeout
+                if (_jumpTimeoutDelta >= 0.0f)
 				{
 					_jumpTimeoutDelta -= Time.deltaTime;
 				}
@@ -421,9 +452,14 @@ namespace StarterAssets
 				{
 					_fallTimeoutDelta -= Time.deltaTime;
 				}
+                //DualJunmp
+                if (_input.jump && CurrentjumpCount < MaxJumps)
+                {
+                    DoJump(SecondJumpSpeed,true);
+                }
 
-				// if we are not grounded, do not jump
-				_input.jump = false;
+                // if we are not grounded, do not jump
+                _input.jump = false;
 			}
 
 			// apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
@@ -431,9 +467,43 @@ namespace StarterAssets
 			{
 				_verticalVelocity += Gravity * Time.deltaTime;
 			}
-		}
+            //HeightLimited
+            if (LimitDoubleJumpHeight)
+            {
+                float currentY = transform.position.y;
+                float maxY = DoubleJumpStartY + DoubleJumpMaxHeight;
 
-		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
+                if (currentY >= maxY && _verticalVelocity > 0f)
+                {
+                    _verticalVelocity = 0f;
+                    LimitDoubleJumpHeight = false; 
+                }
+            }
+
+            // apply gravity
+            if (_verticalVelocity < _terminalVelocity)
+            {
+                _verticalVelocity += Gravity * Time.deltaTime;
+            }
+        }
+        public void DoJump(float multiplier, bool isDoubleJump = false)
+        {
+            _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity * multiplier);
+
+            CurrentjumpCount++;
+
+            if (isDoubleJump)
+            {
+                DoubleJumpStartY = transform.position.y;
+                LimitDoubleJumpHeight = true;
+                SpeedLine.Play();
+                DualJumpScreenShake.GenerateImpulse();
+            }
+
+            _input.jump = false;
+        }
+
+        private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
 		{
 			if (lfAngle < -360f) lfAngle += 360f;
 			if (lfAngle > 360f) lfAngle -= 360f;

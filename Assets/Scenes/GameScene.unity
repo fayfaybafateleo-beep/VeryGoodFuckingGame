@@ -1428,6 +1428,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Coins: 0
+--- !u!114 &205207800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205207782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 1
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.3
+    ImpulseType: 0
+    DissipationRate: 0.25
+    RawSignal: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 0.2
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 0, y: 0.1, z: -0.3}
 --- !u!1 &208698995
 GameObject:
   m_ObjectHideFlags: 0
@@ -26637,11 +26690,15 @@ PrefabInstance:
       objectReference: {fileID: 489316012}
     - target: {fileID: 1997990668872459761, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
       propertyPath: m_VersionIndex
-      value: 1720
+      value: 1738
       objectReference: {fileID: 0}
     - target: {fileID: 2584509266129602466, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
       propertyPath: m_Dithering
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3045674022276790409, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
+      propertyPath: ImpulseDefinition.ImpulseDuration
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5081582628032921918, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26696,6 +26753,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 489316012}
     - target: {fileID: 7761796095114291895, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
+      propertyPath: MoveSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7761796095114291895, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
       propertyPath: SlideTime
       value: 0.5
       objectReference: {fileID: 0}
@@ -26703,6 +26764,22 @@ PrefabInstance:
       propertyPath: SlideCoolDown
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7761796095114291895, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
+      propertyPath: FirstJumpSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7761796095114291895, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
+      propertyPath: SecondJumpSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7761796095114291895, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
+      propertyPath: DoubleJumpMaxHeight
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7761796095114291895, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
+      propertyPath: DualJumpScreenShake
+      value: 
+      objectReference: {fileID: 205207800}
     - target: {fileID: 8119262740199567382, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
       propertyPath: m_ClearFlags
       value: 1
@@ -26726,6 +26803,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1328618496563296605, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 205207791}
+    - targetCorrespondingSourceObject: {fileID: 1328618496563296605, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 205207800}
   m_SourcePrefab: {fileID: 100100000, guid: 0e7a802f0b4e5fd40951d17a4f5bf71b, type: 3}
 --- !u!64 &9143735849864657154
 MeshCollider:
