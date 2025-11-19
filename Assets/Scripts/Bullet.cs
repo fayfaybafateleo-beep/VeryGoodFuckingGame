@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -27,6 +28,10 @@ public class Bullet : MonoBehaviour
     public float Damage;
     public int PenatrateLevel;
 
+    [Header("Penetration")]
+    private HashSet<Transform> hitEnemyRoots = new HashSet<Transform>();
+    public int MaxPenetrateTargets = 1;
+    private int PenetratedCount = 0;
     void Start()
     {
         Rigidbody.linearVelocity = transform.forward * Speed;
@@ -83,6 +88,43 @@ public class Bullet : MonoBehaviour
                 HitMark.GetComponent<Animator>().SetTrigger("Hit");
                 HitMarkParent.AddShake(1f);
                 HitMarkParent.HitMarkHitSoundPlay();
+
+                //pENERTRAEcOUNT
+                Transform enemyRoot = enemy.transform.root;
+
+                bool isNewEnemy = hitEnemyRoots.Add(enemyRoot);
+
+                if (isNewEnemy)
+                {
+                   PenetratedCount++;
+                }
+
+                bool tooHardToPenetrate = hb.Thoughness > PenatrateLevel;
+                bool exceededPenetrateCount = PenetratedCount >= MaxPenetrateTargets;
+
+                if (tooHardToPenetrate || exceededPenetrateCount)
+                {
+                    Destroy(gameObject);
+                    return;
+                }
+                else
+                {
+                    Collider bulletCol = GetComponent<Collider>();
+                    if (bulletCol != null)
+                    {
+                        // 忽略这只敌人身上所有的 collider
+                        foreach (var col in enemyRoot.GetComponentsInChildren<Collider>())
+                        {
+                            Physics.IgnoreCollision(bulletCol, col);
+                        }
+                    }
+
+                    if (Rigidbody != null)
+                    {
+                        Rigidbody.linearVelocity = transform.forward * Speed;
+                    }
+                    return;
+                }
             }   
         }
         

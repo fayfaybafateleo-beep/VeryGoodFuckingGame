@@ -16,6 +16,7 @@ public class GunScript : MonoBehaviour
     [Header("Bullet")]
     public Transform FirePoint;
     public Bullet BulletPrefab;
+    public int PenertrateCount=1;
 
     [Header("FireRate")]
     [Range(0, 3000)]
@@ -325,6 +326,7 @@ public class GunScript : MonoBehaviour
             Bullet bullet = Instantiate(BulletPrefab, FirePoint.position, spreadRot);
             bullet.GetComponent<Bullet>().Damage = GunDamage;
             bullet.GetComponent<Bullet>().PenatrateLevel = GunPeneration;
+            bullet.GetComponent<Bullet>().MaxPenetrateTargets = PenertrateCount;
         }
         //muzzleFlash//
         GameObject muzzleFlash = Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);

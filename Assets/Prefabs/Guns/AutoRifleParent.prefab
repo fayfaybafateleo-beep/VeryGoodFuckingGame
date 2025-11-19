@@ -2291,7 +2291,13 @@ MonoBehaviour:
   Name: AutoRifle HCR-10
   FirePoint: {fileID: 845230208096818263}
   BulletPrefab: {fileID: 3454573842243275128, guid: 76f080b9e636179488875a1923e804fd, type: 3}
+  PenertrateCount: 1
   FireRate: 550
+  BurstRate: 0
+  IsBurstFire: 0
+  BurstCount: 3
+  IsBursting: 0
+  BurstInterval: 0
   MagazineCount: 25
   MagazineCounter: 0
   ReloadTime: 1
