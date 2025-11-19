@@ -976,8 +976,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EBehaviour: {fileID: 1162388349482639301}
-  MaxHealth: 100
-  Health: 100
+  MaxHealth: 50
+  Health: 50
   Thougthness: 1
   HitMark: {fileID: 0}
   HitMarkParent: {fileID: 0}
@@ -1022,9 +1022,8 @@ MonoBehaviour:
   MultiHitMergeTime: 0.01
   AudioSource: {fileID: 5144821902404702106}
   Destruction: {fileID: 8300000, guid: fb8bf2e26ef0ac640802ef685cea26e3, type: 3}
-  ShockPercentage: 0.2
-  ThresholdPercentage: 0.2
-  ShockChance: 0.1
+  ThresholdPercentage: 0.3
+  ShockChance: 0.3
   MoralTest: 0
   SecondClass:
   - {fileID: 3476787668436087256, guid: af59abd832e89e14a8073719be906340, type: 3}
@@ -1034,7 +1033,7 @@ MonoBehaviour:
   - {fileID: 2484064925702399884, guid: 77bf6ac273167d546a7f874c0d70b8c2, type: 3}
   - {fileID: 987435135784451071, guid: 64f55c6948d327543a6f86921ff72714, type: 3}
   Coin: {fileID: 8850797187182654025, guid: b60384feeecd94b4cbb136117f0fd03a, type: 3}
-  DropChance: 0.15
+  DropChance: 0.05
 --- !u!95 &5161086026593443594
 Animator:
   serializedVersion: 7
@@ -1117,7 +1116,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.8
-  m_Speed: 3.5
+  m_Speed: 7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1143,12 +1142,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 4499031727440548263}
   Agent: {fileID: 2417986734043512879}
-  MoveForce: 5
-  MaxSpeed: 10
+  MoveForce: 10
+  MaxSpeed: 20
   AngleOffset: 180
   TurningSpeed: 30
   EnemyAnimator: {fileID: 5161086026593443594}
-  AttackRange: 10
+  AttackRange: 15
   AttackRate: 2
   AttackRateTimer: 0
   Damage: 0
@@ -1308,7 +1307,7 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.395, y: 1.091, z: -0.2460003}
   m_LocalScale: {x: 0.3, y: 0.30000004, z: 0.3}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5574617363313379482}
   m_Father: {fileID: 5916576565604369336}

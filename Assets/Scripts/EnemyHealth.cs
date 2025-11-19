@@ -68,7 +68,7 @@ public class EnemyHealth : MonoBehaviour
     public AudioClip Destruction;
 
     [Header("ThresholdOfShock")]
-    public float ShockPercentage;
+
     public float ThresholdPercentage;
     public float ShockChance;
     public bool MoralTest;
@@ -86,7 +86,7 @@ public class EnemyHealth : MonoBehaviour
 
         Health = MaxHealth;
 
-        DropChance = 0.15f;
+        DropChance = 0.05f;
     }
 
     // Update is called once per frame
@@ -310,7 +310,7 @@ public class EnemyHealth : MonoBehaviour
     public void AddDIssect()
     {
         KillFeed.Instance.AddKillLIst("Dissect", 15, 1f, new Vector3(1f, 0f, 0f));
-        DropChance += 0.15f;
+        DropChance += 0.05f;
 
         DissectDrop();
     }
@@ -318,7 +318,7 @@ public class EnemyHealth : MonoBehaviour
     public void AddCritical()
     {
         Invoke(nameof(AddCriticalDelay), 0.1f);
-        DropChance += 0.25f;
+        DropChance += 0.1f;
         DissectDrop();
         InstanCoin(3);
     }
