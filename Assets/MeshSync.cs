@@ -5,6 +5,8 @@ public class MeshSync : MonoBehaviour
     public MeshFilter SourceMeshFilter;
     private MeshFilter TargetMeshFilter;
 
+    public EnemyBehaviour EB;
+
     [Header("SyncTransform")]
     public bool WantSync;
     public GameObject SyncSource;
@@ -17,7 +19,7 @@ public class MeshSync : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SourceMeshFilter == null)
+        if (SourceMeshFilter == null || EB.ES==EnemyBehaviour.EnemyState.Die)
         {
             Destroy(gameObject, 0);
         }
@@ -27,8 +29,11 @@ public class MeshSync : MonoBehaviour
         }
         if (WantSync)
         {
-            this.transform.position = SyncSource.transform.position;
-            this.transform.rotation = SyncSource.transform.rotation;
+            if(SourceMeshFilter != null)
+            {
+                this.transform.position = SyncSource.transform.position;
+                this.transform.rotation = SyncSource.transform.rotation;
+            }
         }
     }
 }
