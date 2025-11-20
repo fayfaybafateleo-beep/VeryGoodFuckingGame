@@ -11,6 +11,7 @@ public class SectionManager : MonoBehaviour
         Section2,
         Section3
     }
+
     [Header("Sections Overall Inspect")]
     public bool Section1Active;
     public bool Section2Active;
@@ -21,8 +22,13 @@ public class SectionManager : MonoBehaviour
     public bool Section3Done;
 
     [Header("SpawnCount")]
-    public int TargetSpawnCount;    
-    public int CurrentSpawnCount;   
+    public int TargetSpawnCount;      
+    public int CurrentSpawnCount;     
+
+    [Header("SectionSpawnCount")]
+    public int Section1MaxSpawn = 20; 
+    public int Section2MaxSpawn = 30; 
+    public int Section3MaxSpawn = 40; 
 
     [Header("SpawnerList")]
     public List<GameObject> SpawnerList;
@@ -34,7 +40,6 @@ public class SectionManager : MonoBehaviour
 
     private void Awake()
     {
-     
         Instance = this;
 
         foreach (SectionType st in Enum.GetValues(typeof(SectionType)))
@@ -42,6 +47,8 @@ public class SectionManager : MonoBehaviour
             Active[st] = false;
             Done[st] = false;
         }
+        TargetSpawnCount = 0;
+        CurrentSpawnCount = 0;
 
         SyncToInspectorBools();
     }
@@ -49,8 +56,6 @@ public class SectionManager : MonoBehaviour
     public void SetActive(SectionType section, bool value)
     {
         Active[section] = value;
-
-     //SyncData
         switch (section)
         {
             case SectionType.Section1:
@@ -62,6 +67,12 @@ public class SectionManager : MonoBehaviour
             case SectionType.Section3:
                 Section3Active = value;
                 break;
+        }
+
+        if (value)
+        {
+            CurrentSpawnCount = 0;                          
+            TargetSpawnCount = GetMaxSpawnForSection(section); 
         }
     }
 
@@ -93,8 +104,15 @@ public class SectionManager : MonoBehaviour
         return Done.TryGetValue(section, out bool v) && v;
     }
 
+//Spawn Restirct
     public void RegisterSpawn()
     {
+        if (TargetSpawnCount <= 0)
+        {
+            CurrentSpawnCount++;
+            return;
+        }
+
         CurrentSpawnCount++;
 
         if (CurrentSpawnCount >= TargetSpawnCount)
@@ -105,6 +123,7 @@ public class SectionManager : MonoBehaviour
             }
         }
     }
+
     private void SyncToInspectorBools()
     {
         Section1Active = Active[SectionType.Section1];
@@ -116,10 +135,27 @@ public class SectionManager : MonoBehaviour
         Section3Done = Done[SectionType.Section3];
     }
 
-    private void Update()
+
+    private int GetMaxSpawnForSection(SectionType section)
     {
-     
+        switch (section)
+        {
+            case SectionType.Section1:
+                return Section1MaxSpawn;
+            case SectionType.Section2:
+                return Section2MaxSpawn;
+            case SectionType.Section3:
+                return Section3MaxSpawn;
+            default:
+                return 0;
+        }
     }
 
+     void Update()
+    {
+       
+    }
 }
+
+
 
