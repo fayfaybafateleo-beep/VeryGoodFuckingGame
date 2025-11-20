@@ -77,6 +77,9 @@ public class EnemyBehaviour : MonoBehaviour
     float NextStrafeFlip = 1.5f;
     const float EPS = 0.0001f;
 
+
+    [Header("Panic")]
+    public GameObject PanicFantom;
     void Start()
     {
         Target = GameObject.FindGameObjectWithTag("Player");
@@ -263,6 +266,8 @@ public class EnemyBehaviour : MonoBehaviour
                     EnemyAnimator.SetTrigger("Die");
                     ES = EnemyState.Die;
                 }
+
+                PanicFantom.SetActive(true);
                 Agent.enabled = false;
                 break;
         }
