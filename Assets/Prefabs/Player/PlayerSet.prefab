@@ -212,6 +212,9 @@ GameObject:
   - component: {fileID: 6928739011695611230}
   - component: {fileID: 1243000465548267798}
   - component: {fileID: 3045674022276790409}
+  - component: {fileID: 2843371217474550370}
+  - component: {fileID: 3616817996004203810}
+  - component: {fileID: 8580993712917369915}
   m_Layer: 13
   m_Name: PlayerCapsule
   m_TagString: Player
@@ -273,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55919ac34a26952479f3fc91f777b2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 12
+  MoveSpeed: 15
   SprintSpeed: 6
   RotationSpeed: 1
   SpeedChangeRate: 10
@@ -286,7 +289,7 @@ MonoBehaviour:
   GroundedRadius: 0.5
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 2049
   CinemachineCameraTarget: {fileID: 7355119844846105010}
   TopClamp: 80
   BottomClamp: -80
@@ -294,8 +297,8 @@ MonoBehaviour:
   StrafeTiltSmoothTime: 0.08
   SlideKey: 99
   SlideSpeed: 25
-  SlideTime: 0.75
-  SlideCoolDown: 0.5
+  SlideTime: 0.5
+  SlideCoolDown: 1
   SlideCoolDownTimer: 0
   CanSlide: 1
   CameraRoot: {fileID: 2987041761001310768}
@@ -324,6 +327,15 @@ MonoBehaviour:
   SpeedThreshold: 0
   CurrentSpeed: 0
   SpeedLine: {fileID: 0}
+  IsDualJump: 0
+  MaxJumps: 2
+  CurrentjumpCount: 0
+  WasGrounded: 0
+  FirstJumpSpeed: 3
+  SecondJumpSpeed: 10
+  DoubleJumpMaxHeight: 3
+  LimitDoubleJumpHeight: 0
+  DualJumpScreenShake: {fileID: 3616817996004203810}
   CS: 0
   Lock: 0
 --- !u!114 &4049161066265936619
@@ -503,7 +515,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    ImpulseDuration: 0.75
+    ImpulseDuration: 0.5
     ImpulseType: 0
     DissipationRate: 0.25
     RawSignal: {fileID: 0}
@@ -535,6 +547,90 @@ MonoBehaviour:
     DissipationDistance: 100
     PropagationSpeed: 343
   DefaultVelocity: {x: 0, y: -0.1, z: 0}
+--- !u!114 &2843371217474550370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328618496563296605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7339b492b93fdc347b9c39e041a38cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Coins: 0
+--- !u!114 &3616817996004203810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328618496563296605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 1
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.3
+    ImpulseType: 0
+    DissipationRate: 0.25
+    RawSignal: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 0.2
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 0, y: 0.1, z: -0.3}
+--- !u!114 &8580993712917369915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328618496563296605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417e11102618c0b4fa3068457d02a66f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FallY: -30
+  CheckRadius: 0.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  LastSafePosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1489116228095896152
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,8 +680,8 @@ Camera:
   m_GameObject: {fileID: 1489116228095896152}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.2675329, g: 0.29933944, b: 0.33962262, a: 0}
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.18307228, g: 0.19337751, b: 0.20754719, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -694,7 +790,7 @@ MonoBehaviour:
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
-  m_Dithering: 0
+  m_Dithering: 1
   m_ClearDepth: 1
   m_AllowXRRendering: 1
   m_AllowHDROutput: 1
@@ -1702,11 +1798,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OriginWeaponsList:
-  - {fileID: 7617261173868679732, guid: 303440436758efa4fa83c6ada48711ca, type: 3}
+  - {fileID: 7663199390295935275, guid: 65c0c2df77454044db4f81d52fefc861, type: 3}
   - {fileID: 7617261173868679732, guid: 303440436758efa4fa83c6ada48711ca, type: 3}
   WeaponsOnEquipmentList: []
   GrenadeList:
-  - {fileID: 5312831152365387784, guid: a84007f64609c064883967490c037a07, type: 3}
+  - {fileID: 5312831152365387784, guid: 92a15329f48eaeb4899e0eb49bacb652, type: 3}
   Key: 113
   Key2: 101
   Key3: 102
@@ -7268,7 +7364,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1717
+  m_VersionIndex: 1738
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
