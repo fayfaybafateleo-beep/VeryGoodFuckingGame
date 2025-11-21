@@ -43,7 +43,7 @@ public class PlayerAntiFall : MonoBehaviour
 
     void CheckFall()
     {
-        if (transform.position.y < FwallY)
+        if (transform.position.y < FallY)
         {
             Respawn();
         }
