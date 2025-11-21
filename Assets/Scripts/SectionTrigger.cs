@@ -16,8 +16,8 @@ public class SectionTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (HasTriggered && TriggerOnce) return;
-
+        if (HasTriggered && TriggerOnce ) return;
+        if(other.gameObject.tag!="Player")return;
         if (IsStartTrigger)
         {
             SectionManager.SetActive(Section, true);

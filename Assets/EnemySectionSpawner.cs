@@ -33,6 +33,7 @@ public class EnemySectionSpawner : MonoBehaviour
 
     private void Update()
     {
+        MaxSpawnInThisSection = SectionManager.TargetSpawnCount;
         if (SectionManager == null) return;
 
         // ActiveWhileSectionManagerIsActive
