@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class SectionTrigger : MonoBehaviour
 {
+    [Header("WholeLevelControl")]
+    public GameLevelControl GLC;
+
     [Header("SectionPart")]
     public SectionManager.SectionType Section;
 
@@ -18,6 +21,7 @@ public class SectionTrigger : MonoBehaviour
     {
         if (HasTriggered && TriggerOnce ) return;
         if(other.gameObject.tag!="Player")return;
+        if (GLC.IsActive == false) return;
         if (IsStartTrigger)
         {
             SectionManager.SetActive(Section, true);

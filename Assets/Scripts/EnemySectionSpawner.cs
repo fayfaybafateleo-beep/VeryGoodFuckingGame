@@ -70,7 +70,8 @@ public class EnemySectionSpawner : MonoBehaviour
             spawnPoint = SpawnPositions[Random.Range(0, SpawnPositions.Count)];
         }
 
-        Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+        GameObject enemy=   Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+        enemy.GetComponent<EnemyHealth>().Section= Section;
 
         LocalSpawnCount++;
         SectionManager.RegisterSpawn();  // 通知 SectionManager：又刷了一个

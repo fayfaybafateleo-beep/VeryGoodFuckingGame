@@ -78,6 +78,9 @@ public class EnemyHealth : MonoBehaviour
     public List<GameObject> FirstClass;
     public GameObject Coin;
     public float DropChance;
+
+    [Header("Sections")]
+    public SectionManager.SectionType Section;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -214,6 +217,8 @@ public class EnemyHealth : MonoBehaviour
             lights.GetComponent<Renderer>().material = LightsOffMaterial;
         }
         KillFeed.Instance.AddKillLIst("Kill", 5,1, new Vector3(1f, 1f, 1f));
+
+        SectionManager.Instance.RegisterKill(Section);
     }
     public void EnemyKinematic()
     {
