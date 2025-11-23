@@ -198,6 +198,20 @@ public class SectionManager : MonoBehaviour
         }
     }
 
+    public void ResetState()
+    {
+        foreach (SectionType st in Enum.GetValues(typeof(SectionType)))
+        {
+            Active[st] = false;
+            Done[st] = false;
+            KillCounts[st] = 0;
+        }
+
+        CurrentSpawnCount = 0;
+        TargetSpawnCount = 0;
+
+        SyncToInspectorBools();
+    }
     void Update()
     {
        

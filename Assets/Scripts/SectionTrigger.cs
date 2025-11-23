@@ -35,4 +35,9 @@ public class SectionTrigger : MonoBehaviour
 
         HasTriggered = true;
     }
+    public void ResetTrigger()
+    {
+        HasTriggered = false;
+        TriggerOnce = true;
+    }
 }

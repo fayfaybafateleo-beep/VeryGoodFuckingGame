@@ -14,12 +14,12 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
-  m_FogDensity: 0.01
+  m_Fog: 1
+  m_FogColor: {r: 0.31132078, g: 0.18649878, b: 0.18649878, a: 1}
+  m_FogMode: 1
+  m_FogDensity: 0.05
   m_LinearFogStart: 0
-  m_LinearFogEnd: 300
+  m_LinearFogEnd: 67.32
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
@@ -1549,7 +1549,7 @@ GameObject:
   - component: {fileID: 125713366}
   - component: {fileID: 125713365}
   m_Layer: 0
-  m_Name: 'EndTrigger '
+  m_Name: 'LevelEndTrigger '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4237,7 +4237,7 @@ GameObject:
   - component: {fileID: 323903869}
   - component: {fileID: 323903868}
   m_Layer: 0
-  m_Name: StartTrigger
+  m_Name: LevelStartTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15616,6 +15616,20 @@ MonoBehaviour:
   Zone1: {fileID: 0}
   Zone2: {fileID: 0}
   Zone3: {fileID: 0}
+  SM: {fileID: 1189504416}
+  Triggers:
+  - {fileID: 118307809}
+  - {fileID: 1417747739}
+  - {fileID: 1168033999}
+  LevelTriggers:
+  - {fileID: 323903868}
+  - {fileID: 125713365}
+  - {fileID: 1108697575}
+  - {fileID: 402110405}
+  Spawners:
+  - {fileID: 1571874012}
+  - {fileID: 1807207355}
+  - {fileID: 1030557851}
   LS: 0
 --- !u!1 &902751135
 GameObject:

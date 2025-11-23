@@ -49,4 +49,9 @@ public class SectorDoor : MonoBehaviour
     {
         Blocker.SetActive(false);
     }
+    public void ResetGate()
+    {
+        Blocker.SetActive(true);
+        GateAnimator.SetTrigger("Reset");
+    }
 }

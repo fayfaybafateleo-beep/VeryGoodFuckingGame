@@ -23,4 +23,8 @@ public class LevelTriggers : MonoBehaviour
             IsTriggered = true;
         }
     }
+    public void ResetTrigger()
+    {
+        IsTriggered = false;
+    }
 }

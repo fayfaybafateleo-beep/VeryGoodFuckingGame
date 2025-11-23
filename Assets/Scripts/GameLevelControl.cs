@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameLevelControl : MonoBehaviour
@@ -17,7 +19,13 @@ public class GameLevelControl : MonoBehaviour
     public GameObject Zone2;
     public GameObject Zone3;
 
+    [Header("Manager")]
+    public SectionManager SM;
 
+    public List<SectionTrigger> Triggers;
+    public List<LevelTriggers> LevelTriggers;
+    public List<EnemySectionSpawner> Spawners;
+    public List<SectorDoor> Gates;
     public enum LevelState
     { 
         NotActive,
@@ -39,7 +47,7 @@ public class GameLevelControl : MonoBehaviour
         {
             return;
         }
-        
+        if (Input.GetKeyDown(KeyCode.L)) ResetLevel();
         switch (LS) 
         {
             case LevelState.NotActive:
@@ -64,5 +72,27 @@ public class GameLevelControl : MonoBehaviour
         }
 
     }
+    public void ResetLevel()
+    {
+        foreach(var st in Triggers)
+        {
+            st.ResetTrigger();
+        }
+        foreach (var st2 in LevelTriggers)
+        {
+            st2.ResetTrigger();
+        }
+        foreach (var st3 in Spawners)
+        {
+            st3.ResetState();
+        }
+        foreach(var st4 in Gates)
+        {
+            st4.ResetGate();
+        }
+        SM.ResetState();
+        LS = LevelState.NotActive;
+    }
 
 }
+
