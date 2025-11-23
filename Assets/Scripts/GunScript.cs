@@ -5,6 +5,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.Profiling;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 
 public class GunScript : MonoBehaviour
@@ -15,6 +16,9 @@ public class GunScript : MonoBehaviour
 
     [Header("Bullet")]
     public Transform FirePoint;
+    public int CurrentFirePointIndex = 0;
+    public bool IsMultiFirepoint=false;
+    public List<Transform> FirePoints = new List<Transform>();
     public Bullet BulletPrefab;
     public int PenertrateCount=1;
 
@@ -138,10 +142,16 @@ public class GunScript : MonoBehaviour
         Vector3 DirFromMuzzle = (EndPoint - FirePoint.position).normalized;
 
         Quaternion aim = Quaternion.LookRotation(DirFromMuzzle, Vector3.up);
-        FirePoint.rotation = aim;
 
-        Debug.DrawRay(RayOrigin, RayDir * MaxDistance, Color.cyan);             
-        Debug.DrawRay(FirePoint.position, DirFromMuzzle * MaxDistance, Color.red);
+        if(FirePoints.Count > 0)
+        {
+            foreach(var fp in FirePoints)
+            {
+                fp.rotation = aim;
+            }
+        }
+
+        FirePoint.rotation = aim;
 
         if (MagazineCounter <= 0)
         {
@@ -308,6 +318,21 @@ public class GunScript : MonoBehaviour
 
     public void GunFire()
     {
+        Transform currentFirePoint;
+
+        if (FirePoints != null && FirePoints.Count > 0)
+        {
+            currentFirePoint = FirePoints[CurrentFirePointIndex];
+
+            CurrentFirePointIndex++;
+            if (CurrentFirePointIndex >= FirePoints.Count)
+                CurrentFirePointIndex = 0;
+        }
+        else
+        {
+            currentFirePoint = FirePoint;
+        }
+
         // Sound
         AudioSource.PlayOneShot(ClipShooting);
         // Fire
@@ -321,16 +346,16 @@ public class GunScript : MonoBehaviour
             float yaw = c.x * HorizontalSpreadAngle;
             float pitch = c.y * VerticalSpreadAngle;
 
-            Quaternion spreadRot = FirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
+            Quaternion spreadRot = currentFirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
 
-            Bullet bullet = Instantiate(BulletPrefab, FirePoint.position, spreadRot);
+            Bullet bullet = Instantiate(BulletPrefab, currentFirePoint.position, spreadRot);
             bullet.GetComponent<Bullet>().Damage = GunDamage;
             bullet.GetComponent<Bullet>().PenatrateLevel = GunPeneration;
             bullet.GetComponent<Bullet>().MaxPenetrateTargets = PenertrateCount;
         }
         //muzzleFlash//
-        GameObject muzzleFlash = Instantiate(MuzzleFlash, FirePoint.position, FirePoint.rotation);
-        muzzleFlash.transform.SetParent(FirePoint);
+        GameObject muzzleFlash = Instantiate(MuzzleFlash, currentFirePoint.position, currentFirePoint.rotation);
+        muzzleFlash.transform.SetParent(currentFirePoint);
 
         //Shell//
         ShellEject();

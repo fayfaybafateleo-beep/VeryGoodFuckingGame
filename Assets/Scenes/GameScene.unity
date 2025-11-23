@@ -38451,7 +38451,7 @@ Transform:
   m_GameObject: {fileID: 8019977592520595721}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -268, y: 6, z: 14.4}
+  m_LocalPosition: {x: -37.1, y: 6, z: 14.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -40038,7 +40038,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartPoint: {fileID: 1838540467459554240}
   EndPoint: {fileID: 7706928968055396198}
-  Radius: 0.15
+  Radius: 0.4
   HitMask:
     serializedVersion: 2
     m_Bits: 2305
@@ -41569,7 +41569,7 @@ Transform:
   m_GameObject: {fileID: 3344583132213513370}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -268, y: 7.375, z: 14.4}
+  m_LocalPosition: {x: -37.1, y: 7.375, z: 14.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -43459,7 +43459,7 @@ Transform:
   m_GameObject: {fileID: 7608544643299379724}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -268, y: 7.375, z: 14.4}
+  m_LocalPosition: {x: -37.1, y: 7.375, z: 14.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -52378,6 +52378,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 
   FirePoint: {fileID: 0}
+  CurrentFirePointIndex: 0
+  IsMultiFirepoint: 0
+  FirePoints: []
   BulletPrefab: {fileID: 3454573842243275128, guid: c87df9d91869f9240b5d030728824403, type: 3}
   PenertrateCount: 0
   FireRate: 100
@@ -52825,8 +52828,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OriginWeaponsList:
-  - {fileID: 3149476838327951459, guid: 622cb3b7ba3cd8c44b8e572c7fa0a30c, type: 3}
-  - {fileID: 5765748169061680932, guid: 2873b6c1c21e1ef41a0b42c0aa04f131, type: 3}
+  - {fileID: 7617261173868679732, guid: 303440436758efa4fa83c6ada48711ca, type: 3}
+  - {fileID: 7663199390295935275, guid: 65c0c2df77454044db4f81d52fefc861, type: 3}
   WeaponsOnEquipmentList: []
   GrenadeList:
   - {fileID: 5312831152365387784, guid: 92a15329f48eaeb4899e0eb49bacb652, type: 3}
