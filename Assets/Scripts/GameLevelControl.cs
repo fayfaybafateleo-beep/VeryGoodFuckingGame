@@ -39,7 +39,7 @@ public class GameLevelControl : MonoBehaviour
         {
             return;
         }
-
+        
         switch (LS) 
         {
             case LevelState.NotActive:

@@ -42,7 +42,7 @@ public class SectionManager : MonoBehaviour
     public int Section2KillTarget = 30;   
     public int Section3KillTarget = 40;   
     public Dictionary<SectionType, int> KillCounts = new Dictionary<SectionType, int>();
-
+    public int ShowKillCounts;
     public static SectionManager Instance { get; private set; }
 
     private void Awake()
@@ -83,6 +83,7 @@ public class SectionManager : MonoBehaviour
             CurrentSpawnCount = 0;                          
             TargetSpawnCount = GetMaxSpawnForSection(section);
             KillCounts[section] = 0;
+            ShowKillCounts = 0;
         }
     }
 
@@ -170,7 +171,7 @@ public class SectionManager : MonoBehaviour
             KillCounts[section] = 0;
 
         KillCounts[section]++;
-
+        ShowKillCounts ++;
         int target = GetKillTargetForSection(section);
 
         // 如果这个 Section 没设置目标（=0），就不做判定
