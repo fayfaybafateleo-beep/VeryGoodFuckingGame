@@ -86,12 +86,12 @@ public class GameLevelControl : MonoBehaviour
         {
             st3.ResetState();
         }
-        foreach(var st4 in Gates)
+        SM.ResetState();
+        LS = LevelState.NotActive;
+        foreach (var st4 in Gates)
         {
             st4.ResetGate();
         }
-        SM.ResetState();
-        LS = LevelState.NotActive;
     }
 
 }
