@@ -94,9 +94,14 @@ public class EnemyBehaviour : MonoBehaviour
     void FixedUpdate()
     {
         // Reset attack timer when not attacking
-        if (ES != EnemyState.Attack)
+        if (ES == EnemyState.Die || ES == EnemyState.Shock)
         {
             AttackRateTimer = 0;
+        }
+
+        if (AttackRateTimer > AttackRate)
+        {
+            AttackRateTimer = AttackRate;
         }
         // Shocked check
         bool allDestroyed = !ImportantPartList.Exists(p => p);
@@ -170,6 +175,9 @@ public class EnemyBehaviour : MonoBehaviour
                     StrafeSign *= -1f;
                     NextStrafeFlip = Random.Range(StrafeChangeIntervalMin, StrafeChangeIntervalMax);
                 }
+
+                //FireCountDown
+                AttackRateTimer += Time.deltaTime;
 
                 // EnterAttack Mode
                 float atkDist = (Target.transform.position - transform.position).sqrMagnitude;
