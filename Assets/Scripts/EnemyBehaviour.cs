@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyBehaviour : MonoBehaviour
 {
+    public string Name;
+
     [Header("Target")]
     public GameObject Target;
     public NavMeshAgent Agent;
@@ -44,6 +46,7 @@ public class EnemyBehaviour : MonoBehaviour
     public List<GameObject> ImportantPartList;
 
     public bool Shocked = false;
+
 
     public enum EnemyState 
     {

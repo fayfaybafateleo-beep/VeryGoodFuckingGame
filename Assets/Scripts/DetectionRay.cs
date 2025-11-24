@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DetectionRay : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class DetectionRay : MonoBehaviour
     public float Dist;
     public LayerMask EnemyLayer;
     public Camera Cam;
+    public float AimRadius = 0.3f;   // 可以在 Inspector 里调，比如 0.2 ~ 0.5 试试
 
     [Header("Execution")]
     public GameObject ExecutionText;
@@ -24,6 +26,17 @@ public class DetectionRay : MonoBehaviour
     public float FadeDuration = 0.5f;
     private float FadeTimer;
     public CanvasGroup CG;
+
+    [Header("EnemyHealthSystem")]
+    public GameObject EnemyDetailGroup;
+    public GameObject EnemyExecuteHint;
+    public Image EnemyHealthBar;
+    public TextMeshProUGUI ThoughnessAmount;
+    public TextMeshProUGUI ThoughnessCompare;
+    public TextMeshProUGUI EnemyName;
+
+    [Header("WeaponData")]
+    public MagazineCounterUI MGUI;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -77,17 +90,47 @@ public class DetectionRay : MonoBehaviour
         Ray ray = Cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         Debug.DrawRay(ray.origin, ray.direction * MaxDistance, Color.red, 1f);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, MaxDistance, EnemyLayer))
+        if (Physics.SphereCast(ray, AimRadius, out RaycastHit hit, MaxDistance, EnemyLayer))
         {
             EnemyHealth eh = hit.collider.GetComponentInParent<EnemyHealth>();
             EnemyBehaviour eb  = hit.collider.GetComponentInParent<EnemyBehaviour>();
             if (eh != null)
             {
+                EnemyDetailGroup.SetActive(true);
 
+                EnemyHealthBar.fillAmount = eh.Health / eh.MaxHealth;
+                ThoughnessAmount.text = eh.Thougthness.ToString();
+
+                EnemyName.text = eb.Name;
+
+                if (eb.ES == EnemyBehaviour.EnemyState.Shock)
+                {
+                    EnemyExecuteHint.SetActive(true);
+                }
+                else
+                {
+                    EnemyExecuteHint.SetActive(false);
+                }
+
+                if (MGUI.CurrentAP > eh.Thougthness)
+                {
+                    ThoughnessCompare.text = "<";
+                    ThoughnessCompare.color= Color.green;
+                }
+                if (MGUI.CurrentAP < eh.Thougthness)
+                {
+                    ThoughnessCompare.text = ">";
+                    ThoughnessCompare.color = Color.red;
+                }
+                if (MGUI.CurrentAP == eh.Thougthness)
+                {
+                    ThoughnessCompare.text = "|";
+                    ThoughnessCompare.color = Color.yellow;
+                }
             }
-            else
+            if(eh == null)
             {
-
+                EnemyDetailGroup.SetActive(false);
             }
             if(eb!=null && eb.ES == EnemyBehaviour.EnemyState.Shock)
             {

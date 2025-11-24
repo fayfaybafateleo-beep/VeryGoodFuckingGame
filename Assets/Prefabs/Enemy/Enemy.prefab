@@ -1299,6 +1299,7 @@ MonoBehaviour:
   - {fileID: 987435135784451071, guid: 64f55c6948d327543a6f86921ff72714, type: 3}
   Coin: {fileID: 8850797187182654025, guid: b60384feeecd94b4cbb136117f0fd03a, type: 3}
   DropChance: 0.05
+  Section: 0
 --- !u!95 &5161086026593443594
 Animator:
   serializedVersion: 7
@@ -1405,6 +1406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a216a0018b6c10b41a78a7ba0a6c3952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: MobGunner
   Target: {fileID: 4499031727440548263}
   Agent: {fileID: 2417986734043512879}
   MoveForce: 10

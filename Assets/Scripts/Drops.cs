@@ -37,14 +37,29 @@ public class Drops : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!IsUsed && Type == "Coin")
+        if (!IsUsed)
         {
             Timer += Time.unscaledDeltaTime;
 
             if (Timer >= 3f)
             {
-                PD.Coins += CoinCount;
 
+                if (Type == "Ammo1")
+                {
+                    RecoverAmmo1();
+                }
+                if (Type == "Ammo2")
+                {
+                    RecoverAmmo2();
+                }
+                if (Type == "AmmoG")
+                {
+                    RecoverGrenade();
+                }
+                if (Type == "Coin")
+                {
+                    GetCoin();
+                }
                 IsUsed = true;
                 Destroy(transform.parent.gameObject);
             }
@@ -59,23 +74,39 @@ public class Drops : MonoBehaviour
             //DifferentTypes,DifferentEffect
             if (Type == "Ammo1")
             {
-                GS1.GetBackUpAmmo(GainMultipulier);
+                RecoverAmmo1();
             }
             if (Type == "Ammo2")
             {
-                GS2.GetBackUpAmmo(GainMultipulier);
+                RecoverAmmo2();
             }
             if (Type == "AmmoG")
             {
-                WMScript.GetBackUpGrenade();
+                RecoverGrenade();
             }
             if(Type == "Coin")
             {
-                PD.Coins += CoinCount;
+                GetCoin();
             }
 
             var parent = transform.parent;
             Destroy(parent.gameObject, 0f);
         }
+    }
+    public void RecoverAmmo1()
+    {
+        GS1.GetBackUpAmmo(GainMultipulier);
+    }
+    public void RecoverAmmo2()
+    {
+        GS2.GetBackUpAmmo(GainMultipulier);
+    }
+    public void RecoverGrenade()
+    {
+        WMScript.GetBackUpGrenade();
+    }
+    public void GetCoin()
+    {
+        PD.Coins += CoinCount;;
     }
 }

@@ -11,7 +11,7 @@ public class MagazineCounterUI : MonoBehaviour
     public WeaponManager WMScript;
     public GameObject Player;
     public PlayerGetInCar PIC;
-   
+    public int CurrentAP;
 
     [Header("UI")]
     public TextMeshProUGUI Text;
@@ -63,22 +63,26 @@ public class MagazineCounterUI : MonoBehaviour
             GunNumber.text = "1";
 
             gs = firstGun.GetComponent<GunScript>();
+            CurrentAP = gs.GunPeneration;
             Text.text = gs.MagazineCounter.ToString() + "/" + gs.CurrentCapasity.ToString();
             if (gs.GS == GunScript.GunState.Reload)
             {
                 ReloadBar.fillAmount = gs.ReloadTimer / gs.ReloadTime;
             }
+           
         }
         else
         {
             GunNumber.text = "2";
 
             gs = secondGun.GetComponent<GunScript>();
+            CurrentAP = gs.GunPeneration;
             Text.text = gs.MagazineCounter.ToString() + "/" + gs.CurrentCapasity.ToString();
             if (gs.GS == GunScript.GunState.Reload)
             {
                 ReloadBar.fillAmount = gs.ReloadTimer / gs.ReloadTime;
             }
+             
         }
         //DetectReloadState
         if (gs.GS == GunScript.GunState.Reload)
