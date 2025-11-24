@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -318,5 +319,13 @@ public class WeaponManager : MonoBehaviour
     public void GetBackUpGrenade()
     {
         CurrentCount += RecoverCount;
+    }
+
+    public void RecoverGunBurst()
+    {
+        foreach(var gun in WeaponsOnEquipmentList)
+        {
+            gun.GetComponent<GunScript>().IsBursting = false;
+        }
     }
 }

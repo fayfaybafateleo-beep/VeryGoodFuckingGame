@@ -20,6 +20,7 @@ public class PlayerGetInCar : MonoBehaviour
     
     public Transform OriginalParent;
     public int OriginalSiblingIndex;
+    public WeaponManager WM;
 
     public void Start()
     {
@@ -32,6 +33,8 @@ public class PlayerGetInCar : MonoBehaviour
        DropPoint = GameObject.FindGameObjectWithTag("DropPoint");
 
        MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        WM = GameObject.FindGameObjectWithTag("WeaponManager").GetComponent<WeaponManager>();
     }
 
     public void Update()
@@ -105,6 +108,8 @@ public class PlayerGetInCar : MonoBehaviour
             if (child.name == "OverLayCamera") continue;
             child.gameObject.SetActive(true);
         }
+
+        WM.RecoverGunBurst();
 
         IsMounted = false;
     }
