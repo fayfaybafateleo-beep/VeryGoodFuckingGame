@@ -26,6 +26,7 @@ public class GameLevelControl : MonoBehaviour
     public List<LevelTriggers> LevelTriggers;
     public List<EnemySectionSpawner> Spawners;
     public List<SectorDoor> Gates;
+    public GameObject ExitTrigger;
     public enum LevelState
     { 
         NotActive,
@@ -52,6 +53,7 @@ public class GameLevelControl : MonoBehaviour
         {
             case LevelState.NotActive:
                 IsActive = false;
+                ExitTrigger.SetActive(false);
 
                 if (StartTrigger.IsTriggered)
                 {
@@ -60,6 +62,7 @@ public class GameLevelControl : MonoBehaviour
                 break;
             case LevelState.Active:
                 IsActive = true;
+                ExitTrigger.SetActive(false);
 
                 if (EndTrigger.IsTriggered)
                 {
@@ -67,7 +70,7 @@ public class GameLevelControl : MonoBehaviour
                 }
                 break;
             case LevelState.End:
-
+                ExitTrigger.SetActive(true);
                 break;
         }
 
