@@ -2369,6 +2369,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: ShotGun UltraShorty
   FirePoint: {fileID: 6328008716768508170}
+  CurrentFirePointIndex: 0
+  IsMultiFirepoint: 0
+  FirePoints: []
   BulletPrefab: {fileID: 6506540414330150620, guid: 3163e6c9d4a31084089e044304871cfd, type: 3}
   PenertrateCount: 1
   FireRate: 94
@@ -2394,7 +2397,7 @@ MonoBehaviour:
   GunAnimator: {fileID: 1458400183304755529}
   AnimatorSpeed: 4
   shake: {fileID: 4404955300069377803}
-  GunDamage: 30
+  GunDamage: 25
   GunPeneration: 2
   Camera: {fileID: 0}
   MaxDistance: 60

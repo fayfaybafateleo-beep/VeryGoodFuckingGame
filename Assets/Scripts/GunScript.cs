@@ -236,7 +236,7 @@ public class GunScript : MonoBehaviour
                 break;
             case GunState.CeaseFire:
                 SetBlur(0);
-
+                IsBursting = false;
                 //Reload
                 if (MagazineCounter <= 0)
                 {
@@ -245,6 +245,7 @@ public class GunScript : MonoBehaviour
                 break;
 
             case GunState.Reload:
+                IsBursting = false;
                 if (NeedReload && CurrentCapasity > 0)
                 {
                     ReloadTimer += Time.deltaTime;
