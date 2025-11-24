@@ -22,6 +22,9 @@ public class SectorDoor : MonoBehaviour
     [Header("ExitGate")]
     public bool IsExit;
     public GameLevelControl CLC;
+
+    [Header("StartGate")]
+    public bool IsStart;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,6 +36,16 @@ public class SectorDoor : MonoBehaviour
     void Update()
     {
         float dist = Vector3.Distance(Player.position, transform.position);
+        //StartGate
+        if(IsStart && CLC.LS == GameLevelControl.LevelState.NotActive)
+        {
+            GateAnimator.SetTrigger("Open");
+        }
+        if(IsStart && CLC.LS != GameLevelControl.LevelState.NotActive)
+        {
+            GateAnimator.SetTrigger("Close");
+        }
+        //EndGate
 
         if (IsExit && CLC.LS==GameLevelControl.LevelState.End)
         {
@@ -46,6 +59,8 @@ public class SectorDoor : MonoBehaviour
                 GateAnimator.SetTrigger("Close");
             }
         }
+        //SectorGate
+
         if (!SectionManager.IsDone(RequiredSection))
             return;
        
