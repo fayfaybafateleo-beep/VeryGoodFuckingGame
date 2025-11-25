@@ -61,18 +61,21 @@ public class SectorDoor : MonoBehaviour
         }
         //SectorGate
 
-        if (!SectionManager.IsDone(RequiredSection))
+        if (!SectionManager.IsDone(RequiredSection) && IsExit && IsStart )
             return;
-       
-        if (dist <= OpenDistance)
-        {
-            GateAnimator.SetTrigger("Open");
-        }
+       if( LT != null)
+       {
+            if (dist <= OpenDistance)
+            {
+                GateAnimator.SetTrigger("Open");
+            }
 
-        if (LT.IsTriggered)
-        {
-            GateAnimator.SetTrigger("Close");
-        }
+            if (LT.IsTriggered)
+            {
+                GateAnimator.SetTrigger("Close");
+            }
+       }
+        
     }
     public void Blocking()
     {

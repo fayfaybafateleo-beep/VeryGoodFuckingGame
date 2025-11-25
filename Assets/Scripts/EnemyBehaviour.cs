@@ -122,6 +122,7 @@ public class EnemyBehaviour : MonoBehaviour
             case EnemyState.Moving:
                 if (Target == null) return;
 
+
                 EnemyAnimator.SetBool("Run", true);
                 Agent.SetDestination(Target.transform.position);
                 Agent.nextPosition = Rigidbody.position;
