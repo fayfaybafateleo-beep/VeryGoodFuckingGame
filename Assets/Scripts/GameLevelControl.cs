@@ -48,7 +48,6 @@ public class GameLevelControl : MonoBehaviour
         {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.L)) ResetLevel();
         switch (LS) 
         {
             case LevelState.NotActive:
@@ -71,6 +70,7 @@ public class GameLevelControl : MonoBehaviour
                 break;
             case LevelState.End:
                 ExitTrigger.SetActive(true);
+                IsSeleted = false;
                 break;
         }
 

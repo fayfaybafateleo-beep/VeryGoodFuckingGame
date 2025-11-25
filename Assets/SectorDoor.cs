@@ -37,11 +37,12 @@ public class SectorDoor : MonoBehaviour
     {
         float dist = Vector3.Distance(Player.position, transform.position);
         //StartGate
-        if(IsStart && CLC.LS == GameLevelControl.LevelState.NotActive)
+        if(IsStart && CLC.LS == GameLevelControl.LevelState.NotActive && CLC.IsSeleted)
         {
             GateAnimator.SetTrigger("Open");
+            GateAnimator.Play("Open");
         }
-        if(IsStart && CLC.LS != GameLevelControl.LevelState.NotActive)
+        if(IsStart && CLC.LS != GameLevelControl.LevelState.NotActive && CLC.IsSeleted==false)
         {
             GateAnimator.SetTrigger("Close");
         }
@@ -61,7 +62,7 @@ public class SectorDoor : MonoBehaviour
         }
         //SectorGate
 
-        if (!SectionManager.IsDone(RequiredSection) && IsExit && IsStart )
+       if (!SectionManager.IsDone(RequiredSection) || IsExit || IsStart )
             return;
        if( LT != null)
        {
