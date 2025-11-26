@@ -54,22 +54,27 @@ public class EnemySectionSpawner : MonoBehaviour
         SpawnTimer = 0f;
 
         Spawn();
+
+       
+
     }
 
     private void Spawn()
     {
         if (ObjectList.Count == 0) return;
 
-     
+        Vector2 offset = Random.insideUnitCircle * 1f;
         GameObject prefab = ObjectList[Random.Range(0, ObjectList.Count)];
 
         Transform spawnPoint = transform;
+        Vector3 offsetPoisition = spawnPoint.position;
         if (SpawnPositions.Count > 0)
         {
-            spawnPoint = SpawnPositions[Random.Range(0, SpawnPositions.Count)];
+            spawnPoint = SpawnPositions[Random.Range(0, SpawnPositions.Count)] ;
+            offsetPoisition = spawnPoint.position + new Vector3(offset.x, 0f, offset.y);
         }
 
-        GameObject enemy=   Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+        GameObject enemy=   Instantiate(prefab, offsetPoisition, spawnPoint.rotation);
         enemy.GetComponent<EnemyHealth>().Section= Section;
 
         LocalSpawnCount++;
