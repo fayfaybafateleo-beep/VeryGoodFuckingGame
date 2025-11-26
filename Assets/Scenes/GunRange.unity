@@ -94,7 +94,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 2f288e1536ddac646a847d2dad2c9929, type: 2}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 8bb1cc005ed4f1844b2b4167d50a7222, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1953,7 +1953,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 4280547130729450097, guid: 64f55c6948d327543a6f86921ff72714, type: 3}
+  SM: {fileID: 0}
   InsNUm: 1
+  ObjectList: []
+  CanInstan: 0
+  SpawnCD: 0
+  SpawnCurrentCD: 0
+  IsSectionSpawner: 0
 --- !u!65 &353389059
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3335,7 +3341,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 4499031727440548263, guid: f838e0847690665448903ec510bc32fd, type: 3}
+  SM: {fileID: 0}
   InsNUm: 3
+  ObjectList: []
+  CanInstan: 0
+  SpawnCD: 0
+  SpawnCurrentCD: 0
+  IsSectionSpawner: 0
 --- !u!65 &533306122
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3888,7 +3900,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 4499031727440548263, guid: 38819a383f137bd4887ddebc96c61045, type: 3}
+  SM: {fileID: 0}
   InsNUm: 5
+  ObjectList: []
+  CanInstan: 0
+  SpawnCD: 0
+  SpawnCurrentCD: 0
+  IsSectionSpawner: 0
 --- !u!65 &565857835
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4218,7 +4236,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 5616591609401060697, guid: af59abd832e89e14a8073719be906340, type: 3}
+  SM: {fileID: 0}
   InsNUm: 1
+  ObjectList: []
+  CanInstan: 0
+  SpawnCD: 0
+  SpawnCurrentCD: 0
+  IsSectionSpawner: 0
 --- !u!65 &621648955
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4543,6 +4567,7 @@ MonoBehaviour:
   WMScript: {fileID: 0}
   Player: {fileID: 0}
   PIC: {fileID: 0}
+  CurrentAP: 0
   Text: {fileID: 815096325}
   GLAmmoText: {fileID: 204798132}
   GunNumber: {fileID: 310706167}
@@ -5245,7 +5270,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 4499031727440548263, guid: 38819a383f137bd4887ddebc96c61045, type: 3}
+  SM: {fileID: 0}
   InsNUm: 3
+  ObjectList: []
+  CanInstan: 0
+  SpawnCD: 0
+  SpawnCurrentCD: 0
+  IsSectionSpawner: 0
 --- !u!65 &718100664
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5481,7 +5512,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 4499031727440548263, guid: a740ee7084ea141408fa19eb99f7fada, type: 3}
+  SM: {fileID: 0}
   InsNUm: 3
+  ObjectList: []
+  CanInstan: 0
+  SpawnCD: 0
+  SpawnCurrentCD: 0
+  IsSectionSpawner: 0
 --- !u!65 &770645331
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6679,7 +6716,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 4499031727440548263, guid: f838e0847690665448903ec510bc32fd, type: 3}
+  SM: {fileID: 0}
   InsNUm: 5
+  ObjectList: []
+  CanInstan: 0
+  SpawnCD: 0
+  SpawnCurrentCD: 0
+  IsSectionSpawner: 0
 --- !u!65 &918086917
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8534,7 +8577,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 4499031727440548263, guid: a740ee7084ea141408fa19eb99f7fada, type: 3}
+  SM: {fileID: 0}
   InsNUm: 5
+  ObjectList: []
+  CanInstan: 0
+  SpawnCD: 0
+  SpawnCurrentCD: 0
+  IsSectionSpawner: 0
 --- !u!65 &1395599226
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11498,7 +11547,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 5366077334996044442, guid: a0b0932f548e2774b8c4032de307a164, type: 3}
+  SM: {fileID: 0}
   InsNUm: 1
+  ObjectList: []
+  CanInstan: 0
+  SpawnCD: 0
+  SpawnCurrentCD: 0
+  IsSectionSpawner: 0
 --- !u!65 &2060787774
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17546,7 +17601,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 
   FirePoint: {fileID: 0}
+  CurrentFirePointIndex: 0
+  IsMultiFirepoint: 0
+  FirePoints: []
   BulletPrefab: {fileID: 3454573842243275128, guid: c87df9d91869f9240b5d030728824403, type: 3}
+  PenertrateCount: 1
   FireRate: 100
   BurstRate: 0
   IsBurstFire: 0

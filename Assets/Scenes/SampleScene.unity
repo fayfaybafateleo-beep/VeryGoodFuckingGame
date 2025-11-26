@@ -94,7 +94,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 2f288e1536ddac646a847d2dad2c9929, type: 2}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 8bb1cc005ed4f1844b2b4167d50a7222, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -316,6 +316,7 @@ MonoBehaviour:
   IsMounted: 0
   OriginalParent: {fileID: 0}
   OriginalSiblingIndex: 0
+  WM: {fileID: 0}
 --- !u!1 &85628620
 GameObject:
   m_ObjectHideFlags: 0
@@ -3325,6 +3326,7 @@ MonoBehaviour:
   RotationAmplitude: 6
   Frequency: 18
   ShakeHoldTime: 0.04
+  KillShakeHoldTime: 0.2
   FadeOut: 0.14
   UseUnscaledTime: 1
   HitMarkHitSound: {fileID: 657333964}
@@ -3781,6 +3783,10 @@ MonoBehaviour:
   Impulse: {fileID: 867014031}
   IsBursting: 0
   MuzzelFlash: {fileID: 2933326327969011748, guid: 6600eb2f57e0f714b8b06d8f4f40220d, type: 3}
+  CurrentCount: 0
+  RecoverCount: 0
+  InitialCount: 0
+  MaxCount: 0
   GLsound: {fileID: 867014032}
   GLFireClip: {fileID: 8300000, guid: b926075a8932c1741b93ffc6cc5df8e8, type: 3}
   MeleeRate: 0.5
@@ -3823,6 +3829,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 0}
+  SM: {fileID: 0}
+  InsNUm: 0
+  ObjectList: []
+  CanInstan: 0
+  SpawnCD: 0
+  SpawnCurrentCD: 0
+  IsSectionSpawner: 0
 --- !u!65 &770645331
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15225,11 +15238,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 
   FirePoint: {fileID: 0}
+  CurrentFirePointIndex: 0
+  IsMultiFirepoint: 0
+  FirePoints: []
   BulletPrefab: {fileID: 3454573842243275128, guid: c87df9d91869f9240b5d030728824403, type: 3}
-  MagazineCount: 0
+  PenertrateCount: 1
   FireRate: 100
-  SpreadAngle: 0.2
+  BurstRate: 0
+  IsBurstFire: 0
+  BurstCount: 3
+  IsBursting: 0
+  BurstInterval: 0
+  MagazineCount: 0
+  MagazineCounter: 0
+  ReloadTime: 0
+  ReloadTimer: 0
+  NeedReload: 0
+  VerticalSpreadAngle: 6
+  HorizontalSpreadAngle: 6
   SlugCount: 1
+  Shell: {fileID: 0}
+  ShellPoint: {fileID: 0}
   AudioSource: {fileID: 4334857088557468831}
   ClipShooting: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
   ClipCocking: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
@@ -15248,9 +15277,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   Offset: 0.1
+  GlobalVolume: {fileID: 0}
+  MotionBlur: {fileID: 0}
   GunModel: {fileID: 1711457382288360335}
   MuzzleFlash: {fileID: 2933326327969011748, guid: 2b7e7fc9265810a45b3ad8fd3e61a65a, type: 3}
   WeaponWagingScript: {fileID: 1681999647621041878}
+  Reminder: {fileID: 0}
+  ReloadKey: 0
+  ReloadText: {fileID: 0}
+  InitialCapasityRate: 0
+  MaxCapasity: 0
+  CurrentCapasity: 0
+  AmmoConvertRate: 0
   GS: 0
 --- !u!1 &7665436012694651364
 GameObject:

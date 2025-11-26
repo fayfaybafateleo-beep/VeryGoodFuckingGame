@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using Unity.VisualScripting;
 
 public class MissionSelect : MonoBehaviour
 {
@@ -16,10 +18,17 @@ public class MissionSelect : MonoBehaviour
     public KeyCode Key6 = KeyCode.C;
     public KeyCode Key7 = KeyCode.B;
 
+    [Header(" MissionInfo")]
+    public TextMeshPro MissionName;
+    public TextMeshPro MissionData;
+    public GameObject CurrentLevel;
+
     public bool InTrigger;
+    public bool IsMissionSelected;
     void Start()
     {
         WM = GameObject.FindGameObjectWithTag("WeaponManager").GetComponent<WeaponManager>();
+        CurrentLevel = null;
     }
 
     // Update is called once per frame
@@ -36,9 +45,15 @@ public class MissionSelect : MonoBehaviour
         if (Input.GetKeyDown(Key7) && InTrigger)
         {
             GameObject currentLV = Levels[CurrentInedx];
+            CurrentLevel= Levels[CurrentInedx];
             currentLV.GetComponent<GameLevelControl>().ResetLevel();
             currentLV.GetComponent<GameLevelControl>().IsSeleted = true;
             currentLV.GetComponent<GameLevelControl>().LS=GameLevelControl.LevelState.NotActive;
+        }
+
+        if (CurrentLevel.GetComponent<GameLevelControl>().LS == GameLevelControl.LevelState.End)
+        {
+            CurrentLevel = null;
         }
     }
     void OnTriggerEnter(Collider other)
