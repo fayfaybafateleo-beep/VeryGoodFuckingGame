@@ -12,7 +12,13 @@ public class TextTowardPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(Player.transform);
-        transform.Rotate(0, 180, 0);
+        Vector3 dir = transform.position - Player.transform.position;
+
+        dir.y = 0f;
+
+        if (dir.sqrMagnitude > 0.0001f)
+        {
+            transform.rotation = Quaternion.LookRotation(dir);
+        }
     }
 }

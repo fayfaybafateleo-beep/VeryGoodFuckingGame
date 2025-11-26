@@ -28,6 +28,8 @@ public class MissionSelect : MonoBehaviour
 
     public bool InTrigger;
     public bool IsMissionSelected;
+
+    public GameObject Guidence;
     void Start()
     {
         WM = GameObject.FindGameObjectWithTag("WeaponManager").GetComponent<WeaponManager>();
@@ -47,12 +49,12 @@ public class MissionSelect : MonoBehaviour
             if (Input.GetKeyDown(Key5) && InTrigger) CurrentInedx++;
 
             if (Input.GetKeyDown(Key6) && InTrigger) CurrentInedx--;
+             Guidence.SetActive(true);
         }
 
         if (IsMissionSelected)
         {
-
-
+            Guidence.SetActive(false);
         }
 
             //Info
