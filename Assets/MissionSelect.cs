@@ -23,6 +23,9 @@ public class MissionSelect : MonoBehaviour
     public TextMeshPro MissionData;
     public GameObject CurrentLevel;
 
+    [Header("Animator")]
+    public Animator Animator;
+
     public bool InTrigger;
     public bool IsMissionSelected;
     void Start()
@@ -34,26 +37,46 @@ public class MissionSelect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(Key5) && InTrigger) CurrentInedx++;
-
-        if (Input.GetKeyDown(Key6) && InTrigger) CurrentInedx--;
-
         if (CurrentInedx == Levels.Count) CurrentInedx = 0;
 
         if (CurrentInedx < 0) CurrentInedx = Levels.Count - 1;
 
-        if (Input.GetKeyDown(Key7) && InTrigger)
+        //MissionSelect
+        if (IsMissionSelected == false)
+        {
+            if (Input.GetKeyDown(Key5) && InTrigger) CurrentInedx++;
+
+            if (Input.GetKeyDown(Key6) && InTrigger) CurrentInedx--;
+        }
+
+        if (IsMissionSelected)
+        {
+
+
+        }
+
+            //Info
+        MissionName.text = Levels[CurrentInedx].GetComponent<GameLevelControl>().LevelName;
+        MissionData.text = Levels[CurrentInedx].GetComponent<GameLevelControl>().HazardLevel.ToString();
+
+        if (Input.GetKeyDown(Key7) && InTrigger && IsMissionSelected==false)
         {
             GameObject currentLV = Levels[CurrentInedx];
             CurrentLevel= Levels[CurrentInedx];
             currentLV.GetComponent<GameLevelControl>().ResetLevel();
             currentLV.GetComponent<GameLevelControl>().IsSeleted = true;
             currentLV.GetComponent<GameLevelControl>().LS=GameLevelControl.LevelState.NotActive;
+            IsMissionSelected = true;
+            Animator.SetTrigger("Confirm");
         }
 
-        if (CurrentLevel.GetComponent<GameLevelControl>().LS == GameLevelControl.LevelState.End)
+
+
+        if (CurrentLevel != null&& CurrentLevel.GetComponent<GameLevelControl>().LS == GameLevelControl.LevelState.End)
         {
             CurrentLevel = null;
+            IsMissionSelected = false;
+            Animator.SetTrigger("Reset");
         }
     }
     void OnTriggerEnter(Collider other)

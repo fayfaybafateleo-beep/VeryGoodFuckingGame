@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameLevelControl : MonoBehaviour
 {
+    [Header("LevelData")]
+    public string LevelName;
+    public int HazardLevel;
     [Header("TriggerZone")]
     public GameObject StartingPoint;
     public GameObject EndingPoint;
