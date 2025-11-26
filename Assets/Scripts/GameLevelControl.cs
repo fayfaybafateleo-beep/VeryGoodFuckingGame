@@ -7,6 +7,12 @@ public class GameLevelControl : MonoBehaviour
     [Header("LevelData")]
     public string LevelName;
     public int HazardLevel;
+    public float HideDistance = 2f;
+
+    [Header("UiGuidence")]
+    public GameObject Guidence;
+    public Camera PlayerCamera;
+
     [Header("TriggerZone")]
     public GameObject StartingPoint;
     public GameObject EndingPoint;
@@ -41,21 +47,38 @@ public class GameLevelControl : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        PlayerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        float distance = Vector3.Distance(PlayerCamera.transform.position, Guidence.transform.position);
+        if (IsSeleted && distance > HideDistance && LS == LevelState.NotActive)
+        {
+            Guidence.SetActive(true);
+        }
+        if (IsSeleted == false)
+        {
+            Guidence.SetActive(false);
+        }
+
         if (IsSeleted == false)
         {
             return;
         }
+
+
         switch (LS) 
         {
             case LevelState.NotActive:
                 IsActive = false;
                 ExitTrigger.SetActive(false);
+
+
+               
+                
 
                 if (StartTrigger.IsTriggered)
                 {
@@ -70,10 +93,15 @@ public class GameLevelControl : MonoBehaviour
                 {
                     LS = LevelState.End;
                 }
+
+                Guidence.SetActive(false);
+
                 break;
             case LevelState.End:
                 ExitTrigger.SetActive(true);
                 IsSeleted = false;
+
+                Guidence.SetActive(false);
                 break;
         }
 

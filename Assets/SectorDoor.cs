@@ -42,7 +42,7 @@ public class SectorDoor : MonoBehaviour
             GateAnimator.SetTrigger("Open");
             GateAnimator.Play("Open");
         }
-        if(IsStart && CLC.LS != GameLevelControl.LevelState.NotActive && CLC.IsSeleted==false)
+        if(IsStart && CLC.LS != GameLevelControl.LevelState.NotActive || IsStart&& CLC.IsSeleted==false)
         {
             GateAnimator.SetTrigger("Close");
         }

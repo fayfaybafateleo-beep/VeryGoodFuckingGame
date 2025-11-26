@@ -24941,6 +24941,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelName: Settlement 1-05
   HazardLevel: 1
+  HideDistance: 20
+  Guidence: {fileID: 1471607260}
+  PlayerCamera: {fileID: 0}
   StartingPoint: {fileID: 323903867}
   EndingPoint: {fileID: 125713364}
   StartTrigger: {fileID: 323903868}
@@ -37974,7 +37977,7 @@ Transform:
   m_GameObject: {fileID: 1471607260}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 173.7, y: 4.8, z: 0}
+  m_LocalPosition: {x: 134.2, y: 25.3, z: -59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

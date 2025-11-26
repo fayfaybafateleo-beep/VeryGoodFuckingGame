@@ -7,11 +7,11 @@ public class WorldUIAutoSize : MonoBehaviour
     public float SizeMultiplier = 0.1f;     
     public float HideDistance = 2f;         
 
-    private Vector3 initialScale;
+    private Vector3 InitialScale;
 
     void Start()
     {
-        initialScale = transform.localScale;
+        InitialScale = transform.localScale;
         PlayerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
@@ -19,21 +19,7 @@ public class WorldUIAutoSize : MonoBehaviour
     {
         float distance = Vector3.Distance(PlayerCamera.transform.position, transform.position);
 
-        // 距离近时自动隐藏
-        if (distance < HideDistance)
-        {
-            if (gameObject.activeSelf)
-                gameObject.SetActive(false);
-            return;
-        }
-        else
-        {
-            if (!gameObject.activeSelf)
-                gameObject.SetActive(true);
-        }
-
-        // 保持视觉大小
         float scaleFactor = distance * SizeMultiplier;
-        transform.localScale = initialScale * scaleFactor;
+        transform.localScale = InitialScale * scaleFactor;
     }
 }
