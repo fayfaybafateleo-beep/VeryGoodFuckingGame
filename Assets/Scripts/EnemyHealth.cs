@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -223,6 +224,14 @@ public class EnemyHealth : MonoBehaviour
         KillFeed.Instance.AddKillLIst("Kill", 5,1, new Vector3(1f, 1f, 1f));
 
         SectionManager.Instance.RegisterKill(Section);
+
+        //SwitchToBodyLayer
+        gameObject.layer = LayerMask.NameToLayer("Bodies");
+        foreach (Transform child in GetComponentsInChildren<Transform>(true))
+        {
+            child.gameObject.layer = LayerMask.NameToLayer("Bodies");
+        }
+
     }
     public void EnemyKinematic()
     {
@@ -272,6 +281,7 @@ public class EnemyHealth : MonoBehaviour
             var massiveBlood = Instantiate(MassiveBlood, transform.position, Quaternion.identity);
             massiveBlood.transform.SetParent(limbs.transform);
             massiveBlood.transform.localScale=new Vector3(0.5f,0.5f,0.5f);
+            limbs.layer = LayerMask.NameToLayer("Bodies");
             HitBoxPart hbp = limbs.GetComponent<HitBoxPart>();
             Rigidbody rb = limbs.AddComponent<Rigidbody>();
 
@@ -438,7 +448,7 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    void PlayRandomDeathSFX()
+    public void PlayRandomDeathSFX()
     {
        
         if (DeathClips == null || DeathClips.Length == 0) return;

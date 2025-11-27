@@ -278,7 +278,7 @@ public class EnemyBehaviour : MonoBehaviour
                     EnemyAnimator.SetTrigger("Die");
                     ES = EnemyState.Die;
                 }
-
+               
                 PanicFantom.SetActive(true);
                 Agent.enabled = false;
                 break;
@@ -318,5 +318,6 @@ public class EnemyBehaviour : MonoBehaviour
         EH.ShockedText();
         ES = EnemyState.Shock;
         EnemyAnimator.SetTrigger("Shock");
+        EH.PlayRandomDeathSFX();
     }
 }

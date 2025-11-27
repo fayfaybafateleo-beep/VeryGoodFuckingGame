@@ -1,4 +1,5 @@
 using StarterAssets;
+using TMPro;
 using UnityEngine;
 
 public class PlayerGetInCar : MonoBehaviour
@@ -6,7 +7,7 @@ public class PlayerGetInCar : MonoBehaviour
     [Header("CarDetection")]
     public GameObject Car;               
     public KeyCode Key = KeyCode.V;     
-    public float mountDistance = 3f;         
+    public float MountDistance = 3f;         
 
     [Header("PlayerControl&Weapon")]
     public FirstPersonController PlayerController;
@@ -17,7 +18,14 @@ public class PlayerGetInCar : MonoBehaviour
     public GameObject DropPoint;
     public bool IsMounted = false;
 
-    
+    [Header("Fade Settings")]
+    public float FadeDuration = 0.5f;
+    private float FadeTimer;
+    public CanvasGroup CG;
+    public GameObject GetInText;
+
+
+
     public Transform OriginalParent;
     public int OriginalSiblingIndex;
     public WeaponManager WM;
@@ -35,6 +43,8 @@ public class PlayerGetInCar : MonoBehaviour
        MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
         WM = GameObject.FindGameObjectWithTag("WeaponManager").GetComponent<WeaponManager>();
+
+        GetInText.SetActive(false);
     }
 
     public void Update()
@@ -52,9 +62,37 @@ public class PlayerGetInCar : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, Car.transform.position);
 
-        if (distance <= mountDistance && Input.GetKeyDown(Key))
+        if (distance <= MountDistance && Input.GetKeyDown(Key))
         {
             MountVehicle();
+        }
+
+
+        //Show
+        if (distance <= MountDistance && IsMounted == false)
+        {
+            GetInText.SetActive(true);
+            FadeTimer = FadeDuration;  // 重置淡出计时器，让它保持显示
+        }
+
+        //Fadeout
+        if (GetInText.activeSelf && IsMounted == false)
+        {
+            if (FadeTimer > 0)
+            {
+                FadeTimer -= Time.deltaTime;
+                CG.alpha = 1f;
+            }
+            else
+            {
+                CG.alpha -= Time.deltaTime / FadeDuration;
+
+                if (CG.alpha <= 0f)
+                {
+                    CG.alpha = 0f;
+                    GetInText.SetActive(false);
+                }
+            }
         }
     }
 
@@ -81,6 +119,8 @@ public class PlayerGetInCar : MonoBehaviour
         transform.SetParent(SeatPoint.transform, worldPositionStays: false);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
+
+        GetInText.SetActive(false);
     }
 
     public void DismountVehicle()

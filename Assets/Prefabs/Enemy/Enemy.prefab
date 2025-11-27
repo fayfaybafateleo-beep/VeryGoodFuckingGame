@@ -1289,9 +1289,10 @@ MonoBehaviour:
   Destruction: {fileID: 8300000, guid: fb8bf2e26ef0ac640802ef685cea26e3, type: 3}
   DeathClips:
   - {fileID: 8300000, guid: ee115cb975826134d9c24a26848c1e42, type: 3}
-  - {fileID: 8300000, guid: b6d11f699e0bde141bd169e5a4d3a8ff, type: 3}
+  - {fileID: 8300000, guid: ef1c7927fc254ca459b294ee78dfede9, type: 3}
   - {fileID: 8300000, guid: 111f8f00db10c654bbcf84879a3a9f42, type: 3}
   - {fileID: 8300000, guid: ca745580c8ca254468ffe17cf7e7fdc4, type: 3}
+  - {fileID: 8300000, guid: 43e914171ec680246ba9c18f45f050a3, type: 3}
   ThresholdPercentage: 0.3
   ShockChance: 0.3
   MoralTest: 0
@@ -1465,7 +1466,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.147
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1473,10 +1474,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 0
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 2
+  MaxDistance: 50
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
