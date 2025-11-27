@@ -118,7 +118,7 @@ namespace StarterAssets
         public Vector3 SlideCapsuleCenter;
         public float NormalCapsuleHeight;
         public float SlideCapsuleHeight;
-        // ====================== 关键修改结束 ======================
+        // 
 
         [Header("CameraWalkingWagingPos")]
         public Vector3 PointA = new Vector3(0, 1.375f, 0);
@@ -148,6 +148,18 @@ namespace StarterAssets
         // IsHeightLimitation
         public bool LimitDoubleJumpHeight = false;
         public CinemachineImpulseSource DualJumpScreenShake;
+
+
+        [Header("Footstep SFX")]
+        public AudioSource FootstepSource;   
+        public AudioClip[] FootstepClips;    
+
+        public float StepInterval = 0.5f;
+
+        public float MinMoveSpeedForStep = 0.5f;
+
+        private int FootstepIndex = 0;
+        private float FootstepTimer = 0f;
 
         public enum ControllerState
         {
@@ -271,6 +283,8 @@ namespace StarterAssets
 
                     float currentSpeed = Mathf.Sqrt( _controller.velocity.x * _controller.velocity.x + _verticalVelocity * _verticalVelocity +    _controller.velocity.z * _controller.velocity.z);
                     CurrentSpeed = currentSpeed;
+
+                    HandleFootsteps();
                     break;
 
 				case ControllerState.StopMove:
@@ -654,5 +668,48 @@ namespace StarterAssets
             CapsuleCollider.height = SlideCapsuleHeight;
         }
 
+        private void HandleFootsteps()
+        {
+            if (FootstepSource == null) return;
+            if (FootstepClips == null || FootstepClips.Length == 0) return;
+            if (CS != ControllerState.CanMove) return;
+
+            if (!Grounded)
+            {
+                FootstepTimer = 0f;
+                return;
+            }
+            if (_isSliding)
+            {
+                FootstepTimer = 0f;
+                return;
+            }
+
+            Vector3 horizontalVel = new Vector3(_controller.velocity.x, 0f, _controller.velocity.z);
+            float horizontalSpeed = horizontalVel.magnitude;
+
+            if (horizontalSpeed < MinMoveSpeedForStep)
+            {
+                FootstepTimer = 0f;
+                return;
+            }
+
+            //FoddStepTimer
+            FootstepTimer -= Time.deltaTime;
+            if (FootstepTimer > 0f) return;
+
+            AudioClip clip = FootstepClips[FootstepIndex];
+
+            FootstepSource.PlayOneShot(clip);
+
+            FootstepIndex++;
+            if (FootstepIndex >= FootstepClips.Length)
+            {
+                FootstepIndex = 0;
+            }
+  
+            // ResetTimer
+            FootstepTimer = StepInterval;
+        }
     }
 }

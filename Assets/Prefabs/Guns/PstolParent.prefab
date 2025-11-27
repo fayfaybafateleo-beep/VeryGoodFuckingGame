@@ -1339,6 +1339,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Pistol G114
   FirePoint: {fileID: 1898633215775109795}
+  CurrentFirePointIndex: 0
+  IsMultiFirepoint: 0
+  FirePoints: []
   BulletPrefab: {fileID: 3454573842243275128, guid: c87df9d91869f9240b5d030728824403, type: 3}
   PenertrateCount: 1
   FireRate: 350
@@ -1364,7 +1367,7 @@ MonoBehaviour:
   GunAnimator: {fileID: 227658081199487082}
   AnimatorSpeed: 5
   shake: {fileID: 1979443626662996304}
-  GunDamage: 10
+  GunDamage: 20
   GunPeneration: 2
   Camera: {fileID: 0}
   MaxDistance: 60

@@ -2244,7 +2244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionTarget: {fileID: 5004394571427201234}
   rotationTarget: {fileID: 5004394571427201234}
-  kickBackDistance: 0.2
+  kickBackDistance: 0.3
   kickPitchYaw: {x: 0.4, y: 0.4}
   kickRandomYawSignChance: 0.5
   posSpringStiffness: 500
@@ -2275,10 +2275,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d1bc8ba0aa39c041bf4f0a0314e3ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionTarget: {fileID: 4847522824298966538}
-  rotationTarget: {fileID: 4847522824298966538}
+  positionTarget: {fileID: 0}
+  rotationTarget: {fileID: 0}
   walkFrequency: 8
-  walkPosAmplitude: {x: -0.05, y: 0.2, z: -0.4}
+  walkPosAmplitude: {x: -0.1, y: 0.5, z: -0.4}
   walkRotAmplitude: {x: -0.5, y: 2, z: -20}
   blendSmoothTime: 0.12
   referenceMoveSpeed: 4
