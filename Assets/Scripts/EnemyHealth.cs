@@ -67,6 +67,8 @@ public class EnemyHealth : MonoBehaviour
     public AudioSource AudioSource;
     public AudioClip Destruction;
 
+    public AudioClip[] DeathClips;        
+
     [Header("ThresholdOfShock")]
 
     public float ThresholdPercentage;
@@ -208,6 +210,8 @@ public class EnemyHealth : MonoBehaviour
         //BodyStationary
         Invoke("EnemyKinematic", KinematicActiveAfterDie);
         //lightsOff
+        //DeadSound
+        PlayRandomDeathSFX();
 
         //Drops
         KillDrop();
@@ -431,6 +435,19 @@ public class EnemyHealth : MonoBehaviour
                 rb.AddForce(randomDir1 * randomForce1, ForceMode.Impulse);
                 rb.AddTorque(Random.onUnitSphere * 0.5f, ForceMode.Impulse);
             }
+        }
+    }
+
+    void PlayRandomDeathSFX()
+    {
+       
+        if (DeathClips == null || DeathClips.Length == 0) return;
+
+        int index = Random.Range(0, DeathClips.Length); 
+        AudioClip clip = DeathClips[index];
+        if (clip != null)
+        {
+            AudioSource.PlayOneShot(clip);
         }
     }
 
