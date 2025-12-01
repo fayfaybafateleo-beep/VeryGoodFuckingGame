@@ -79,27 +79,29 @@ namespace StarterAssets
 
         // ====================== 关键修改开始 ======================
         [Header("Slide Settings")] // [MOD]
-        public KeyCode SlideKey = KeyCode.LeftControl; // 触发滑铲的按键
-        public float SlideSpeed = 10f; // 滑铲初速度
-        public float SlideTime = 0.5f; // 滑铲持续时间
-        private bool _isSliding = false; // 是否正在滑铲
+        public KeyCode SlideKey = KeyCode.LeftControl; 
+        public float SlideSpeed = 10f; 
+        public float SlideTime = 0.5f; 
+        private bool _isSliding = false; 
         private float _slideTimer = 0f;
         private Vector3 _slideDirection;
+        public AudioClip SlideSound1;
+        public AudioClip SlideSound2;
 
         [Header("SlideCD")]
         public float SlideCoolDown;
 		public float SlideCoolDownTimer=0;
 		public bool CanSlide=true;
 
-        // [MOD] 镜头下沉部分
+    
         [Header("Slide Camera Effect")]
-        public Transform CameraRoot;               // 你的相机根物体
+        public Transform CameraRoot;              
 		public bool EnableSlide;
 		public float SlideFriction;
-        public float SlideCameraOffset = -0.6f;    // 滑铲时相机下沉距离（负值向下）
-        public float CameraLerpSpeed = 8f;         // 镜头移动平滑速度
-        private Vector3 _originalCamLocalPos;      // 原始相机位置
-        private Vector3 _targetCamLocalPos;        // 当前目标相机位置
+        public float SlideCameraOffset = -0.6f;    
+        public float CameraLerpSpeed = 8f;        
+        private Vector3 _originalCamLocalPos;      
+        private Vector3 _targetCamLocalPos;        
         private float _currentSlideSpeed = 0f;
         public CinemachineImpulseSource SlideScreenShake;
 
@@ -142,6 +144,7 @@ namespace StarterAssets
         public bool WasGrounded;
         public float FirstJumpSpeed;
         public float SecondJumpSpeed;
+        public AudioClip JumpSound;
 
         public float DoubleJumpMaxHeight = 1.5f;
         private float DoubleJumpStartY;
@@ -512,9 +515,17 @@ namespace StarterAssets
                 LimitDoubleJumpHeight = true;
                 SpeedLine.Play();
                 DualJumpScreenShake.GenerateImpulse();
-            }
 
+               
+            }
+            else
+            {
+                FootstepSource.PlayOneShot(SlideSound2);
+            }
             _input.jump = false;
+
+           
+            FootstepSource.PlayOneShot(JumpSound);
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
@@ -573,6 +584,9 @@ namespace StarterAssets
             ChangeToSlideCapsule();
             //ScreenShake
             SlideScreenShake.GenerateImpulse();
+
+            FootstepSource.PlayOneShot(SlideSound1);
+            FootstepSource.PlayOneShot(SlideSound2);
 
         }
 
