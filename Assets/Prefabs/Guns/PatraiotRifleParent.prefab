@@ -1211,6 +1211,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: AutoRifle Patraiot
   FirePoint: {fileID: 6736261893501121073}
+  CurrentFirePointIndex: 0
+  IsMultiFirepoint: 0
+  FirePoints: []
   BulletPrefab: {fileID: 3454573842243275128, guid: 76f080b9e636179488875a1923e804fd, type: 3}
   PenertrateCount: 1
   FireRate: 800
@@ -1256,7 +1259,7 @@ MonoBehaviour:
   ReloadKey: 114
   ReloadText: {fileID: 0}
   InitialCapasityRate: 0.3
-  MaxCapasity: 300
+  MaxCapasity: 200
   CurrentCapasity: 0
   AmmoConvertRate: 2
   GS: 0

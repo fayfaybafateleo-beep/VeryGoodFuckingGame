@@ -9,7 +9,7 @@ public class EnemyBullet : MonoBehaviour
     public float Duration = 5f;
 
     [Header("Data")]
-    public float Damage;
+    public int Damage;
 
     [Header("HitEffect")]
     public GameObject HitEffect;
@@ -32,6 +32,11 @@ public class EnemyBullet : MonoBehaviour
         //HitEffecT
         GameObject hitEffect1 = Instantiate(HitEffect, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
         hitEffect1.transform.SetParent(collision.transform);
+
+        if (collision.gameObject.GetComponent<PlayerHealth>() != null)
+        {
+            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(Damage);
+        }
         // Destroy the bullet on collision
         Destroy(gameObject);
     }

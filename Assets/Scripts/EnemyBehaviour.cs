@@ -24,7 +24,7 @@ public class EnemyBehaviour : MonoBehaviour
     [UnityEngine.Range(0, 1000)] public float AttackRange = 2.0f;
     [UnityEngine.Range(0, 1000)] public float AttackRate = 2f;
     public float AttackRateTimer = 0f;
-    public float Damage;
+    public int Damage;
     public int SlugCount=1;
     public Transform FirePoint;
     public GameObject EnemyBullet;
