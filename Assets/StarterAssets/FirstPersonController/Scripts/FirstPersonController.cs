@@ -1,5 +1,10 @@
 ﻿using UnityEngine;
 using Unity.VisualScripting;
+using UnityEngine.Windows;
+using Unity.Mathematics;
+
+
+
 
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -164,6 +169,8 @@ namespace StarterAssets
         private int FootstepIndex = 0;
         private float FootstepTimer = 0f;
 
+        public PlayerHealth PH;
+
         public enum ControllerState
         {
             CanMove,
@@ -237,71 +244,87 @@ namespace StarterAssets
 
 		private void Update()
 		{
+            switch (PH.PS) 
+            {
+                case PlayerHealth.PlayerState.Alive:
 
-            // 达到阈值就启用物品
-            if (CurrentSpeed >= SpeedThreshold)
-            {
-                if (!SpeedLine.isPlaying)
-				{
-                    SpeedLine.Play();
-                }
-            }
-            else
-            {
-                if (SpeedLine.isPlaying)
-                {
+                    if (CurrentSpeed >= SpeedThreshold)
+                    {
+                        if (!SpeedLine.isPlaying)
+                        {
+                            SpeedLine.Play();
+                        }
+                    }
+                    else
+                    {
+                        if (SpeedLine.isPlaying)
+                        {
+                            SpeedLine.Stop();
+                        }
+                    }
+
+                    switch (CS)
+                    {
+                        case ControllerState.CanMove:
+                            // [MOD] 更新滑铲（不移动）
+                            if (EnableSlide)
+                            {
+                                if (UnityEngine.Input.GetKeyDown(SlideKey) && Grounded && _input.move.sqrMagnitude > 0.1f && !_isSliding && CanSlide)
+                                    StartSlide();
+
+                                if (_isSliding) HandleSlide();
+                            }
+
+                            if (SlideCoolDownTimer >= SlideCoolDown)
+                            {
+                                SlideCoolDownTimer = SlideCoolDown;
+                                CanSlide = true;
+                            }
+
+                            if (_isSliding == false && CanSlide == false)
+                            {
+                                SlideCoolDownTimer += Time.deltaTime;
+                            }
+
+                            Move();
+                            JumpAndGravity();
+                            GroundedCheck();
+
+                            UpdateCameraSlideEffect();
+                            UpdateCapsuleSize();
+
+                            float currentSpeed = Mathf.Sqrt(_controller.velocity.x * _controller.velocity.x + _verticalVelocity * _verticalVelocity + _controller.velocity.z * _controller.velocity.z);
+                            CurrentSpeed = currentSpeed;
+
+                            HandleFootsteps();
+                            break;
+
+                        case ControllerState.StopMove:
+                            //ReplaceCamera
+                            _targetCamLocalPos = _originalCamLocalPos;
+                            UpdateCameraSlideEffect();
+                            if (CapsuleCollider.center != NormalCapsuleCenter) ChangeToNormalCapsule();
+                            //SpeedLine.Stop();
+                            break;
+
+                        case ControllerState.Shock:
+
+                            break;
+                    }
+
+                    break;
+                case PlayerHealth.PlayerState.Die:
                     SpeedLine.Stop();
-                }
+                    ClearAllInput();
+                    float fall=0;
+                    fall += Time.deltaTime * 5;
+                    if (fall <= -90)
+                    {
+                        fall=-90;
+                    }
+                   // this.transform.rotation = quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y,fall);
+                    break;
             }
-
-            switch (CS)
-			{
-				case ControllerState.CanMove:
-                    // [MOD] 更新滑铲（不移动）
-                    if (EnableSlide)
-                    {
-                        if (Input.GetKeyDown(SlideKey) && Grounded && _input.move.sqrMagnitude > 0.1f && !_isSliding && CanSlide)
-                            StartSlide();
-
-                        if (_isSliding) HandleSlide();
-                    }
-
-                    if (SlideCoolDownTimer >= SlideCoolDown)
-                    {
-                        SlideCoolDownTimer = SlideCoolDown;
-                        CanSlide = true;
-                    }
-
-					if (_isSliding == false && CanSlide == false)
-					{
-						SlideCoolDownTimer += Time.deltaTime;
-					}
-                    
-                    Move();
-                    JumpAndGravity();
-                    GroundedCheck();
-
-                    UpdateCameraSlideEffect();
-                    UpdateCapsuleSize();
-
-                    float currentSpeed = Mathf.Sqrt( _controller.velocity.x * _controller.velocity.x + _verticalVelocity * _verticalVelocity +    _controller.velocity.z * _controller.velocity.z);
-                    CurrentSpeed = currentSpeed;
-
-                    HandleFootsteps();
-                    break;
-
-				case ControllerState.StopMove:
-					//ReplaceCamera
-                    _targetCamLocalPos = _originalCamLocalPos;
-					UpdateCameraSlideEffect();
-                    if (CapsuleCollider.center != NormalCapsuleCenter) ChangeToNormalCapsule();
-                    //SpeedLine.Stop();
-                    break;
-
-				case ControllerState.Shock:
-
-				break;
-			}
 			
 		}
 
@@ -725,5 +748,13 @@ namespace StarterAssets
             // ResetTimer
             FootstepTimer = StepInterval;
         }
+        public void ClearAllInput()
+        {
+            _input.move = Vector2.zero;
+            _input.jump = false;
+            _input.look = Vector2.zero;
+            _input.sprint = false;
+        }
     }
+   
 }

@@ -53,6 +53,8 @@ public class WeaponManager : MonoBehaviour
     public AudioSource MeleeSound;
     public AudioClip FireClip;
 
+    [Header("Player")]
+    public PlayerHealth PH;
     public enum FireControlState
     {
         AllowInput,
@@ -80,6 +82,7 @@ public class WeaponManager : MonoBehaviour
         WeaponsOnEquipmentList[I + 1].SetActive(false);
         WeaponsOnEquipmentList[I + 1].GetComponent<GunScript>().GS = GunScript.GunState.CeaseFire;
         SynchronizeGLData();
+        PH = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
     }
     public void OnEnable()
     {
@@ -91,6 +94,11 @@ public class WeaponManager : MonoBehaviour
     void Update()
     {
         //GLcount
+        if (PH.PS == PlayerHealth.PlayerState.Die)
+        {
+            StopFireInput();
+            return;
+        }
         if (CurrentCount >= MaxCount) CurrentCount = MaxCount;
         if (CurrentCount <= 0) CurrentCount = 0;
 
@@ -326,6 +334,13 @@ public class WeaponManager : MonoBehaviour
         foreach(var gun in WeaponsOnEquipmentList)
         {
             gun.GetComponent<GunScript>().IsBursting = false;
+        }
+    }
+    public void StopFireInput()
+    {
+        foreach(var gun in WeaponsOnEquipmentList)
+        {
+            gun.GetComponent<GunScript>().GS = GunScript.GunState.CeaseFire;
         }
     }
 }
