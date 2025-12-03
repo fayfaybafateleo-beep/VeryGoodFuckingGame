@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
     public int MaxArmuor;
     public int CurrentHealth;
     public int CurrentArmuor;
+    public bool IsShieldBroke;
 
     [Header("Invincible")]
     public float HurtInvincibleTime = 1f;
@@ -43,6 +44,26 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (CurrentArmuor > MaxArmuor)
+        {
+            CurrentArmuor = MaxArmuor;
+        }
+
+        if (CurrentHealth > MaxHealth)
+        {
+            CurrentHealth = MaxHealth;
+        }
+
+        if (CurrentArmuor <= 0)
+        {
+            CurrentArmuor = 0;
+            IsShieldBroke = true;
+        }
+        else
+        {
+            IsShieldBroke = false;
+        }
+
         if (CurrentHealth <= 0)
         {
             PS = PlayerState.Die;
@@ -112,5 +133,13 @@ public class PlayerHealth : MonoBehaviour
     {
         IsInvincible = true;
         InvincibleTimer = time;
+    }
+    public void GainHealth(float multipulier)
+    {
+        CurrentHealth += Mathf.RoundToInt(5 * multipulier);
+    }
+    public void GainArmour(float multipulier)
+    {
+        CurrentArmuor += Mathf.RoundToInt(5 * multipulier);
     }
 }

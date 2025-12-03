@@ -169,8 +169,10 @@ namespace StarterAssets
         private int FootstepIndex = 0;
         private float FootstepTimer = 0f;
 
+        [Header("DeadSetting")]
         public PlayerHealth PH;
-
+        private float DeathTilt = 0f;     // 玩家死亡时的 z 轴倾斜角
+        private bool IsDeadTilting = false;
         public enum ControllerState
         {
             CanMove,
@@ -316,13 +318,10 @@ namespace StarterAssets
                 case PlayerHealth.PlayerState.Die:
                     SpeedLine.Stop();
                     ClearAllInput();
-                    float fall=0;
-                    fall += Time.deltaTime * 5;
-                    if (fall <= -90)
-                    {
-                        fall=-90;
-                    }
-                   // this.transform.rotation = quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y,fall);
+                   
+                    DeathTilt = Mathf.Lerp(DeathTilt, -80f, Time.deltaTime * 3f);
+
+                    transform.rotation = Quaternion.Euler(transform.eulerAngles.x,transform.eulerAngles.y,DeathTilt);
                     break;
             }
 			

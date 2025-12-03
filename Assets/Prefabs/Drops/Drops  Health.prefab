@@ -183,16 +183,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3ab76e939e5c0d4bb46ae9e83ae46d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: Coin
+  Type: Health
   WMScript: {fileID: 0}
   WM: {fileID: 0}
   GS1: {fileID: 0}
   GS2: {fileID: 0}
   Player: {fileID: 0}
   PD: {fileID: 0}
-  GainMultipulier: 3
+  PH: {fileID: 0}
+  GainMultipulier: 1
   CoinCount: 10
   IsUsed: 0
+  Timer: 0
 --- !u!135 &150137547009455451
 SphereCollider:
   m_ObjectHideFlags: 0
