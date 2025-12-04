@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerGetInCar : MonoBehaviour
 {
     [Header("CarDetection")]
-    public GameObject Car;               
+    public GameObject Car;
+    public CarControl CC;
     public KeyCode Key = KeyCode.V;     
     public float MountDistance = 3f;         
 
@@ -23,7 +24,7 @@ public class PlayerGetInCar : MonoBehaviour
     private float FadeTimer;
     public CanvasGroup CG;
     public GameObject GetInText;
-
+    public GameObject GetOutText;
 
 
     public Transform OriginalParent;
@@ -35,6 +36,8 @@ public class PlayerGetInCar : MonoBehaviour
        PlayerController = GetComponent<FirstPersonController>();
 
        Car = GameObject.FindGameObjectWithTag("Car");
+
+        CC = Car.GetComponent<CarControl>();
 
        SeatPoint = GameObject.FindGameObjectWithTag("SeatPoint");
 
@@ -50,7 +53,7 @@ public class PlayerGetInCar : MonoBehaviour
     public void Update()
     {
         // Dismount
-        if (IsMounted && Input.GetKeyDown(Key))
+        if (IsMounted && Input.GetKeyDown(Key) && CC.CanGetDown)
         {
             DismountVehicle();
             return;
@@ -93,6 +96,15 @@ public class PlayerGetInCar : MonoBehaviour
                     GetInText.SetActive(false);
                 }
             }
+        }
+
+        if (CC.CanGetDown && IsMounted)
+        {
+            GetOutText.SetActive(true);
+        }
+        else
+        {
+            GetOutText.SetActive(false);
         }
     }
 

@@ -25,6 +25,7 @@ public class CarControl : MonoBehaviour
 
     [Header("Refs")]
     public GameObject Player;
+    public bool CanGetDown;
     void Awake()
     {
         RB = GetComponent<Rigidbody>();
@@ -96,6 +97,6 @@ public class CarControl : MonoBehaviour
         {
             RB.linearDamping = Mathf.MoveTowards(RB.linearDamping, 100, 20f * Time.deltaTime);
         }
-
+        
     }
 }
