@@ -18,13 +18,14 @@ public class PlayerHealth : MonoBehaviour
     public float HurtInvincibleTime = 1f;
     public float ShieldBreakInvincibleTime = 1.5f;
 
-
     public bool IsInvincible = false;
     public float InvincibleTimer = 0f;
 
     public VignetteControl VC;
 
     public CinemachineImpulseSource ImpulseSource;
+
+    public Animator DeadCurtainAnimator;
 
     public enum PlayerState
     {
@@ -39,6 +40,7 @@ public class PlayerHealth : MonoBehaviour
         PS = PlayerState.Alive;
 
        VC = GameObject.FindGameObjectWithTag("GlobalVolume").GetComponent<VignetteControl>();
+        DeadCurtainAnimator = GameObject.FindGameObjectWithTag("DeadCurtain").GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -67,6 +69,7 @@ public class PlayerHealth : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             PS = PlayerState.Die;
+            DeadCurtainAnimator.SetTrigger("Die");
         }
 
         if (IsInvincible)

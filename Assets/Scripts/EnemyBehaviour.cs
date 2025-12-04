@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -30,6 +31,12 @@ public class EnemyBehaviour : MonoBehaviour
     public GameObject EnemyBullet;
     public GameObject EnemyMuzzleFlash;
     public bool Lock=false;
+
+    [Header("Burst Fire")]
+    public int BurstCount = 3;               
+    public float BurstRate = 0.2f;
+    public bool IsBurstFiring = false;     
+    private int BurstShotsFired = 0;         
 
     public float FacingAngleTolerance = 12f;
     public bool XiaoTou = true;
@@ -239,32 +246,14 @@ public class EnemyBehaviour : MonoBehaviour
 
                 //FireCountDown
                 AttackRateTimer += Time.deltaTime;
-
-                if (AttackRateTimer >= AttackRate && Target != null && Lock)
+                if (!IsBurstFiring && AttackRateTimer >= AttackRate && Target != null && Lock)
                 {
                     AttackRateTimer = 0;
-                    EnemyAnimator.SetTrigger("Fire");
-
-                    for (int i = 0; i < SlugCount; i++)
-                    {
-                        Vector2 c = Random.insideUnitCircle;
-
-                        float yaw = c.x * HorizontalSpreadAngle;
-                        float pitch = c.y * VerticalSpreadAngle;
-
-                        Quaternion spreadRot = FirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
-
-                        GameObject bullet = Instantiate(EnemyBullet, FirePoint.position, spreadRot);
-                        bullet.GetComponent<EnemyBullet>().Damage = Damage;
-                    }
-                    //muzzleFlash//
-                    GameObject muzzleFlash = Instantiate(EnemyMuzzleFlash, FirePoint.position, FirePoint.rotation);
-                    muzzleFlash.transform.SetParent(FirePoint);
-
+                    StartCoroutine(BurstRoutine());
                 }
-
+          
                 float qtaDist = (Target.transform.position - transform.position).sqrMagnitude;
-                if (qtaDist > AttackRange * AttackRange)
+                if (!IsBurstFiring && qtaDist > AttackRange * AttackRange)
                     QuitAttack();
                 break;
 
@@ -319,5 +308,42 @@ public class EnemyBehaviour : MonoBehaviour
         ES = EnemyState.Shock;
         EnemyAnimator.SetTrigger("Shock");
         EH.PlayRandomDeathSFX();
+    }
+
+    private IEnumerator BurstRoutine()
+    {
+        IsBurstFiring = true;
+        BurstShotsFired = 0;
+        AttackRateTimer = 0f;
+
+        Rigidbody.linearVelocity = Vector3.zero;
+
+        while (BurstShotsFired < BurstCount)
+        {
+            EnemyAnimator.SetTrigger("Fire");
+
+            for (int i = 0; i < SlugCount; i++)
+            {
+                Vector2 c = Random.insideUnitCircle;
+                float yaw = c.x * HorizontalSpreadAngle;
+                float pitch = c.y * VerticalSpreadAngle;
+
+                Quaternion spreadRot = FirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
+                GameObject bullet = Instantiate(EnemyBullet, FirePoint.position, spreadRot);
+                bullet.GetComponent<EnemyBullet>().Damage = Damage;
+            }
+
+            if (EnemyMuzzleFlash != null)
+            {
+                GameObject muzzleFlash = Instantiate(EnemyMuzzleFlash, FirePoint.position, FirePoint.rotation);
+                muzzleFlash.transform.SetParent(FirePoint);
+            }
+
+            BurstShotsFired++;
+
+            yield return new WaitForSeconds(BurstRate);
+        }
+
+        IsBurstFiring = false;
     }
 }

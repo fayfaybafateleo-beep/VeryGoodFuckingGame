@@ -275,9 +275,12 @@ public class EnemyHealth : MonoBehaviour
         Destroy(text, 1f);
         foreach (var obj in LimbsList)
         {
+            float multiplier = transform.localScale.x;
             if (obj == null) continue;
 
             var limbs = Instantiate(obj, transform.position, Quaternion.identity);
+            limbs.transform.localScale = limbs.transform.localScale * multiplier;
+
             var massiveBlood = Instantiate(MassiveBlood, transform.position, Quaternion.identity);
             massiveBlood.transform.SetParent(limbs.transform);
             massiveBlood.transform.localScale=new Vector3(0.5f,0.5f,0.5f);
