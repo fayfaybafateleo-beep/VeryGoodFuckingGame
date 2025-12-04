@@ -40,7 +40,7 @@ public class ParkingZone : MonoBehaviour
     {
         if (other.gameObject.tag == "Car")
         {
-            CC.CanGetDown = true;
+            CC.CanGetDown = false;
         }
     }
 }

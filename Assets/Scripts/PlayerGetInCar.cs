@@ -59,6 +59,15 @@ public class PlayerGetInCar : MonoBehaviour
             return;
         }
 
+        if (CC.CanGetDown && IsMounted)
+        {
+            GetOutText.SetActive(true);
+        }
+        else
+        {
+            GetOutText.SetActive(false);
+        }
+
         if (IsMounted) return; 
 
         if (Car == null) return;
@@ -98,14 +107,7 @@ public class PlayerGetInCar : MonoBehaviour
             }
         }
 
-        if (CC.CanGetDown && IsMounted)
-        {
-            GetOutText.SetActive(true);
-        }
-        else
-        {
-            GetOutText.SetActive(false);
-        }
+       
     }
 
     public void MountVehicle()
