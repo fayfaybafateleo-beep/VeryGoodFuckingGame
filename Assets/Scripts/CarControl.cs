@@ -95,8 +95,13 @@ public class CarControl : MonoBehaviour
         }
         else
         {
-            RB.linearDamping = Mathf.MoveTowards(RB.linearDamping, 100, 20f * Time.deltaTime);
+            RB.linearDamping = Mathf.MoveTowards(RB.linearDamping, 200, 40f * Time.deltaTime);
         }
         
+    }
+
+    public void ReGenerateCar()
+    {
+        this.transform.position = new Vector3(Player.transform.position.x, 0.96f, Player.transform.position.y);
     }
 }

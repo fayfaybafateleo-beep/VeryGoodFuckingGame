@@ -36,6 +36,9 @@ public class GameLevelControl : MonoBehaviour
     public List<EnemySectionSpawner> Spawners;
     public List<SectorDoor> Gates;
     public GameObject ExitTrigger;
+
+    [Header("CarPark")]
+    public GameObject CarPark;
     public enum LevelState
     { 
         NotActive,
@@ -53,6 +56,10 @@ public class GameLevelControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (IsSeleted)
+        {
+            CarPark.SetActive(true);
+        }
 
         float distance = Vector3.Distance(PlayerCamera.transform.position, Guidence.transform.position);
         if (IsSeleted && distance > HideDistance && LS == LevelState.NotActive)
@@ -62,8 +69,9 @@ public class GameLevelControl : MonoBehaviour
         if (IsSeleted == false)
         {
             Guidence.SetActive(false);
+            CarPark.SetActive(false);
         }
-
+       
         if (IsSeleted == false)
         {
             return;

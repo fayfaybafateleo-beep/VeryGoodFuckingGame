@@ -43,4 +43,8 @@ public class ParkingZone : MonoBehaviour
             CC.CanGetDown = false;
         }
     }
+    private void OnDisable()
+    {
+        CC.CanGetDown = false;
+    }
 }
