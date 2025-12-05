@@ -13,6 +13,7 @@ public class GunScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("WhenUcantEvenSay MYNAME")]
     public string Name;
+    public int Cost;
 
     [Header("Bullet")]
     public Transform FirePoint;

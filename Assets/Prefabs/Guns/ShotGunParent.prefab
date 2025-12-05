@@ -2368,6 +2368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: ShotGun UltraShorty
+  Cost: 3000
   FirePoint: {fileID: 6328008716768508170}
   CurrentFirePointIndex: 0
   IsMultiFirepoint: 0
@@ -2376,7 +2377,7 @@ MonoBehaviour:
   PenertrateCount: 1
   FireRate: 94
   BurstRate: 400
-  IsBurstFire: 0
+  IsBurstFire: 1
   BurstCount: 3
   IsBursting: 0
   BurstInterval: 0
@@ -2397,7 +2398,7 @@ MonoBehaviour:
   GunAnimator: {fileID: 1458400183304755529}
   AnimatorSpeed: 3.5
   shake: {fileID: 4404955300069377803}
-  GunDamage: 25
+  GunDamage: 15
   GunPeneration: 2
   Camera: {fileID: 0}
   MaxDistance: 60

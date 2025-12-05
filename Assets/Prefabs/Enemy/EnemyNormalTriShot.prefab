@@ -1733,6 +1733,7 @@ MonoBehaviour:
   MaxHealth: 100
   Health: 100
   Thougthness: 2
+  CoinValue: 10
   HitMark: {fileID: 0}
   HitMarkParent: {fileID: 0}
   RB: {fileID: 1900214545859322635}
@@ -1794,7 +1795,7 @@ MonoBehaviour:
   - {fileID: 2484064925702399884, guid: 77bf6ac273167d546a7f874c0d70b8c2, type: 3}
   - {fileID: 987435135784451071, guid: 64f55c6948d327543a6f86921ff72714, type: 3}
   Coin: {fileID: 8850797187182654025, guid: b60384feeecd94b4cbb136117f0fd03a, type: 3}
-  DropChance: 0.05
+  DropChance: 0.1
   Section: 0
 --- !u!95 &5161086026593443594
 Animator:

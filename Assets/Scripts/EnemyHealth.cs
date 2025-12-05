@@ -14,6 +14,7 @@ public class EnemyHealth : MonoBehaviour
     public float MaxHealth;
     public float Health;
     public int Thougthness;
+    public int CoinValue;
 
     [Header("DamgeMultiplier")]
     float PenertrateRate = 1f;
@@ -104,7 +105,10 @@ public class EnemyHealth : MonoBehaviour
         {
             Die();
         }
-
+        if (transform.position.y <= -20)
+        {
+            Health = 0;
+        }
         if(MoralTest==false && Health / MaxHealth <= ThresholdPercentage && IsDead == false)
         {
             if (Random.value <= ShockChance) 
@@ -441,6 +445,7 @@ public class EnemyHealth : MonoBehaviour
         for (int i = 0; i < 1*multipulier; i++)
         {
             GameObject coin = Instantiate(Coin, transform.position, Quaternion.identity);
+            coin.GetComponentInChildren<Drops>().CoinCount = CoinValue;
 
             Rigidbody rb= coin.GetComponent<Rigidbody>();
             if (rb != null)

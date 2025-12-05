@@ -250,7 +250,11 @@ namespace StarterAssets
 		{
             if (PIC.IsMounted)
             {
-                SpeedLine.Stop();
+                SpeedLine.gameObject.SetActive(false);
+            }
+            else
+            {
+                SpeedLine.gameObject.SetActive(true);
             }
             switch (PH.PS) 
             {
