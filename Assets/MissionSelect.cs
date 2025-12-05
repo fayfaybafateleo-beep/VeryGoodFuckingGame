@@ -78,6 +78,14 @@ public class MissionSelect : MonoBehaviour
         {
             CurrentLevel = null;
             IsMissionSelected = false;
+
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach (GameObject enemy in enemies)
+            {
+                DestroyImmediate(enemy);
+            }
+
             Animator.SetTrigger("Reset");
         }
     }

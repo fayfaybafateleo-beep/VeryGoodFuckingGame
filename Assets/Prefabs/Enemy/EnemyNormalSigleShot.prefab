@@ -1192,6 +1192,7 @@ MonoBehaviour:
   - {fileID: 2101993914729372683}
   LightsOffMaterial: {fileID: 2100000, guid: 761510b4ae776524ea692a37c85dc1d1, type: 2}
   IsGore: 0
+  BodyDispearTime: 120
   Head: {fileID: 3206654840511858543}
   Lower: {fileID: 6164167150907843305}
   Upper: {fileID: 7085949298545758025}
@@ -1354,8 +1355,8 @@ MonoBehaviour:
   LineOfSightMask:
     serializedVersion: 2
     m_Bits: 10241
-  VerticalSpreadAngle: 0
-  HorizontalSpreadAngle: 0
+  VerticalSpreadAngle: 1
+  HorizontalSpreadAngle: 1
   Rigidbody: {fileID: 1900214545859322635}
   ImportantPartList:
   - {fileID: 4752524910610644522}

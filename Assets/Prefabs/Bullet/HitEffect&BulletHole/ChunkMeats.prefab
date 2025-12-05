@@ -270,6 +270,14 @@ PrefabInstance:
       propertyPath: moveWithTransform
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2801671529821630298, guid: 0193c944703a36b4fb7ef48a97347ea3, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 2801671529821630298, guid: 0193c944703a36b4fb7ef48a97347ea3, type: 3}
+      propertyPath: InitialModule.startLifetime.minScalar
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 8886345116682741524, guid: 0193c944703a36b4fb7ef48a97347ea3, type: 3}
       propertyPath: m_LocalScale.x
       value: 2

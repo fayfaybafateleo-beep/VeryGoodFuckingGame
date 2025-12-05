@@ -32,7 +32,6 @@ public class EnemyBullet : MonoBehaviour
         //HitEffecT
         GameObject hitEffect1 = Instantiate(HitEffect, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
         hitEffect1.transform.SetParent(collision.transform);
-        Debug.Log(collision.gameObject.name);
         if (collision.gameObject.GetComponent<PlayerHealth>() != null)
         {
             collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(Damage);

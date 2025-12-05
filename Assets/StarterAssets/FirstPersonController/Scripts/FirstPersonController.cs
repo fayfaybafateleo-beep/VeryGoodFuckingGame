@@ -173,6 +173,8 @@ namespace StarterAssets
         public PlayerHealth PH;
         private float DeathTilt = 0f;     // 玩家死亡时的 z 轴倾斜角
         private bool IsDeadTilting = false;
+
+        public PlayerGetInCar PIC;
         public enum ControllerState
         {
             CanMove,
@@ -246,6 +248,10 @@ namespace StarterAssets
 
 		private void Update()
 		{
+            if (PIC.IsMounted)
+            {
+                SpeedLine.Stop();
+            }
             switch (PH.PS) 
             {
                 case PlayerHealth.PlayerState.Alive:

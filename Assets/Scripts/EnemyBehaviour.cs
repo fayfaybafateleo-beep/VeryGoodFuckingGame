@@ -327,13 +327,15 @@ public class EnemyBehaviour : MonoBehaviour
                 Vector2 c = Random.insideUnitCircle;
                 float yaw = c.x * HorizontalSpreadAngle;
                 float pitch = c.y * VerticalSpreadAngle;
-
-                Quaternion spreadRot = FirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
-                GameObject bullet = Instantiate(EnemyBullet, FirePoint.position, spreadRot);
-                bullet.GetComponent<EnemyBullet>().Damage = Damage;
+                if (FirePoint != null)
+                {
+                    Quaternion spreadRot = FirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
+                    GameObject bullet = Instantiate(EnemyBullet, FirePoint.position, spreadRot);
+                    bullet.GetComponent<EnemyBullet>().Damage = Damage;
+                }
             }
 
-            if (EnemyMuzzleFlash != null)
+            if (EnemyMuzzleFlash != null && FirePoint != null)
             {
                 GameObject muzzleFlash = Instantiate(EnemyMuzzleFlash, FirePoint.position, FirePoint.rotation);
                 muzzleFlash.transform.SetParent(FirePoint);

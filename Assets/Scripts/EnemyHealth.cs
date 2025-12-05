@@ -53,6 +53,8 @@ public class EnemyHealth : MonoBehaviour
 
     public bool IsGore = false;
 
+    public float BodyDispearTime;
+
     [Header("BodyParts")]
     public GameObject Head;
     public GameObject Lower;
@@ -209,7 +211,7 @@ public class EnemyHealth : MonoBehaviour
         RB.AddTorque(Random.onUnitSphere * AngularPerDamage * FinalDamage, ForceMode.Impulse);
         RB.AddForceAtPosition(force, LastHitPoint, ForceMode.Impulse);
         //BodyStationary
-        Invoke("EnemyKinematic", KinematicActiveAfterDie);
+        Invoke("EnemyKinematic", BodyDispearTime);
         //lightsOff
         //DeadSound
         PlayRandomDeathSFX();
@@ -283,7 +285,7 @@ public class EnemyHealth : MonoBehaviour
 
             var massiveBlood = Instantiate(MassiveBlood, transform.position, Quaternion.identity);
             massiveBlood.transform.SetParent(limbs.transform);
-            massiveBlood.transform.localScale=new Vector3(0.5f,0.5f,0.5f);
+            massiveBlood.transform.localScale=new Vector3(0.5f,0.5f,0.5f) * multiplier;
             limbs.layer = LayerMask.NameToLayer("Bodies");
             HitBoxPart hbp = limbs.GetComponent<HitBoxPart>();
             Rigidbody rb = limbs.AddComponent<Rigidbody>();
@@ -300,7 +302,7 @@ public class EnemyHealth : MonoBehaviour
 
             
 
-            Destroy(limbs, 5f);
+            Destroy(limbs, BodyDispearTime);
         }
         foreach (HitBoxPart part in GetComponentsInChildren<HitBoxPart>())
         {

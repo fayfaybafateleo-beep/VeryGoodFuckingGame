@@ -116,8 +116,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 3
-      minScalar: 2
+      scalar: 120
+      minScalar: 60
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1044,19 +1044,19 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.0017662048
+          time: 0
           value: 0.13846207
-          inSlope: 5.8898745
-          outSlope: 5.8898745
+          inSlope: 20.469595
+          outSlope: 20.469595
           tangentMode: 34
           weightedMode: 0
           inWeight: 0
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.12655392
-          value: 0.87344605
-          inSlope: 2.9293137
-          outSlope: 2.9293137
+          time: 0.035417587
+          value: 0.8272922
+          inSlope: 10.244575
+          outSlope: 10.244575
           tangentMode: 34
           weightedMode: 0
           inWeight: 0.33333334
@@ -1064,8 +1064,8 @@ ParticleSystem:
         - serializedVersion: 3
           time: 1
           value: 0.84615326
-          inSlope: -0.031247249
-          outSlope: -0.031247249
+          inSlope: 0.019553596
+          outSlope: 0.019553596
           tangentMode: 34
           weightedMode: 0
           inWeight: 0.33333334
@@ -4947,7 +4947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b87663a5726263d41a5010d81eca11a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DestroyTime: 30
+  DestroyTime: 120
   MuzzleFlashOffset: 360
 --- !u!199 &5880903135371784077
 ParticleSystemRenderer:

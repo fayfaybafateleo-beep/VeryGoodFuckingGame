@@ -129,7 +129,7 @@ public class HitBoxPart : MonoBehaviour
                 rb.AddTorque(Random.onUnitSphere * TorqueForce, ForceMode.Impulse);
             }
 
-            Destroy(chunk, ChunkLife);
+            Destroy(chunk, Owner.BodyDispearTime);
         }
     }
     public void GoreExcution(Vector3 origin)
