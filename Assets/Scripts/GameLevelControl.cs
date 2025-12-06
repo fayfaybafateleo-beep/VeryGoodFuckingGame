@@ -63,6 +63,7 @@ public class GameLevelControl : MonoBehaviour
         if (IsSeleted)
         {
             CarPark.SetActive(true);
+            SM.enabled = true;
         }
 
         float distance = Vector3.Distance(PlayerCamera.transform.position, Guidence.transform.position);
@@ -74,6 +75,7 @@ public class GameLevelControl : MonoBehaviour
         {
             Guidence.SetActive(false);
             CarPark.SetActive(false);
+            SM.enabled = false;
         }
        
         if (IsSeleted == false)

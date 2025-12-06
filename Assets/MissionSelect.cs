@@ -39,18 +39,20 @@ public class MissionSelect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (CurrentInedx == Levels.Count) CurrentInedx = 0;
-
-        if (CurrentInedx < 0) CurrentInedx = Levels.Count - 1;
-
-        //MissionSelect
         if (IsMissionSelected == false)
         {
             if (Input.GetKeyDown(Key5) && InTrigger) CurrentInedx++;
 
             if (Input.GetKeyDown(Key6) && InTrigger) CurrentInedx--;
-             Guidence.SetActive(true);
+            Guidence.SetActive(true);
         }
+
+        if (CurrentInedx == Levels.Count) CurrentInedx = 0;
+
+        if (CurrentInedx < 0) CurrentInedx = Levels.Count - 1;
+
+        //MissionSelect
+     
 
         if (IsMissionSelected)
         {
