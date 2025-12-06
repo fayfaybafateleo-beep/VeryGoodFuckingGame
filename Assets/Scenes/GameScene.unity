@@ -36138,6 +36138,10 @@ MonoBehaviour:
   Section2KillTarget: 30
   Section3KillTarget: 40
   ShowKillCounts: 0
+  CurrentSection: 0
+  CurrentSectionKillTarget: 0
+  CurrentSectionKillCount: 0
+  CurrentSectionDone: 0
 --- !u!4 &1189504417
 Transform:
   m_ObjectHideFlags: 0
@@ -82020,7 +82024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OriginWeaponsList:
-  - {fileID: 7617261173868679732, guid: 303440436758efa4fa83c6ada48711ca, type: 3}
+  - {fileID: 8252787098904650708, guid: 94f7e68595af7964f959a0f1cbccd6e3, type: 3}
   - {fileID: 7091615679065204936, guid: eb993aaaeae08394eb30edaf748abba4, type: 3}
   WeaponsOnEquipmentList: []
   GrenadeList:

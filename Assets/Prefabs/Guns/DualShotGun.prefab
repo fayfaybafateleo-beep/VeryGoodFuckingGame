@@ -1954,15 +1954,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionTarget: {fileID: 5661204794457059608}
   rotationTarget: {fileID: 5661204794457059608}
-  kickBackDistance: 1
+  kickBackDistance: 2
   kickPitchYaw: {x: -20, y: 1}
-  kickRandomYawSignChance: 0.5
-  posSpringStiffness: 500
-  rotSpringStiffness: 300
+  kickRandomYawSignChance: 0.833
+  posSpringStiffness: 300
+  rotSpringStiffness: 100
   dampingRatioPos: 1.1
   dampingRatioRot: 1.15
-  noisePosAmp: 0.003
-  noiseRotAmp: 0.03
+  noisePosAmp: 0.06
+  noiseRotAmp: 0.35
   noiseFrequency: 18
   noiseAxesPos: {x: 1, y: 1, z: 0.2}
   noiseAxesRot: {x: 0.4, y: 0.6, z: 1}
