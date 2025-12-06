@@ -231,6 +231,7 @@ public class EnemyHealth : MonoBehaviour
         KillFeed.Instance.AddKillLIst("Kill", 5,1, new Vector3(1f, 1f, 1f));
 
         //RegisterKill
+        if(SectionManager!=null)
         SectionManager.RegisterKill(Section);
 
         //SwitchToBodyLayer
