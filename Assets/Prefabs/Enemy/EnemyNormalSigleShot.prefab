@@ -1307,7 +1307,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 15
+  m_Speed: 20
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1334,7 +1334,7 @@ MonoBehaviour:
   Name: MobGunner
   Target: {fileID: 4499031727440548263}
   Agent: {fileID: 2417986734043512879}
-  MoveForce: 10
+  MoveForce: 20
   MaxSpeed: 20
   AngleOffset: 180
   TurningSpeed: 30
@@ -1348,7 +1348,7 @@ MonoBehaviour:
   EnemyBullet: {fileID: 56932041484218793, guid: 6b9d485cb290d7f47abbb182122b2aaa, type: 3}
   EnemyMuzzleFlash: {fileID: 2933326327969011748, guid: 5e6c087b8781237448826d37bd0a15a2, type: 3}
   Lock: 0
-  BurstCount: 1
+  BurstCount: 3
   BurstRate: 0.2
   IsBurstFiring: 0
   FacingAngleTolerance: 12
@@ -1356,8 +1356,8 @@ MonoBehaviour:
   LineOfSightMask:
     serializedVersion: 2
     m_Bits: 10241
-  VerticalSpreadAngle: 1
-  HorizontalSpreadAngle: 1
+  VerticalSpreadAngle: 3
+  HorizontalSpreadAngle: 3
   Rigidbody: {fileID: 1900214545859322635}
   ImportantPartList:
   - {fileID: 4752524910610644522}
