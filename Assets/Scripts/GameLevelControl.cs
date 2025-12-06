@@ -30,6 +30,7 @@ public class GameLevelControl : MonoBehaviour
 
     [Header("Manager")]
     public SectionManager SM;
+    public GameObject SMobject;
 
     public List<SectionTrigger> Triggers;
     public List<LevelTriggers> LevelTriggers;
@@ -63,7 +64,7 @@ public class GameLevelControl : MonoBehaviour
         if (IsSeleted)
         {
             CarPark.SetActive(true);
-            SM.enabled = true;
+            SMobject.SetActive(true);
         }
 
         float distance = Vector3.Distance(PlayerCamera.transform.position, Guidence.transform.position);
@@ -75,7 +76,7 @@ public class GameLevelControl : MonoBehaviour
         {
             Guidence.SetActive(false);
             CarPark.SetActive(false);
-            SM.enabled = false;
+            SMobject.SetActive(false);
         }
        
         if (IsSeleted == false)

@@ -14,10 +14,13 @@ public class KillListing : MonoBehaviour
     private float Timer;
 
     public Animator Animator;
+  
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Destroy(gameObject, 3f);
+
+      
 
         OriginalPos = TextBoject.transform.localPosition;
         Timer = Duration;
@@ -50,6 +53,7 @@ public class KillListing : MonoBehaviour
     public void SetName (string what,int score, float size, Vector3 color)
     {
         WhatText.text = what + " +"+score.ToString() + " Brutal";
+       
         this.transform.localScale = new Vector3(size, size, size);
         WhatText.color = new Color(color.x, color.y, color.z, 1f);
     }

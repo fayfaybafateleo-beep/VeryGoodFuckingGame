@@ -87,6 +87,7 @@ public class EnemyHealth : MonoBehaviour
 
     [Header("Sections")]
     public SectionManager.SectionType Section;
+    public SectionManager SectionManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -229,7 +230,8 @@ public class EnemyHealth : MonoBehaviour
         }
         KillFeed.Instance.AddKillLIst("Kill", 5,1, new Vector3(1f, 1f, 1f));
 
-        SectionManager.Instance.RegisterKill(Section);
+        //RegisterKill
+        SectionManager.RegisterKill(Section);
 
         //SwitchToBodyLayer
         gameObject.layer = LayerMask.NameToLayer("Bodies");

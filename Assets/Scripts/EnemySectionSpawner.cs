@@ -20,15 +20,12 @@ public class EnemySectionSpawner : MonoBehaviour
 
     private void Start()
     {
-        if (SectionManager == null)
-        {
-            SectionManager = SectionManager.Instance;
-
+      
             if (SectionManager == null)
             {
                 SectionManager = FindFirstObjectByType<SectionManager>();
             }
-        }
+       
     }
 
     private void Update()
@@ -75,7 +72,9 @@ public class EnemySectionSpawner : MonoBehaviour
         }
 
         GameObject enemy=   Instantiate(prefab, offsetPoisition, spawnPoint.rotation);
+
         enemy.GetComponent<EnemyHealth>().Section= Section;
+        enemy.GetComponent<EnemyHealth>().SectionManager = SectionManager;
 
         LocalSpawnCount++;
         SectionManager.RegisterSpawn();  

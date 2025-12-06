@@ -49,13 +49,11 @@ public class SectionManager : MonoBehaviour
     public int CurrentSectionKillTarget;
     public int CurrentSectionKillCount;
     public bool CurrentSectionDone;
-    public static SectionManager Instance { get; private set; }
 
 
   
     private void Awake()
     {
-        Instance = this;
 
         foreach (SectionType st in Enum.GetValues(typeof(SectionType)))
         {

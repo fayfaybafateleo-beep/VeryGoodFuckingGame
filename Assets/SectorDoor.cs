@@ -28,7 +28,6 @@ public class SectorDoor : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SectionManager = SectionManager.Instance;
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
