@@ -39,6 +39,8 @@ public class GameLevelControl : MonoBehaviour
 
     [Header("CarPark")]
     public GameObject CarPark;
+    public GameObject GuideText;
+    public GuideText GT;
     public enum LevelState
     { 
         NotActive,
@@ -51,6 +53,8 @@ public class GameLevelControl : MonoBehaviour
     void Start()
     {
         PlayerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        GuideText = GameObject.FindGameObjectWithTag("GuideSystem");
+        GT = GuideText.GetComponent<GuideText>();
     }
 
     // Update is called once per frame
@@ -85,8 +89,11 @@ public class GameLevelControl : MonoBehaviour
                 ExitTrigger.SetActive(false);
 
 
+                if (IsSeleted)
+                {
+                    GT.Text.text = "Go to Contract Location";
+                }
                
-                
 
                 if (StartTrigger.IsTriggered)
                 {
@@ -101,14 +108,14 @@ public class GameLevelControl : MonoBehaviour
                 {
                     LS = LevelState.End;
                 }
-
+                GT.Text.text = "Kill Your Way Out " + SM.ShowKillCounts.ToString()+"/" +SM.CurrentSectionKillTarget.ToString();
                 Guidence.SetActive(false);
 
                 break;
             case LevelState.End:
                 ExitTrigger.SetActive(true);
                 IsSeleted = false;
-
+                GT.Text.text = "Return To Base";
                 Guidence.SetActive(false);
                 break;
         }

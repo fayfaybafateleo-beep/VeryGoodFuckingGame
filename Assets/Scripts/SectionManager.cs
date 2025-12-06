@@ -43,8 +43,16 @@ public class SectionManager : MonoBehaviour
     public int Section3KillTarget = 40;   
     public Dictionary<SectionType, int> KillCounts = new Dictionary<SectionType, int>();
     public int ShowKillCounts;
+
+    [Header("UI Display")]
+    public SectionType CurrentSection;
+    public int CurrentSectionKillTarget;
+    public int CurrentSectionKillCount;
+    public bool CurrentSectionDone;
     public static SectionManager Instance { get; private set; }
 
+
+  
     private void Awake()
     {
         Instance = this;
@@ -59,6 +67,11 @@ public class SectionManager : MonoBehaviour
         CurrentSpawnCount = 0;
 
         SyncToInspectorBools();
+    }
+
+    public void Start()
+    {
+        
     }
 
     public void SetActive(SectionType section, bool value)
@@ -84,6 +97,10 @@ public class SectionManager : MonoBehaviour
             TargetSpawnCount = GetMaxSpawnForSection(section);
             KillCounts[section] = 0;
             ShowKillCounts = 0;
+
+            CurrentSectionKillTarget = GetKillTargetForSection(section);
+            CurrentSectionKillCount = 0;
+            CurrentSectionDone = false;
         }
     }
 
@@ -212,6 +229,8 @@ public class SectionManager : MonoBehaviour
 
         SyncToInspectorBools();
     }
+
+
     void Update()
     {
        
