@@ -49,6 +49,11 @@ public class KillListing : MonoBehaviour
         {
             Animator.SetBool("End", true);
         }
+
+        if (!IsInsideScreen())
+        {
+            Destroy(gameObject);
+        }
     }
     public void SetName (string what,int score, float size, Vector3 color)
     {
@@ -56,5 +61,30 @@ public class KillListing : MonoBehaviour
        
         this.transform.localScale = new Vector3(size, size, size);
         WhatText.color = new Color(color.x, color.y, color.z, 1f);
+    }
+
+    bool IsInsideScreen()
+    {
+        //OutOfScreenDetedtion
+        RectTransform rect = GetComponent<RectTransform>();
+
+        Vector3[] worldCorners = new Vector3[4];
+        rect.GetWorldCorners(worldCorners);
+
+        
+        float width = Screen.width;
+        float height = Screen.height;
+
+        for (int i = 0; i < 4; i++)
+        {
+            Vector3 pos = RectTransformUtility.WorldToScreenPoint(null, worldCorners[i]);
+
+            if (pos.x >= 0 && pos.x <= width && pos.y >= 0 && pos.y <= height)
+            {
+                return true;   
+            }
+        }
+
+        return false;
     }
 }

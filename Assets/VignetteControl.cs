@@ -21,6 +21,15 @@ public class VignetteControl : MonoBehaviour
     private float CurrentIntensity;
     private float TargetIntensity;
     private Color TargetColor;
+
+    [Header("Last Dance Settings")]
+    public bool LastDanceActive = false;         
+    public float LastDanceMinIntensity = 0.4f;    
+    public float LastDanceMaxIntensity = 0.9f;    
+    public float LastDanceSpeed = 2f;             
+    public Color LastDanceColor = Color.red;      
+
+    private float LastDanceTime = 0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -43,7 +52,7 @@ public class VignetteControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         Vignette vignette_temp;
         if (Volume.profile.TryGet<Vignette>(out vignette_temp))
         {
@@ -51,14 +60,31 @@ public class VignetteControl : MonoBehaviour
 
         }
 
+        if (LastDanceActive)
+        {
+            LastDanceTime += Time.deltaTime * LastDanceSpeed;
+
+            float t = (Mathf.Sin(LastDanceTime) + 1f) * 0.5f;
+
+            float pulseIntensity = Mathf.Lerp(LastDanceMinIntensity, LastDanceMaxIntensity, t);
+            vignette.intensity.value = pulseIntensity;
+
+            var color = Color.Lerp(DefaultColor, LastDanceColor, t);
+            vignette.color.value = color;
+
+            return; 
+        }
+
         //Smooth color/intensity change
-          CurrentIntensity = Mathf.MoveTowards(CurrentIntensity,TargetIntensity,RecoverSpeed * Time.deltaTime );
+        CurrentIntensity = Mathf.MoveTowards(CurrentIntensity,TargetIntensity,RecoverSpeed * Time.deltaTime );
            vignette.intensity.value = CurrentIntensity;
            vignette.color.value = Color.Lerp(vignette.color.value,TargetColor,RecoverSpeed * Time.deltaTime);
     }
 
     public void OnShieldHit()
     {
+        if (LastDanceActive) return;
+
         CurrentIntensity = HitIntensity;
         vignette.intensity.value = HitIntensity;
 
@@ -69,11 +95,29 @@ public class VignetteControl : MonoBehaviour
 
     public void OnHealthHit()
     {
+        if (LastDanceActive) return;
+
         CurrentIntensity = HitIntensity;
         vignette.intensity.value = HitIntensity;
 
         vignette.color.value = HealthHitColor;
         TargetIntensity = DefaultIntensity;
         TargetColor = DefaultColor;  
+    }
+
+    public void StartLastDance()
+    {
+        LastDanceActive = true;
+        LastDanceTime = 0f;
+    }
+
+    public void StopLastDance()
+    {
+        LastDanceActive = false;
+
+        TargetIntensity = DefaultIntensity;
+        TargetColor = DefaultColor;
+        CurrentIntensity = vignette.intensity.value;
+        vignette.color.value = DefaultColor;
     }
 }

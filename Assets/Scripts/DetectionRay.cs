@@ -9,7 +9,7 @@ public class DetectionRay : MonoBehaviour
     public float Dist;
     public LayerMask EnemyLayer;
     public Camera Cam;
-    public float AimRadius = 0.3f;   // 可以在 Inspector 里调，比如 0.2 ~ 0.5 试试
+    public float AimRadius = 0.3f;   
 
     [Header("Execution")]
     public GameObject ExecutionText;
@@ -41,6 +41,7 @@ public class DetectionRay : MonoBehaviour
     void Start()
     {
         OriginalPos = ExecutionText.transform.localPosition;
+        EnemyDetailGroup.SetActive(false);
     }
 
     // Update is called once per frame
@@ -139,7 +140,7 @@ public class DetectionRay : MonoBehaviour
                 if (Dist <= ExecutionDis)
                 {
                     ExecutionText.SetActive(true);
-                    FadeTimer = FadeDuration;  // 重置淡出计时器，让它保持显示
+                    FadeTimer = FadeDuration;  
                 }
                 else
                 {

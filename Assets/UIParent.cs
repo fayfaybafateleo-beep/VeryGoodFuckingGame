@@ -19,6 +19,11 @@ public class UIParent : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player");
         PH = Player.GetComponent<PlayerHealth>();
         StarterInputs = Player.GetComponent<StarterAssetsInputs>();
+
+    }
+    private void Start()
+    {
+        StarterInputs.LockCursor();
     }
 
     void Update()

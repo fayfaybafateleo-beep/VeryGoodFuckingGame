@@ -27,6 +27,11 @@ public class PlayerHealth : MonoBehaviour
 
     public Animator DeadCurtainAnimator;
 
+
+    [Header("Brutal System")]
+    public BrutalSystem BS;          
+    public float BrutalDrainPerSecond = 50f; 
+    public bool IsUsingBrutalToSurvive = false;
     public enum PlayerState
     {
      Alive,
@@ -41,6 +46,8 @@ public class PlayerHealth : MonoBehaviour
 
        VC = GameObject.FindGameObjectWithTag("GlobalVolume").GetComponent<VignetteControl>();
         DeadCurtainAnimator = GameObject.FindGameObjectWithTag("DeadCurtain").GetComponent<Animator>();
+
+        BS = GameObject.FindGameObjectWithTag("Brutal").GetComponent<BrutalSystem>();
     }
 
     // Update is called once per frame
@@ -68,8 +75,16 @@ public class PlayerHealth : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
-            PS = PlayerState.Die;
-            DeadCurtainAnimator.SetTrigger("Die");
+            HandleDeathOrBrutal();
+        }
+        else
+        {
+            if (IsUsingBrutalToSurvive)
+            {
+                IsUsingBrutalToSurvive = false;
+                VC.StopLastDance();
+              
+            }
         }
 
         if (IsInvincible)
@@ -80,7 +95,6 @@ public class PlayerHealth : MonoBehaviour
                 IsInvincible = false;
             }
         }
-
 
     }
     public void TakeDamage(int damage)
@@ -113,7 +127,8 @@ public class PlayerHealth : MonoBehaviour
             
                 StartInvincible(HurtInvincibleTime);
 
-                  VC.OnShieldHit();
+                VC.OnShieldHit();
+           
                 ImpulseSource.GenerateImpulse();
             }
         }
@@ -144,5 +159,44 @@ public class PlayerHealth : MonoBehaviour
     public void GainArmour(float multipulier)
     {
         CurrentArmuor += Mathf.RoundToInt(5 * multipulier);
+    }
+
+    void HandleDeathOrBrutal()
+    {
+        if (PS == PlayerState.Die) return;
+
+        if (IsUsingBrutalToSurvive==false)
+        {
+            IsUsingBrutalToSurvive = true;
+            VC.StartLastDance();
+        }
+        //BrutalLastDance
+        if (BS != null && BS.CurrentBrutal > 0)
+        {
+            IsUsingBrutalToSurvive = true;
+
+         
+            float drain = BrutalDrainPerSecond * Time.deltaTime;
+            int drainInt = Mathf.CeilToInt(drain);
+
+            if (drainInt > BS.CurrentBrutal)
+                drainInt = BS.CurrentBrutal;
+
+           BS.CurrentBrutal -= drainInt;
+
+            if (BS.CurrentBrutal <= 0 && CurrentHealth <= 0)
+            {
+                PS = PlayerState.Die;
+                VC.StopLastDance();
+                DeadCurtainAnimator.SetTrigger("Die");
+            }
+        }
+        else
+        {
+            
+            PS = PlayerState.Die;
+            VC.StopLastDance();
+            DeadCurtainAnimator.SetTrigger("Die");
+        }
     }
 }
