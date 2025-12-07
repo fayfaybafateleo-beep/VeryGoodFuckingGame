@@ -1210,9 +1210,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: AutoRifle Patraiot
-  Cost: 12000
+  Cost: 0
   FirePoint: {fileID: 6736261893501121073}
-  CurrentFirePointIndex: 0
+  CurrentFirePointIndex: 9000
   IsMultiFirepoint: 0
   FirePoints: []
   BulletPrefab: {fileID: 3454573842243275128, guid: 76f080b9e636179488875a1923e804fd, type: 3}
@@ -1240,6 +1240,7 @@ MonoBehaviour:
   GunAnimator: {fileID: 5480749461538715529}
   AnimatorSpeed: 5
   shake: {fileID: 1057738087423309964}
+  OriginGunDamage: 0
   GunDamage: 15
   GunPeneration: 3
   Camera: {fileID: 0}
@@ -1260,9 +1261,10 @@ MonoBehaviour:
   ReloadKey: 114
   ReloadText: {fileID: 0}
   InitialCapasityRate: 0.3
-  MaxCapasity: 200
+  MaxCapasity: 100
   CurrentCapasity: 0
   AmmoConvertRate: 2
+  BM: {fileID: 0}
   GS: 0
 --- !u!95 &5480749461538715529
 Animator:

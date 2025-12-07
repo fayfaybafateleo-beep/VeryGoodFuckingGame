@@ -67,6 +67,7 @@ public class GunScript : MonoBehaviour
     public GunShake shake;
 
     [Header("GunData")]
+    public float OriginGunDamage;
     public float GunDamage;
     public int GunPeneration;
 
@@ -95,6 +96,9 @@ public class GunScript : MonoBehaviour
     public int MaxCapasity;
     public int CurrentCapasity;
     public float AmmoConvertRate;
+
+    [Header("Buff")]
+    public BuffManager BM;
     public enum GunState
     {
        CanFire,
@@ -119,9 +123,16 @@ public class GunScript : MonoBehaviour
         ReloadText = Reminder.GetComponentInChildren<TextMeshPro>();
 
         BurstInterval = 60 / BurstRate ;
+
+        BM = GameObject.FindGameObjectWithTag("BuffManager").GetComponent<BuffManager>();
+
+        OriginGunDamage = GunDamage;
     }
     void Update()
     {
+        //Damage
+        GunDamage = OriginGunDamage * (1 + BM.DamageIncreaseRate);
+
         //ZeroTheFirePoint
         Vector3 RayOrigin = Camera.transform.position + Camera.transform.forward * Offset;
         Vector3 RayDir = Camera.transform.forward;

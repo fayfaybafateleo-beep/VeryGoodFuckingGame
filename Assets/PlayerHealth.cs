@@ -48,6 +48,9 @@ public class PlayerHealth : MonoBehaviour
         DeadCurtainAnimator = GameObject.FindGameObjectWithTag("DeadCurtain").GetComponent<Animator>();
 
         BS = GameObject.FindGameObjectWithTag("Brutal").GetComponent<BrutalSystem>();
+
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
     }
 
     // Update is called once per frame
@@ -83,7 +86,7 @@ public class PlayerHealth : MonoBehaviour
             {
                 IsUsingBrutalToSurvive = false;
                 VC.StopLastDance();
-              
+
             }
         }
 
@@ -95,7 +98,20 @@ public class PlayerHealth : MonoBehaviour
                 IsInvincible = false;
             }
         }
+        switch (PS)
+        {
+            case PlayerState.Die:
 
+                Time.timeScale = Mathf.Lerp(Time.timeScale, 0.1f, 0.3f * Time.unscaledDeltaTime);
+
+                if (Mathf.Abs(Time.timeScale - 0.1f) < 0.01f)
+                {
+                    Time.timeScale = 0.1f;
+                }
+
+                Time.fixedDeltaTime = 0.02f * Time.timeScale;
+                break;
+        }
     }
     public void TakeDamage(int damage)
     {
@@ -200,3 +216,4 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 }
+

@@ -13,27 +13,56 @@ public class BrutalSystem : MonoBehaviour
     public TextMeshProUGUI ScoreText;
 
     [Header("Skill Settings")]
-    public int BrutalCost = 100;        
-    public int BrutalNeed = 100;        
-    public float SupplyCooldown = 3f;     
+    // skill1
+    public int BrutalCost1 = 100;
+    public int BrutalNeed1 = 100;
+
+    // skill2
+    public int BrutalCost2 = 150;
+    public int BrutalNeed2 = 150;
+
+    // skill3
+    public int BrutalCost3 = 200;
+    public int BrutalNeed3 = 200;
+
+    public float SupplyCooldown = 3f;   
+
     public int DropsCount = 3;
     public GameObject Player;
 
     [Header("Skill UI")]
-    public Image SupplyIcon;              
-    public Color ReadyColor = Color.green; 
-    private Color OriginalColor;    
+    public Image SkillIcon1;
+    public Image SkillIcon2;
+    public Image SkillIcon3;
 
+    public Color ReadyColor = Color.green;
+    private Color OriginalColor1;
+    private Color OriginalColor2;
+    private Color OriginalColor3;
 
+    [Header("Drops")]
     public GameObject AmmoDrops1;
     public GameObject AmmoDrops2;
 
+    public GameObject HealthDrops;
+    public GameObject AurmorDrops;
+
     private float SupplyCooldownTimer = 0f;
+
+    [Header("BuffManager")]
+    public BuffManager BM;
 
     void Start()
     {
         MaxBrutal = 999;
+
         Player = GameObject.FindGameObjectWithTag("Player");
+
+        BM = GameObject.FindGameObjectWithTag("BuffManager").GetComponent<BuffManager>();
+
+        if (SkillIcon1 != null) OriginalColor1 = SkillIcon1.color;
+        if (SkillIcon2 != null) OriginalColor2 = SkillIcon2.color;
+        if (SkillIcon3 != null) OriginalColor3 = SkillIcon3.color;
     }
 
     void Update()
@@ -43,8 +72,6 @@ public class BrutalSystem : MonoBehaviour
             CurrentBrutal = MaxBrutal;
         }
 
-        UpdateSupplyIconColor();
-
         BrutalBar.fillAmount = (float)CurrentBrutal / MaxBrutal;
         ScoreText.text = CurrentBrutal.ToString();
 
@@ -53,35 +80,61 @@ public class BrutalSystem : MonoBehaviour
             SupplyCooldownTimer -= Time.deltaTime;
         }
 
+        UpdateSkillIconsColor();
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Supply();
+            TryCastSkill(BrutalCost1, BrutalNeed1, () => Skill1Effect(AmmoDrops1, AmmoDrops2));
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            TryCastSkill(BrutalCost2, BrutalNeed2, () => Skill2Effect(HealthDrops, AurmorDrops));
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            TryCastSkill(BrutalCost3, BrutalNeed3, Skill3Effect);
         }
     }
 
-    public void Supply()
+    void TryCastSkill(int cost, int need, System.Action skillAction)
     {
         if (SupplyCooldownTimer > 0f)
-        {
             return;
-        }
 
-        if (CurrentBrutal < BrutalNeed || CurrentBrutal < BrutalCost)
-        {
+        if (CurrentBrutal < need || CurrentBrutal < cost)
             return;
-        }
 
-        SpawnDrops();
+        skillAction?.Invoke();
 
-        CurrentBrutal -= BrutalCost;
+        CurrentBrutal -= cost;
         if (CurrentBrutal < 0) CurrentBrutal = 0;
 
         SupplyCooldownTimer = SupplyCooldown;
     }
 
-    void SpawnDrops()
+    // SkillPerformance
+
+    void Skill1Effect(GameObject drop1, GameObject drop2)
     {
-        
+        SpawnDrops(drop1,drop2);
+    }
+
+    void Skill2Effect(GameObject drop1, GameObject drop2)
+    {
+        SpawnDrops(drop1, drop2);
+    }
+
+    void Skill3Effect()
+    {
+
+        BM.StartDamageIncrease();
+    }
+
+
+    void SpawnDrops(GameObject drop1, GameObject drop2)
+    {
+        if (Player == null) return;
+
         for (int i = 0; i < DropsCount; i++)
         {
             Vector3 offset = new Vector3(
@@ -91,7 +144,7 @@ public class BrutalSystem : MonoBehaviour
             );
             Vector3 spawnPos = Player.transform.position + offset;
 
-            GameObject prefabToSpawn = (Random.value < 0.5f) ? AmmoDrops1 : AmmoDrops2;
+            GameObject prefabToSpawn = (Random.value < 0.5f) ?drop1 : drop2;
 
             if (prefabToSpawn != null)
             {
@@ -100,13 +153,21 @@ public class BrutalSystem : MonoBehaviour
         }
     }
 
-    void UpdateSupplyIconColor()
+
+    void UpdateSkillIconsColor()
     {
-        if (SupplyIcon == null) return;
+        bool canSkill1 = SupplyCooldownTimer <= 0f && CurrentBrutal >= BrutalCost1 && CurrentBrutal >= BrutalNeed1;
+        bool canSkill2 = SupplyCooldownTimer <= 0f && CurrentBrutal >= BrutalCost2 && CurrentBrutal >= BrutalNeed2;
+        bool canSkill3 = SupplyCooldownTimer <= 0f && CurrentBrutal >= BrutalCost3 && CurrentBrutal >= BrutalNeed3;
 
-        bool canUseSupply = SupplyCooldownTimer <= 0f && CurrentBrutal >= BrutalCost && CurrentBrutal >= BrutalNeed;
+        if (SkillIcon1 != null)
+            SkillIcon1.color = canSkill1 ? ReadyColor : OriginalColor1;
 
-        SupplyIcon.color = canUseSupply ? ReadyColor : OriginalColor;
+        if (SkillIcon2 != null)
+            SkillIcon2.color = canSkill2 ? ReadyColor : OriginalColor2;
+
+        if (SkillIcon3 != null)
+            SkillIcon3.color = canSkill3 ? ReadyColor : OriginalColor3;
     }
 
 }

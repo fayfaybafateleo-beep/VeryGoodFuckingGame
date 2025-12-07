@@ -175,6 +175,7 @@ namespace StarterAssets
         private bool IsDeadTilting = false;
 
         public PlayerGetInCar PIC;
+        public BasicRigidBodyPush PP;
         public enum ControllerState
         {
             CanMove,
@@ -244,6 +245,8 @@ namespace StarterAssets
 
             LastPos = transform.position;
 			SpeedThreshold = 17;
+
+            PP.canPush = false;
         }
 
 		private void Update()
@@ -620,6 +623,8 @@ namespace StarterAssets
             FootstepSource.PlayOneShot(SlideSound1);
             FootstepSource.PlayOneShot(SlideSound2);
 
+            PP.canPush = true;
+
         }
 
 
@@ -654,7 +659,9 @@ namespace StarterAssets
                 _targetCamLocalPos = _originalCamLocalPos;
             }
             ChangeToNormalCapsule();
-         //   SpeedLine.Stop();
+            //   SpeedLine.Stop();
+
+            PP.canPush = false;
 
         }
 
