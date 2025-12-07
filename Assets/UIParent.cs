@@ -23,13 +23,21 @@ public class UIParent : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            StarterInputs.UnlockCursor();
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            StarterInputs.LockCursor();
+        }
         if (PH == null) return;
 
         if (PH.PS == PlayerHealth.PlayerState.Die && !unlockedOnDeath)
         {
             if (StarterInputs != null)
             {
-             //   StarterInputs.UnlockCursor();
+                StarterInputs.UnlockCursor();
             }
 
             PlayDeadSound();
