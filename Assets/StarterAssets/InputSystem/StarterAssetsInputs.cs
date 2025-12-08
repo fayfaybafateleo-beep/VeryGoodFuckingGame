@@ -30,24 +30,7 @@ namespace StarterAssets
         {
             if (cursorInputForLook)
             {
-                Vector2 delta = value.Get<Vector2>();
-
-                // --- 新增：WebGL 异常跳动过滤器 ---
-#if UNITY_WEBGL && UNITY_EDITOR
-                // 设定一个合理的阈值。普通甩鼠标通常在 10-50 之间。
-                // 如果一帧超过 200 (甚至更高，视具体分辨率而定)，通常是浏览器的重置信号
-                const float THRESHOLD = 200f; 
-
-                // 检查是否出现异常大的跳跃
-                if (delta.sqrMagnitude > THRESHOLD * THRESHOLD)
-                {
-                    // 这是一个“幽灵数据”，直接丢弃，不执行 LookInput
-                    return; 
-                }
-#endif
-                // ------------------------------------
-
-                LookInput(delta);
+                LookInput(value.Get<Vector2>());
             }
         }
 
@@ -92,21 +75,7 @@ namespace StarterAssets
         {
             Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
         }
-
-       public void LockCursor()
-        {
-         //   cursorLocked = true;
-        //   cursorInputForLook = true;      
-
-         //   SetCursorState(true);
-        }
-
-        public void UnlockCursor()
-        {
-         //   cursorLocked = false;
-          //  cursorInputForLook = false;     
-
-           // SetCursorState(false);
-        }
     }
+
+
 }

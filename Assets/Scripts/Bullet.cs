@@ -14,6 +14,9 @@ public class Bullet : MonoBehaviour
     public GameObject HitEffect;
     public GameObject ExtraHitEffect;
     public GameObject HitEffect2;
+    public ParticleSystem BulletParticle;
+    public GameObject ParticlePrefab;
+
     [Range(1, 10)]
     public float Duration = 5f;
 
@@ -32,6 +35,9 @@ public class Bullet : MonoBehaviour
     private HashSet<Transform> hitEnemyRoots = new HashSet<Transform>();
     public int MaxPenetrateTargets = 1;
     private int PenetratedCount = 0;
+
+    [Header("Explosion")]
+    public GameObject Explosion;
     void Start()
     {
         Rigidbody.linearVelocity = transform.forward * Speed;
@@ -53,6 +59,18 @@ public class Bullet : MonoBehaviour
     {
         var hb = collision.collider.GetComponent<HitBoxPart>();
         var enemy = hb ? hb.Owner : collision.collider.transform.parent.GetComponentInParent<EnemyHealth>();
+
+        //DetachParticle
+        if (BulletParticle != null)
+        {
+            PlayAndDetachParticle();
+        }
+
+        if (Explosion != null)
+        {
+            ExplosionInstantiate();
+        }
+
         if (hb != null)
         {
             //Instantiate BulletHole For all RB object
@@ -131,5 +149,24 @@ public class Bullet : MonoBehaviour
         // Destroy the bullet on collision
         Destroy(gameObject);
     }
-   
+    void PlayAndDetachParticle()
+    {
+        //Detach Particle
+        Transform psTransform = BulletParticle.transform;
+        psTransform.SetParent(null);
+
+        BulletParticle.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+
+        var main = BulletParticle.main;
+        float lifeTime = main.duration + main.startLifetime.constantMax;
+
+        Destroy(BulletParticle.gameObject, lifeTime);
+    }
+
+    public void ExplosionInstantiate()
+    {
+        var exp = Instantiate(Explosion, transform.position, transform.rotation);
+        exp.GetComponent<Explosive>().Damage = Damage;
+        exp.GetComponent<Explosive>().PenetrateLevel = PenatrateLevel;
+    }
 }

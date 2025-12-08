@@ -23,18 +23,15 @@ public class UIParent : MonoBehaviour
     }
     private void Start()
     {
-        StarterInputs.LockCursor();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            StarterInputs.UnlockCursor();
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
-            StarterInputs.LockCursor();
         }
         if (PH == null) return;
 
@@ -42,7 +39,6 @@ public class UIParent : MonoBehaviour
         {
             if (StarterInputs != null)
             {
-                StarterInputs.UnlockCursor();
             }
 
             PlayDeadSound();

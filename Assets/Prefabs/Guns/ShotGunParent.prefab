@@ -2398,6 +2398,7 @@ MonoBehaviour:
   GunAnimator: {fileID: 1458400183304755529}
   AnimatorSpeed: 3.5
   shake: {fileID: 4404955300069377803}
+  OriginGunDamage: 0
   GunDamage: 15
   GunPeneration: 1
   Camera: {fileID: 0}
@@ -2421,6 +2422,7 @@ MonoBehaviour:
   MaxCapasity: 40
   CurrentCapasity: 0
   AmmoConvertRate: 3
+  BM: {fileID: 0}
   GS: 0
 --- !u!95 &1458400183304755529
 Animator:
@@ -2608,7 +2610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionTarget: {fileID: 1882631221622584612}
   rotationTarget: {fileID: 1882631221622584612}
-  kickBackDistance: 2
+  kickBackDistance: 1.5
   kickPitchYaw: {x: -12.5, y: 0.4}
   kickRandomYawSignChance: 1
   posSpringStiffness: 300

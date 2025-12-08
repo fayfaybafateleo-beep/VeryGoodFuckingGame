@@ -3037,8 +3037,9 @@ MonoBehaviour:
   ClipCocking: {fileID: 8300000, guid: 0df5a3f171e0f974f858a7586e70747c, type: 3}
   Impulse: {fileID: 4865430496110159313}
   GunAnimator: {fileID: 6801892309137895546}
-  AnimatorSpeed: 2
+  AnimatorSpeed: 1.5
   shake: {fileID: 8684527944397318317}
+  OriginGunDamage: 0
   GunDamage: 50
   GunPeneration: 4
   Camera: {fileID: 0}
@@ -3062,6 +3063,7 @@ MonoBehaviour:
   MaxCapasity: 60
   CurrentCapasity: 0
   AmmoConvertRate: 1
+  BM: {fileID: 0}
   GS: 0
 --- !u!95 &6801892309137895546
 Animator:
@@ -3159,13 +3161,13 @@ MonoBehaviour:
   rotSpringStiffness: 300
   dampingRatioPos: 1.1
   dampingRatioRot: 1.15
-  noisePosAmp: 0.003
+  noisePosAmp: 0.06
   noiseRotAmp: 0.03
   noiseFrequency: 18
   noiseAxesPos: {x: 1, y: 1, z: 0.2}
   noiseAxesRot: {x: 0.4, y: 0.6, z: 1}
-  shakeHoldTime: 0.06
-  shakeFadeTime: 0.18
+  shakeHoldTime: 0.03
+  shakeFadeTime: 0.1
   enableIdleNoise: 0
   idleNoisePosAmp: 0.0006
   idleNoiseRotAmp: 0.12
