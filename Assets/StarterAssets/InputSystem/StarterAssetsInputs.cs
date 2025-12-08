@@ -93,20 +93,20 @@ namespace StarterAssets
             Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
         }
 
-        public void LockCursor()
+       public void LockCursor()
         {
-            cursorLocked = true;
-            cursorInputForLook = true;      
+         //   cursorLocked = true;
+        //   cursorInputForLook = true;      
 
-            SetCursorState(true);
+         //   SetCursorState(true);
         }
 
         public void UnlockCursor()
         {
-            cursorLocked = false;
-            cursorInputForLook = false;     
+         //   cursorLocked = false;
+          //  cursorInputForLook = false;     
 
-            SetCursorState(false);
+           // SetCursorState(false);
         }
     }
 }

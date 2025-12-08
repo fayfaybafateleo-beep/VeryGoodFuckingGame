@@ -1338,6 +1338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Pistol G114
+  Cost: 0
   FirePoint: {fileID: 1898633215775109795}
   CurrentFirePointIndex: 0
   IsMultiFirepoint: 0
@@ -1367,6 +1368,7 @@ MonoBehaviour:
   GunAnimator: {fileID: 227658081199487082}
   AnimatorSpeed: 5
   shake: {fileID: 1979443626662996304}
+  OriginGunDamage: 0
   GunDamage: 20
   GunPeneration: 2
   Camera: {fileID: 0}
@@ -1390,6 +1392,7 @@ MonoBehaviour:
   MaxCapasity: 100
   CurrentCapasity: 0
   AmmoConvertRate: 2
+  BM: {fileID: 0}
   GS: 0
 --- !u!95 &227658081199487082
 Animator:
@@ -1487,13 +1490,13 @@ MonoBehaviour:
   rotSpringStiffness: 300
   dampingRatioPos: 1.1
   dampingRatioRot: 1.15
-  noisePosAmp: 0.003
+  noisePosAmp: 0.03
   noiseRotAmp: 0.03
   noiseFrequency: 18
   noiseAxesPos: {x: 1, y: 1, z: 0.2}
   noiseAxesRot: {x: 0.4, y: 0.6, z: 1}
-  shakeHoldTime: 0.06
-  shakeFadeTime: 0.18
+  shakeHoldTime: 0.03
+  shakeFadeTime: 0.09
   enableIdleNoise: 0
   idleNoisePosAmp: 0.0006
   idleNoiseRotAmp: 0.12
