@@ -2150,7 +2150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0256bb19a2b52fb42a9ed153a027c878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: SMG PPP43
+  Name: BoltGun MKIII
   Cost: 10000
   FirePoint: {fileID: 3224998444568063956}
   CurrentFirePointIndex: 0
@@ -2204,7 +2204,7 @@ MonoBehaviour:
   InitialCapasityRate: 0.6
   MaxCapasity: 80
   CurrentCapasity: 0
-  AmmoConvertRate: 2
+  AmmoConvertRate: 0.5
   BM: {fileID: 0}
   GS: 0
 --- !u!95 &8361800785528010177
@@ -2296,7 +2296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionTarget: {fileID: 158224090875790466}
   rotationTarget: {fileID: 158224090875790466}
-  kickBackDistance: 0.5
+  kickBackDistance: 0.75
   kickPitchYaw: {x: -10, y: 2}
   kickRandomYawSignChance: 1
   posSpringStiffness: 500

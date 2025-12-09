@@ -2387,8 +2387,8 @@ MonoBehaviour:
   ReloadTimer: 0
   NeedReload: 0
   VerticalSpreadAngle: 1
-  HorizontalSpreadAngle: 1
-  SlugCount: 6
+  HorizontalSpreadAngle: 3
+  SlugCount: 8
   Shell: {fileID: 1239073040038692928, guid: cd9b760feaf19c340b9bce50b1750df7, type: 3}
   ShellPoint: {fileID: 7421615968426401682}
   AudioSource: {fileID: 5296983058485635032}
@@ -2400,7 +2400,7 @@ MonoBehaviour:
   shake: {fileID: 4404955300069377803}
   OriginGunDamage: 0
   GunDamage: 15
-  GunPeneration: 1
+  GunPeneration: 2
   Camera: {fileID: 0}
   MaxDistance: 60
   HitLayers:
@@ -2610,20 +2610,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionTarget: {fileID: 1882631221622584612}
   rotationTarget: {fileID: 1882631221622584612}
-  kickBackDistance: 1.5
+  kickBackDistance: 1
   kickPitchYaw: {x: -12.5, y: 0.4}
   kickRandomYawSignChance: 1
   posSpringStiffness: 300
   rotSpringStiffness: 100
   dampingRatioPos: 1.1
   dampingRatioRot: 1.15
-  noisePosAmp: 0.03
-  noiseRotAmp: 0.3
-  noiseFrequency: 18
+  noisePosAmp: 0.1
+  noiseRotAmp: 1
+  noiseFrequency: 25
   noiseAxesPos: {x: 1, y: 1, z: 0.2}
   noiseAxesRot: {x: 0.4, y: 0.6, z: 1}
   shakeHoldTime: 0.06
-  shakeFadeTime: 0.18
+  shakeFadeTime: 0.1
   enableIdleNoise: 0
   idleNoisePosAmp: 0.0006
   idleNoiseRotAmp: 0.12
