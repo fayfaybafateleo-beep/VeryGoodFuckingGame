@@ -11,6 +11,7 @@ public class EnemyBehaviour : MonoBehaviour
     [Header("Target")]
     public GameObject Target;
     public NavMeshAgent Agent;
+    public bool IsFlesh;
 
     [Header("Movement")]
     [UnityEngine.Range(0, 100)] public float MoveForce = 10f;
@@ -31,6 +32,10 @@ public class EnemyBehaviour : MonoBehaviour
     public GameObject EnemyBullet;
     public GameObject EnemyMuzzleFlash;
     public bool Lock=false;
+
+    [Header("FlySetting")]
+    public bool IsFlying;
+    public float FlyHeight;
 
     [Header("Burst Fire")]
     public int BurstCount = 3;               
@@ -99,6 +104,12 @@ public class EnemyBehaviour : MonoBehaviour
         Agent.avoidancePriority = Random.Range(20, 80);
 
         EH = GetComponent<EnemyHealth>();
+
+        if (IsFlying)
+        {
+            Agent.baseOffset = FlyHeight;
+        }
+
     }
 
     void FixedUpdate()
@@ -348,4 +359,6 @@ public class EnemyBehaviour : MonoBehaviour
 
         IsBurstFiring = false;
     }
+
+ 
 }

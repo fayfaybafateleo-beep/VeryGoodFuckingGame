@@ -88,6 +88,12 @@ public class EnemyHealth : MonoBehaviour
     [Header("Sections")]
     public SectionManager.SectionType Section;
     public SectionManager SectionManager;
+
+    [Header("Flying Enemy Death")]
+    public float FlyingDeathDuration = 1.5f; 
+    public float FlyingDeathForce = 15f;    
+    public float FlyingDeathTorque = 10f;
+    public List<GameObject> ParticleList;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -207,6 +213,7 @@ public class EnemyHealth : MonoBehaviour
         //BodyEffect
         RB.constraints = RigidbodyConstraints.None;
         RB.isKinematic = false;
+        RB.useGravity = true;
         EnemyAnimator.SetTrigger("Die");
         Instantiate(BloodSPlash, LastHitPoint,Quaternion.identity);
 
@@ -215,6 +222,12 @@ public class EnemyHealth : MonoBehaviour
         RB.AddForce(Vector3.up * UpwardForce*FinalDamage, ForceMode.Impulse);
         RB.AddTorque(Random.onUnitSphere * AngularPerDamage * FinalDamage, ForceMode.Impulse);
         RB.AddForceAtPosition(force, LastHitPoint, ForceMode.Impulse);
+
+        if (EBehaviour.IsFlying)
+        {
+            StartCoroutine(FlyingDeathRoutine());
+            Invoke("StopLoopAndDestroy", FlyingDeathDuration);
+        }
         //BodyStationary
         Invoke("EnemyKinematic", BodyDispearTime);
         //lightsOff
@@ -328,6 +341,9 @@ public class EnemyHealth : MonoBehaviour
     }
     public void ShockedText()
     {
+        RB.useGravity = true;
+        StopLoopAndDestroy();
+
         GameObject text = Instantiate(TextObject, transform.position, Quaternion.identity);
         text.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
         text.GetComponentInChildren<TextMeshPro>().text = "PANIC!!!";
@@ -472,6 +488,58 @@ public class EnemyHealth : MonoBehaviour
         {
             AudioSource.PlayOneShot(clip);
         }
+    }
+
+    private IEnumerator FlyingDeathRoutine()
+    {
+        float timer = 0f;
+
+        float originalDrag = RB.linearDamping;
+        float originalAngularDrag = RB.angularDamping;
+        RB.linearDamping = 0.2f;
+        RB.angularDamping = 0.1f;
+
+        while (timer < FlyingDeathDuration)
+        {
+            Vector3 randomDir = Random.onUnitSphere;
+            randomDir.y = Mathf.Abs(randomDir.y); 
+
+            RB.AddForce(randomDir * FlyingDeathForce, ForceMode.Acceleration);
+            RB.AddTorque(Random.onUnitSphere * FlyingDeathTorque, ForceMode.Acceleration);
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        RB.linearDamping = originalDrag;
+        RB.angularDamping = originalAngularDrag;
+    }
+
+    public void StopLoopAndDestroy()
+    {
+        foreach (GameObject obj in ParticleList)
+        {
+            if (obj == null) continue;
+
+            ParticleSystem ps = obj.GetComponent<ParticleSystem>();
+            if (ps == null) continue;
+
+            var main = ps.main;
+            main.loop = false;
+
+            ps.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+
+            StartCoroutine(DestroyAfterDone(ps));
+        }
+    }
+
+    private IEnumerator DestroyAfterDone(ParticleSystem ps)
+    {
+        while (ps != null && ps.IsAlive(true))
+            yield return null;
+
+        if (ps != null)
+            Destroy(ps.gameObject);
     }
 
 }
