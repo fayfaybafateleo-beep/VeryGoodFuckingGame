@@ -60,6 +60,8 @@ public class GunScript : MonoBehaviour
 
     [Header("Screenshake")]
     public CinemachineImpulseSource Impulse;
+    public Test Recoil;
+    public float RecoilStrength;
 
     [Header("Animations")]
     public Animator GunAnimator;
@@ -127,6 +129,8 @@ public class GunScript : MonoBehaviour
         BM = GameObject.FindGameObjectWithTag("BuffManager").GetComponent<BuffManager>();
 
         OriginGunDamage = GunDamage;
+
+        Recoil = GameObject.FindGameObjectWithTag("Recoil").GetComponent<Test>();
     }
     void Update()
     {
@@ -276,7 +280,8 @@ public class GunScript : MonoBehaviour
         {
             SetBlur(0);
         }
-        
+
+      
     }
     public void IdleAnimation()
     {
@@ -379,6 +384,9 @@ public class GunScript : MonoBehaviour
 
         //ammo
         MagazineCounter -= 1;
+
+        //VeiwKick
+        Recoil.Kick(RecoilStrength);
 
         // Screenshake
         Impulse.GenerateImpulse();

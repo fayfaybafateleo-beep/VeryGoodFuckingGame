@@ -1237,6 +1237,8 @@ MonoBehaviour:
   ClipShooting: {fileID: 8300000, guid: 257f46a6e348f1b4da0b4ac535cc6d73, type: 3}
   ClipCocking: {fileID: 8300000, guid: 257f46a6e348f1b4da0b4ac535cc6d73, type: 3}
   Impulse: {fileID: 2315604725746549557}
+  Recoil: {fileID: 0}
+  RecoilStrength: 2
   GunAnimator: {fileID: 5480749461538715529}
   AnimatorSpeed: 5
   shake: {fileID: 1057738087423309964}
@@ -1362,7 +1364,7 @@ MonoBehaviour:
   rotSpringStiffness: 300
   dampingRatioPos: 1.1
   dampingRatioRot: 1.15
-  noisePosAmp: 0.003
+  noisePosAmp: 0.004
   noiseRotAmp: 0.03
   noiseFrequency: 18
   noiseAxesPos: {x: 1, y: 1, z: 0.2}
