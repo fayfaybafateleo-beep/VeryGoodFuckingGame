@@ -303,6 +303,9 @@ public class EnemyHealth : MonoBehaviour
             var limbs = Instantiate(obj, transform.position, Quaternion.identity);
             limbs.transform.localScale = limbs.transform.localScale * multiplier;
 
+        //    limbs.GetComponent<HitBoxPart>().partHealth = 1;
+        //    limbs.GetComponent<HitBoxPart>().destructible=true;
+
             var massiveBlood = Instantiate(MassiveBlood, transform.position, Quaternion.identity);
             massiveBlood.transform.SetParent(limbs.transform);
             massiveBlood.transform.localScale=new Vector3(0.5f,0.5f,0.5f) * multiplier;
@@ -318,7 +321,7 @@ public class EnemyHealth : MonoBehaviour
             rb.AddForce(randomDir * force, ForceMode.Impulse);
             rb.AddForce(Vector3.up * upForce, ForceMode.Impulse);
             rb.AddTorque(Random.insideUnitSphere, ForceMode.Impulse);
-            if (hbp) hbp.enabled = false;
+           if (hbp) hbp.enabled = false;
 
             
 

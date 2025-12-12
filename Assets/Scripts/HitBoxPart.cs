@@ -81,13 +81,34 @@ public class HitBoxPart : MonoBehaviour
     public void BreakPart()
     {
         Owner.BodyPartDesctructSound();
-        GameObject bloodEffect=  Instantiate(Blood, BloodPoint.position, BloodPoint.rotation);
-        bloodEffect.transform.SetParent(Owner.transform);
-        bloodEffect.transform.localScale = Owner.transform.localScale;
 
-        GameObject bloodSplash = Instantiate(BloodSplash, BloodPoint.position, BloodPoint.rotation);
-        bloodSplash.transform.SetParent(Owner.transform);
-        bloodSplash.transform.localScale = Owner.transform.localScale;
+        Vector3 spawnPos;
+        Quaternion spawnRot;
+
+        if (BloodPoint != null)
+        {
+            spawnPos = BloodPoint.position;
+            spawnRot = BloodPoint.rotation;
+        }
+        else
+        {
+            spawnPos = transform.position;
+            spawnRot = transform.rotation;
+        }
+
+        GameObject bloodEffect = Instantiate(Blood, spawnPos, spawnRot);
+      
+
+        GameObject bloodSplash = Instantiate(BloodSplash, spawnPos, spawnRot);
+
+        if (Owner != null)
+        {
+            bloodEffect.transform.SetParent(Owner.transform);
+            bloodEffect.transform.localScale = Owner.transform.localScale;
+            bloodSplash.transform.SetParent(Owner.transform);
+            bloodSplash.transform.localScale = Owner.transform.localScale;
+        }
+
         if (IsCriticalPoint)
         {
             Owner.AddCritical();
