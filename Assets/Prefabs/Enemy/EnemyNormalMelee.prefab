@@ -1201,6 +1201,10 @@ MonoBehaviour:
   DropChance: 0.05
   Section: 0
   SectionManager: {fileID: 0}
+  FlyingDeathDuration: 1.5
+  FlyingDeathForce: 15
+  FlyingDeathTorque: 10
+  ParticleList: []
 --- !u!95 &5161086026593443594
 Animator:
   serializedVersion: 7
@@ -1310,6 +1314,7 @@ MonoBehaviour:
   Name: MobThug
   Target: {fileID: 4499031727440548263}
   Agent: {fileID: 2417986734043512879}
+  IsFlesh: 0
   MoveForce: 20
   MaxSpeed: 20
   AngleOffset: 180
@@ -1324,6 +1329,8 @@ MonoBehaviour:
   EnemyBullet: {fileID: 2442374717578617672, guid: 09ff6534c09a9af43808048030048877, type: 3}
   EnemyMuzzleFlash: {fileID: 0}
   Lock: 0
+  IsFlying: 0
+  FlyHeight: 0
   BurstCount: 1
   BurstRate: 0.2
   IsBurstFiring: 0
@@ -1351,6 +1358,26 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   PanicFantom: {fileID: 4099478621003082010}
+  UseAttackRhythm: 1
+  ShootWindowMin: 0.9
+  ShootWindowMax: 1.7
+  RepositionWindowMin: 0.6
+  RepositionWindowMax: 1.2
+  UseLineOfSight: 1
+  LOSGrace: 0.2
+  AimHeight: 1.15
+  UseFlankWhenNoLOS: 1
+  FlankRadius: 5
+  FlankRefreshTime: 0.6
+  FlankSampleRadius: 2.5
+  UseIndividualFactor: 1
+  IndividualFactor: 0.5
+  IndividualFactorMin: 0.85
+  IndividualFactorMax: 1.15
+  ApplyToAttackWindow: 1
+  ApplyToFlankRadius: 1
+  ApplyToFlankRefresh: 0
+  ApplyToMOA: 0
 --- !u!82 &5144821902404702106
 AudioSource:
   m_ObjectHideFlags: 0
