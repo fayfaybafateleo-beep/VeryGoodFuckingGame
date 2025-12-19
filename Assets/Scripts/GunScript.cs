@@ -101,6 +101,11 @@ public class GunScript : MonoBehaviour
 
     [Header("Buff")]
     public BuffManager BM;
+
+    [Header("MoveSpeedOnFire")]
+    public float FireMoveSpeedMultiplier = 0.7f;  
+    public bool IsFiringNow;                       
+    public float DefaultMoveSpeedMultiplier = 1f;  
     public enum GunState
     {
        CanFire,
@@ -131,6 +136,8 @@ public class GunScript : MonoBehaviour
         OriginGunDamage = GunDamage;
 
         Recoil = GameObject.FindGameObjectWithTag("Recoil").GetComponent<Test>();
+
+        DefaultMoveSpeedMultiplier = BM.SpeedModificator;
     }
     void Update()
     {
@@ -249,6 +256,17 @@ public class GunScript : MonoBehaviour
                     Reminder.GetComponent<Animator>().SetTrigger("Start");
                     GS = GunState.Reload;
                 }
+
+                //MoveSpeedModificate
+                bool holdingFire = Input.GetMouseButton(0);
+                if (holdingFire || IsBursting)
+                {
+                    StartFireSlow(); // [MOD]
+                }
+                else
+                {
+                    StopFireSlow();  // [MOD]
+                }
                 break;
             case GunState.CeaseFire:
                 SetBlur(0);
@@ -258,6 +276,8 @@ public class GunScript : MonoBehaviour
                 {
                     GS = GunState.Reload;
                 }
+
+                StopFireSlow();
                 break;
 
             case GunState.Reload:
@@ -273,12 +293,14 @@ public class GunScript : MonoBehaviour
                     FinishReloading();
                 }
 
+                StopFireSlow();
                 break;
 
         }
         if (Input.GetMouseButtonUp(0))
         {
             SetBlur(0);
+            StopFireSlow();
         }
 
       
@@ -410,6 +432,23 @@ public class GunScript : MonoBehaviour
             }
         }
 
+        StopFireSlow();
         IsBursting = false;
+    }
+    public void StartFireSlow()
+    {
+        if (BM == null) return;
+        if (IsFiringNow) return;
+
+        IsFiringNow = true;
+        BM.SpeedModificator = FireMoveSpeedMultiplier;
+    }
+
+    public void StopFireSlow()
+    {
+        if (BM == null) return;
+
+        IsFiringNow = false;
+        BM.SpeedModificator = DefaultMoveSpeedMultiplier; 
     }
 }

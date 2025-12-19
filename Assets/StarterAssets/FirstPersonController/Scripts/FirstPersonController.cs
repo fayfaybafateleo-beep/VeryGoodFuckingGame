@@ -176,6 +176,11 @@ namespace StarterAssets
 
         public PlayerGetInCar PIC;
         public BasicRigidBodyPush PP;
+
+        [Header("SpeedModification")]
+        public float OriginSpeed;
+        public float OriginSlideSpeed;
+        public BuffManager BM;
         public enum ControllerState
         {
             CanMove,
@@ -247,6 +252,12 @@ namespace StarterAssets
 			SpeedThreshold = 17;
 
             PP.canPush = false;
+
+            BM = GameObject.FindGameObjectWithTag("BuffManager").GetComponent<BuffManager>();
+
+            OriginSpeed = MoveSpeed;
+
+            OriginSlideSpeed = SlideSpeed;
         }
 
 		private void Update()
@@ -259,6 +270,11 @@ namespace StarterAssets
             {
                 SpeedLine.gameObject.SetActive(true);
             }
+
+            //SpeedModification
+            MoveSpeed = OriginSpeed * BM.SpeedModificator;
+            SlideSpeed = OriginSlideSpeed * BM.SpeedModificator;
+
             switch (PH.PS) 
             {
                 case PlayerHealth.PlayerState.Alive:
@@ -582,9 +598,8 @@ namespace StarterAssets
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
 
-        // ====================== 滑铲核心 ======================
+        // Slide
 
-        // [MOD] 开始滑铲
         private void StartSlide()
         {
             _isSliding = true;
@@ -594,13 +609,13 @@ namespace StarterAssets
             if (_slideDirection.sqrMagnitude < 0.01f)
                 _slideDirection = transform.forward;
 
-            // [MOD] 不要清空输入，保持玩家可随时转向；速度用“滑铲速度”叠加控制
+            
             _currentSlideSpeed = SlideSpeed;
 
             TargetHeight = SlideHeight;
             TargetCenter = new Vector3(
                 NormalCenter.x,
-                SlideHeight / 2f, // 中心保持在脚上方
+                SlideHeight / 2f, 
                 NormalCenter.z
             );
 
@@ -628,16 +643,12 @@ namespace StarterAssets
         }
 
 
-        // [MOD] 滑铲中逻辑
         private void HandleSlide()
         {
-            // [MOD] 只做计时与速度衰减，不直接 Move（避免和 Move() 冲突导致顿挫）
             _slideTimer -= Time.deltaTime;
 
-            // 速度按“摩擦”衰减（可用 MoveTowards 更线性）
             _currentSlideSpeed = Mathf.Max(0f, _currentSlideSpeed - SlideFriction * Time.deltaTime);
 
-            // 结束条件
             if (_slideTimer <= 0f || !Grounded || _currentSlideSpeed < 0.1f)
             {
                 EndSlide();
@@ -645,11 +656,11 @@ namespace StarterAssets
         }
 
 
-        // [MOD] 结束滑铲
+        //EndSlide
         private void EndSlide()
         {
             _isSliding = false;
-            _currentSlideSpeed = 0f; // [MOD] 收尾清零
+            _currentSlideSpeed = 0f;
 
             TargetHeight = NormalHeight;
             TargetCenter = NormalCenter;
@@ -666,19 +677,16 @@ namespace StarterAssets
         }
 
 
-        // [MOD] 平滑更新镜头下沉/回弹效果
+        // LowTheCamWhenSlide
         private void UpdateCameraSlideEffect()
         {
             if (CameraRoot == null) return;
 
-            // 1) 滑铲/站立等逻辑的基础目标位
             Vector3 baseTarget = _targetCamLocalPos;
 
-            // 2) 用“实际水平速度”判定是否在移动（更可靠）
             Vector2 vel2D = new Vector2(_controller.velocity.x, _controller.velocity.z);
-            bool isMoving = vel2D.sqrMagnitude > 0.01f && Grounded && !_isSliding;  // ← 这里改了
+            bool isMoving = vel2D.sqrMagnitude > 0.01f && Grounded && !_isSliding; 
 
-            // 3) 目标位：默认用基础目标；移动时叠加你的往返摆动
             Vector3 target = baseTarget;
             if (isMoving)
             {
@@ -687,14 +695,11 @@ namespace StarterAssets
                     float t = (Mathf.Sin(Time.time * speed) + 1f) / 2f;
                     Vector3 newPosition = Vector3.Lerp(PointA, PointB, t);
                     target = Vector3.Lerp(baseTarget, newPosition, 0.5f);
-                    // 如果 pointA/pointB 是“绝对局部坐标”且你想在 baseTarget 周围摆动，
-                    // 也可以用： target = baseTarget + (newPosition - pointA);
                 }
 
 
             }
 
-            // 4) 统一 Lerp 到目标，确保可“归位”
             CameraRoot.localPosition = Vector3.Lerp(
                 CameraRoot.localPosition,
                 target,
