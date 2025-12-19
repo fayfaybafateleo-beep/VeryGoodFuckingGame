@@ -4,8 +4,8 @@ public class GunShake : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("Targets (optional)")]
-    public Transform positionTarget; // 为空则用自身
-    public Transform rotationTarget; // 为空则用自身
+    public Transform positionTarget; 
+    public Transform rotationTarget; 
 
     [Header("Recoil Kick (one-shot impulse)")]
     [Tooltip("后座位移（-Z 方向，米）")]
@@ -58,15 +58,14 @@ public class GunShake : MonoBehaviour
     [Tooltip("使用不受 Time.timeScale 影响的时间（慢动作时保持同手感）")]
     public bool useUnscaledTime = false;
 
-    // 内部状态
+   
     Vector3 _baseLocalPos, _posOffset, _posVel;
-    Vector3 _baseLocalEuler, _rotOffset, _rotVel; // 小角度用欧拉即可
+    Vector3 _baseLocalEuler, _rotOffset, _rotVel; 
     float _seedX, _seedY, _seedZ;
 
-    // 开火噪声强度（0-1），只影响噪声，不影响弹簧
-    float _shakeT;         // 当前强度
-    float _shakeVel;       // SmoothDamp 的速度缓存
-    float _holdTimer;      // 满强保持计时
+    float _shakeT;         
+    float _shakeVel;       
+    float _holdTimer;      
 
     Transform P => positionTarget ? positionTarget : transform;
     Transform R => rotationTarget ? rotationTarget : transform;

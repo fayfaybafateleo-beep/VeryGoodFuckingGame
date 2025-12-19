@@ -1224,6 +1224,10 @@ MonoBehaviour:
   DropChance: 0.05
   Section: 0
   SectionManager: {fileID: 0}
+  FlyingDeathDuration: 1.5
+  FlyingDeathForce: 15
+  FlyingDeathTorque: 10
+  ParticleList: []
 --- !u!95 &5161086026593443594
 Animator:
   serializedVersion: 7
@@ -1333,6 +1337,7 @@ MonoBehaviour:
   Name: MobGunner
   Target: {fileID: 4499031727440548263}
   Agent: {fileID: 2417986734043512879}
+  IsFlesh: 0
   MoveForce: 20
   MaxSpeed: 20
   AngleOffset: 180
@@ -1347,6 +1352,8 @@ MonoBehaviour:
   EnemyBullet: {fileID: 56932041484218793, guid: 6b9d485cb290d7f47abbb182122b2aaa, type: 3}
   EnemyMuzzleFlash: {fileID: 2933326327969011748, guid: 5e6c087b8781237448826d37bd0a15a2, type: 3}
   Lock: 0
+  IsFlying: 0
+  FlyHeight: 0
   BurstCount: 3
   BurstRate: 0.2
   IsBurstFiring: 0
@@ -1374,6 +1381,26 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   PanicFantom: {fileID: 4099478621003082010}
+  UseAttackRhythm: 1
+  ShootWindowMin: 0.47
+  ShootWindowMax: 1.05
+  RepositionWindowMin: 0.28
+  RepositionWindowMax: 1.05
+  UseLineOfSight: 1
+  LOSGrace: 0.2
+  AimHeight: 1.15
+  UseFlankWhenNoLOS: 1
+  FlankRadius: 5
+  FlankRefreshTime: 0.6
+  FlankSampleRadius: 2.5
+  UseIndividualFactor: 1
+  IndividualFactor: 0.5
+  IndividualFactorMin: 0.75
+  IndividualFactorMax: 1.25
+  ApplyToAttackWindow: 1
+  ApplyToFlankRadius: 1
+  ApplyToFlankRefresh: 0
+  ApplyToMOA: 0
 --- !u!82 &5144821902404702106
 AudioSource:
   m_ObjectHideFlags: 0

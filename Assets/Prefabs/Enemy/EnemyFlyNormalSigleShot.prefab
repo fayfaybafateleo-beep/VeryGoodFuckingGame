@@ -6941,6 +6941,26 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   PanicFantom: {fileID: 4099478621003082010}
+  UseAttackRhythm: 1
+  ShootWindowMin: 0.28
+  ShootWindowMax: 0.5
+  RepositionWindowMin: 1.2
+  RepositionWindowMax: 2.5
+  UseLineOfSight: 1
+  LOSGrace: 0.2
+  AimHeight: 1.15
+  UseFlankWhenNoLOS: 1
+  FlankRadius: 5
+  FlankRefreshTime: 0.6
+  FlankSampleRadius: 2.5
+  UseIndividualFactor: 1
+  IndividualFactor: 1
+  IndividualFactorMin: 0.85
+  IndividualFactorMax: 1.15
+  ApplyToAttackWindow: 1
+  ApplyToFlankRadius: 1
+  ApplyToFlankRefresh: 1
+  ApplyToMOA: 1
 --- !u!82 &5144821902404702106
 AudioSource:
   m_ObjectHideFlags: 0

@@ -4,8 +4,8 @@ public class WeaponWaging : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("Targets (optional)")]
-    public Transform positionTarget; // 为空则用自身
-    public Transform rotationTarget; // 为空则用自身
+    public Transform positionTarget; 
+    public Transform rotationTarget;
 
     [Header("Walk Sway / Bob")]
     [Tooltip("行走摆动频率（Hz）")]
@@ -55,33 +55,32 @@ public class WeaponWaging : MonoBehaviour
 
     Vector3 _baseLocalPos, _baseLocalEuler;
     float _walkPhase;
-    float _walkBlend;         // 0..1
-    float _walkBlendVel;      // SmoothDamp 缓存
+    float _walkBlend;       
+    float _walkBlendVel;    
     float _idlePhase;
 
     // Fire suppress
-    float _fireSuppressTimer;     // >0 = 压制阶段（摆动为0）
-    float _fireRecoverProgress;   // 0→1 恢复插值
+    float _fireSuppressTimer;    
+    float _fireRecoverProgress;  
 
-    // ===== 新增：装备/换弹 动画层（最终输出叠加） =====
-    [Header("Equip / Reload Hand Animation  // ===== 新增 =====")]
+    //Reload Animation
+    [Header("Equip / Reload Hand Animation  ")]
     [Tooltip("下降到低位的距离（局部 -Y 米）")]
-    public float lowerDistance = 0.12f;                      // ===== 新增 =====
+    public float lowerDistance = 0.12f;                     
     [Tooltip("下降/抬起时的附加俯仰（度，负值为枪口下压）")]
-    public float animPitchDeg = -8f;                          // ===== 新增 =====
+    public float animPitchDeg = -8f;                          
     [Tooltip("下降动画时长（秒）")]
-    public float lowerDuration = 0.18f;                       // ===== 新增 =====
+    public float lowerDuration = 0.18f;                       
     [Tooltip("抬起动画时长（秒）")]
-    public float raiseDuration = 0.20f;                       // ===== 新增 =====
+    public float raiseDuration = 0.20f;                    
 
-    // 动画层内部状态
-    enum HandAnimState { None, Lowering, Raising }            // ===== 新增 =====
-    HandAnimState _animState = HandAnimState.None;            // ===== 新增 =====
-    Vector3 _animPosOffset;                                   // ===== 新增 =====
-    Vector3 _animRotOffsetEuler;                              // ===== 新增 =====
-    Vector3 _animStartPos, _animTargetPos;                    // ===== 新增 =====
-    Vector3 _animStartRotEuler, _animTargetRotEuler;          // ===== 新增 =====
-    float _animTimer, _animDuration;                          // ===== 新增 =====
+    enum HandAnimState { None, Lowering, Raising }            
+    HandAnimState _animState = HandAnimState.None;         
+    Vector3 _animPosOffset;                                  
+    Vector3 _animRotOffsetEuler;                            
+    Vector3 _animStartPos, _animTargetPos;                 
+    Vector3 _animStartRotEuler, _animTargetRotEuler;         
+    float _animTimer, _animDuration;                      
 
 
     void Awake()
@@ -97,7 +96,7 @@ public class WeaponWaging : MonoBehaviour
         float time = useUnscaledTime ? Time.unscaledTime : Time.time;
         if (dt <= 0f) return;
 
-        // —— 读取移动状态 —— //
+        // MovementStatus
         float speed = 0f;
         bool grounded = externalGrounded;
 
@@ -112,11 +111,11 @@ public class WeaponWaging : MonoBehaviour
             speed = Mathf.Max(0f, externalMoveSpeed);
         }
 
-        // —— 目标摆动强度（地面才摆动） —— //
+        // WagingStrength
         float speed01 = Mathf.Clamp01(speed / Mathf.Max(0.0001f, referenceMoveSpeed));
         float targetBlend = grounded ? speed01 : 0f;
 
-        // —— 开火压制 —— //
+        // StopWagingonFire
         if (stopSwayOnFire)
         {
             if (_fireSuppressTimer > 0f)
@@ -127,7 +126,6 @@ public class WeaponWaging : MonoBehaviour
             }
             else
             {
-                // 先计算“正常情况下”的 _walkBlend，再把它乘以恢复进度
                 _walkBlend = Mathf.SmoothDamp(_walkBlend, targetBlend, ref _walkBlendVel, blendSmoothTime);
                 if (fireRecoverTime > 0f && _walkBlend > 0f && _fireRecoverProgress < 1f)
                 {
@@ -146,19 +144,17 @@ public class WeaponWaging : MonoBehaviour
             _fireRecoverProgress = 1f;
         }
 
-        // ADS 衰减
         float weight = Mathf.Clamp01(adsWeight);
 
-        // —— 推进相位 —— //
-        float phaseSpeed = Mathf.Lerp(0.2f, 1f, speed01) * walkFrequency; // 低速不至于停摆
+        float phaseSpeed = Mathf.Lerp(0.2f, 1f, speed01) * walkFrequency; 
         _walkPhase += dt * phaseSpeed;
 
-        // —— 计算行走摆动 —— //
+        //WalkingWaging
         float s1 = Mathf.Sin(_walkPhase);
         float s2 = Mathf.Sin(_walkPhase * 2f);
         float absS1 = Mathf.Abs(s1);
 
-        // 位置：X 左右 = sin(2t); Y 上下 = |sin(t)|; Z 前后 = cos(2t)
+        // Pos：X Left&Right = sin(2t); Y Up&Down = |sin(t)|; Z Forward&Backward = cos(2t)
         Vector3 walkPos =
             new Vector3(
                 s2 * walkPosAmplitude.x,
@@ -166,7 +162,7 @@ public class WeaponWaging : MonoBehaviour
                 Mathf.Cos(_walkPhase * 2f) * walkPosAmplitude.z
             ) * (_walkBlend * weight);
 
-        // 旋转：X 俯仰 = -|sin(t)|; Y 摇头 = sin(2t); Z 侧倾 = -sin(t)
+       // Rot：X Left&Right = -|sin(t)|; Y Up&Down =  sin(2t); Z Forward&Backward = -sin(t)
         Vector3 walkRot =
             new Vector3(
                 -absS1 * walkRotAmplitude.x,
@@ -174,8 +170,8 @@ public class WeaponWaging : MonoBehaviour
                 -s1 * walkRotAmplitude.z
             ) * (_walkBlend * weight);
 
-        // —— Idle 轻摆（速度≈0时）—— //
-        float idleBlend = 1f - Mathf.Clamp01(speed01 * 3f); // 速度稍有就快速衰减
+        // Idle //
+        float idleBlend = 1f - Mathf.Clamp01(speed01 * 3f); 
         _idlePhase += dt * idleFrequency;
         Vector3 idlePos = new Vector3(
             Mathf.Sin(_idlePhase) * idlePosAmplitude.x,
@@ -188,7 +184,7 @@ public class WeaponWaging : MonoBehaviour
             Mathf.Sin(_idlePhase * 1.5f) * idleRotAmplitude.y,
             -Mathf.Sin(_idlePhase) * idleRotAmplitude.z
         ) * idleBlend * weight * 0.8f;
-        if (_animState != HandAnimState.None)                 // ===== 新增 =====
+        if (_animState != HandAnimState.None)                 
         {
             _animTimer += dt;
             float t = (_animDuration > 1e-6f) ? Mathf.Clamp01(_animTimer / _animDuration) : 1f;
@@ -200,12 +196,12 @@ public class WeaponWaging : MonoBehaviour
             if (t >= 1f) _animState = HandAnimState.None;
         }
 
-        // —— 应用到局部变换（叠加在动画之后）—— //
-        P.localPosition = _baseLocalPos + _animPosOffset + walkPos + idlePos;                        // ===== 修改 =====
-        R.localRotation = Quaternion.Euler(_baseLocalEuler + _animRotOffsetEuler + walkRot + idleRot); // ===== 修改 =====
+       
+        P.localPosition = _baseLocalPos + _animPosOffset + walkPos + idlePos;                       
+        R.localRotation = Quaternion.Euler(_baseLocalEuler + _animRotOffsetEuler + walkRot + idleRot); 
     }
 
-    /// 在“开火”事件里调用：暂停摆动并计时恢复
+    //SupressDuringFire
     public void SuppressSwayOnFire()
     {
         if (!stopSwayOnFire) return;
@@ -213,7 +209,6 @@ public class WeaponWaging : MonoBehaviour
         _fireRecoverProgress = 0f;
     }
 
-    /// 没有 CharacterController 时，可从外部喂速度与落地状态（m/s, grounded）
     public void SetLocomotionState(float moveSpeed, bool isGrounded, float ads01 = 1f)
     {
         externalMoveSpeed = Mathf.Max(0f, moveSpeed);
@@ -221,28 +216,27 @@ public class WeaponWaging : MonoBehaviour
         adsWeight = Mathf.Clamp01(ads01);
     }
 
-    /// 输入为 0~1 的移动向量（如你的输入轴），内部按 referenceMoveSpeed 估算速度
+    //MovementInput
     public void SetMoveInput01(Vector2 move01, bool isGrounded, float ads01 = 1f)
     {
         SetLocomotionState(move01.magnitude * referenceMoveSpeed, isGrounded, ads01);
     }
 
-    /// 重置到初始局部姿态
     public void ResetPose()
     {
         _walkBlend = 0f; _walkBlendVel = 0f;
         _walkPhase = 0f; _idlePhase = 0f;
         _fireSuppressTimer = 0f; _fireRecoverProgress = 1f;
 
-        // ===== 修改：重置时也清掉动画层 =====
-        _animState = HandAnimState.None; _animTimer = 0f; _animDuration = 0f; // ===== 修改 =====
-        _animPosOffset = Vector3.zero; _animRotOffsetEuler = Vector3.zero;    // ===== 修改 =====
+        
+        _animState = HandAnimState.None; _animTimer = 0f; _animDuration = 0f; 
+        _animPosOffset = Vector3.zero; _animRotOffsetEuler = Vector3.zero;   
 
         P.localPosition = _baseLocalPos;
         R.localRotation = Quaternion.Euler(_baseLocalEuler);
     }
-    /// <summary>从默认位姿“下降”到低位（用于换弹时的收枪）。</summary>
-    public void LowerForReload(float? duration = null, float? distance = null, float? pitchDeg = null) // ===== 新增 =====
+    //LowerGun
+    public void LowerForReload(float? duration = null, float? distance = null, float? pitchDeg = null)
     {
         float d = duration ?? lowerDuration;
         float dist = distance ?? lowerDistance;
@@ -259,8 +253,8 @@ public class WeaponWaging : MonoBehaviour
         _animState = HandAnimState.Lowering;
     }
 
-    /// <summary>从低位“抬回”默认位姿（用于切枪/换弹结束）。</summary>
-    public void RaiseFromLow(float? duration = null)                                             // ===== 新增 =====
+    //RaiseTheGun
+    public void RaiseFromLow(float? duration = null)                                           
     {
         float d = duration ?? raiseDuration;
 
@@ -275,8 +269,8 @@ public class WeaponWaging : MonoBehaviour
         _animState = HandAnimState.Raising;
     }
 
-    /// <summary>瞬间切到低位（用于新武器出场先在低位，然后抬起）。</summary>
-    public void SnapToLow()                                                                      // ===== 新增 =====
+    //SnapTheGunToLow
+    public void SnapToLow()                                                                      
     {
         _animState = HandAnimState.None;
         _animTimer = 0f; _animDuration = 0f;
@@ -284,8 +278,8 @@ public class WeaponWaging : MonoBehaviour
         _animRotOffsetEuler = new Vector3(animPitchDeg, 0f, 0f);
     }
 
-    /// <summary>打断动画并恢复默认姿态。</summary>
-    public void CancelHandAnimation()                                                            // ===== 新增 =====
+    //StopGunAnimation
+    public void CancelHandAnimation()                                                         
     {
         _animState = HandAnimState.None;
         _animTimer = 0f; _animDuration = 0f;
