@@ -142,16 +142,20 @@ public class EnemyBehaviour : MonoBehaviour
     public bool ApplyToAttackWindow = true;  
     public bool ApplyToFlankRadius = true;   
     public bool ApplyToFlankRefresh = false; 
-    public bool ApplyToMOA = false;          
+    public bool ApplyToMOA = false;
 
+    public bool IsDummy;
     void Start()
     {
         Target = GameObject.FindGameObjectWithTag("Player");
 
-        Agent.updatePosition = false;
-        Agent.updateRotation = false;
-        Agent.avoidancePriority = Random.Range(20, 80);
-
+        if (Agent != null)
+        {
+            Agent.updatePosition = false;
+            Agent.updateRotation = false;
+            Agent.avoidancePriority = Random.Range(20, 80);
+        }
+ 
         EH = GetComponent<EnemyHealth>();
 
         if (IsFlying)
@@ -172,6 +176,11 @@ public class EnemyBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (IsDummy)
+        {
+            return;
+        }
+
         // Reset attack timer when not attacking
         if (ES == EnemyState.Die || ES == EnemyState.Shock)
         {
