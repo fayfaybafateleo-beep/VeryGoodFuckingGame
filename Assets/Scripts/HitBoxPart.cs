@@ -48,10 +48,18 @@ public class HitBoxPart : MonoBehaviour
         {
             //do not thing
         }
+
+        if (IsCriticalPoint)
+        {
+            partMaxHealth = Owner.MaxHealth;
+
+        }
+
         partHealth = partMaxHealth;
     }
     void Start()
     {
+       
 
     }
 

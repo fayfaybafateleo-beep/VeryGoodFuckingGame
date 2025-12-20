@@ -137,7 +137,7 @@ public class GunScript : MonoBehaviour
 
         Recoil = GameObject.FindGameObjectWithTag("Recoil").GetComponent<Test>();
 
-        DefaultMoveSpeedMultiplier = BM.SpeedModificator;
+        DefaultMoveSpeedMultiplier =1;
     }
     void Update()
     {
