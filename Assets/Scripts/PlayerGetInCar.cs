@@ -31,6 +31,10 @@ public class PlayerGetInCar : MonoBehaviour
     public int OriginalSiblingIndex;
     public WeaponManager WM;
 
+    [Header("CameraReset")]
+    public FirstPersonController FP;
+    public StarterAssetsInputs SAI;
+
     public void Start()
     {
        PlayerController = GetComponent<FirstPersonController>();
@@ -129,10 +133,14 @@ public class PlayerGetInCar : MonoBehaviour
             if (child.name == "OverLayCamera") continue;
             child.gameObject.SetActive(false);
         }
+
         // SitOnSeat
         transform.SetParent(SeatPoint.transform, worldPositionStays: false);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
+        SAI.LockVision = true;
+        FP.ResetViewForVehicle(Car.transform, 0f);
+
 
         GetInText.SetActive(false);
     }
@@ -165,6 +173,7 @@ public class PlayerGetInCar : MonoBehaviour
 
         WM.RecoverGunBurst();
 
+        SAI.LockVision = false;
         IsMounted = false;
     }
 }

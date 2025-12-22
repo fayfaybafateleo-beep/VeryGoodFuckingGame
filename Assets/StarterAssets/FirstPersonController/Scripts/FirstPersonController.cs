@@ -776,6 +776,32 @@ namespace StarterAssets
             _input.look = Vector2.zero;
             _input.sprint = false;
         }
+
+        //ResetCamera
+        public void ResetViewForVehicle(Transform vehicleForwardRef = null, float pitch = 0f)
+        {
+            _cinemachineTargetPitch = pitch;
+
+            _rotationVelocity = 0f;
+
+            if (vehicleForwardRef != null)
+            {
+                Vector3 e = transform.eulerAngles;
+                transform.rotation = Quaternion.Euler(e.x, vehicleForwardRef.eulerAngles.y, e.z);
+            }
+
+            if (_input != null)
+            {
+                _input.look = Vector2.zero;
+            }
+            if (CinemachineCameraTarget != null)
+            {
+                _strafeTiltZ = 0f;
+                _strafeTiltVel = 0f;
+
+                CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0f, 0f);
+            }
+        }
     }
    
 }

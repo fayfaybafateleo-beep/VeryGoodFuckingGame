@@ -20,6 +20,9 @@ namespace StarterAssets
         public bool cursorLocked = true;
         public bool cursorInputForLook = true;
 
+        [Header("VehicleVeiw")]
+        public bool LockVision;
+
 #if ENABLE_INPUT_SYSTEM
         public void OnMove(InputValue value)
         {
@@ -28,9 +31,13 @@ namespace StarterAssets
 
         public void OnLook(InputValue value)
         {
-            if (cursorInputForLook)
+            if (cursorInputForLook && !LockVision)
             {
                 LookInput(value.Get<Vector2>());
+            }
+            else
+            {
+                look = Vector2.zero;
             }
         }
 
@@ -75,6 +82,8 @@ namespace StarterAssets
         {
             Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
         }
+
+
     }
 
 

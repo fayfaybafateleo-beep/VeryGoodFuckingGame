@@ -2554,7 +2554,7 @@ MonoBehaviour:
     DissipationMode: 2
     DissipationDistance: 100
     PropagationSpeed: 343
-  DefaultVelocity: {x: 0, y: -0.02, z: -0.05}
+  DefaultVelocity: {x: 0, y: 0, z: -0.05}
 --- !u!114 &1495022847527828666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2603,8 +2603,8 @@ MonoBehaviour:
   positionTarget: {fileID: 0}
   rotationTarget: {fileID: 0}
   walkFrequency: 8
-  walkPosAmplitude: {x: -0.1, y: 0.7, z: -0.4}
-  walkRotAmplitude: {x: -0.5, y: 2, z: -20}
+  walkPosAmplitude: {x: -0.2, y: 1, z: -0.4}
+  walkRotAmplitude: {x: -0.5, y: 2, z: -50}
   blendSmoothTime: 0.12
   referenceMoveSpeed: 4
   adsWeight: 0.1

@@ -1,12 +1,19 @@
 using JetBrains.Annotations;
 using UnityEngine;
+using Unity.Cinemachine;
+using System.Collections.Generic;
 
 public class CarControl : MonoBehaviour
 {
     [Header("Move")]
     public float Speed = 15f;        
     public float MaxSpeed = 25f;      
-    public float BreakDamp = 3f;      
+    public float BreakDamp = 3f;
+
+    [Header("Boost (Shift)")]
+    public float BoostForceMultiplier = 1.6f;  
+    public float BoostMaxSpeedMultiplier = 1.3f; 
+    public ParticleSystem SpeedLine;
 
     [Header("Turn (MoveRotation)")]
     public float TurnSpeed = 120f;    
@@ -26,6 +33,19 @@ public class CarControl : MonoBehaviour
     [Header("Refs")]
     public GameObject Player;
     public bool CanGetDown;
+
+    [Header("Impulse")]
+    public CinemachineImpulseSource Impulse;   
+    public float BoostImpulseInterval = 0.06f; 
+    public float BoostImpulseGain = 1.0f;     
+    private float _nextImpulseTime;
+
+    [Header("PanelLight")]
+    public List<Renderer> Renderers;
+    public Color TargetColor = Color.green;
+    public Color BaseColor;
+
+    MaterialPropertyBlock _mpb;
     void Awake()
     {
         RB = GetComponent<Rigidbody>();
@@ -36,7 +56,13 @@ public class CarControl : MonoBehaviour
         RB.interpolation = RigidbodyInterpolation.Interpolate;
         RB.collisionDetectionMode = CollisionDetectionMode.Continuous;
 
+        _mpb = new MaterialPropertyBlock();
+
         Player = GameObject.FindGameObjectWithTag("Player");
+
+        Renderers[0].GetPropertyBlock(_mpb);
+        BaseColor = Renderers[0].sharedMaterial.GetColor("_BaseColor");
+        SpeedLine.Stop();
     }
 
     void FixedUpdate()
@@ -45,16 +71,35 @@ public class CarControl : MonoBehaviour
         {
             RB.linearDamping = 1;
 
+            bool boosting = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            float speedMul = boosting ? BoostForceMultiplier : 1f;
+            float maxSpeedMul = boosting ? BoostMaxSpeedMultiplier : 1f;
+            float curMaxSpeed = MaxSpeed * maxSpeedMul;
+
             //Forwar&Backward
             float move = Input.GetAxis("Vertical");
             Vector3 fwd = transform.forward;
             float speedAlong = Vector3.Dot(RB.linearVelocity, fwd);
+
             //SpeedLimit
-            if (Mathf.Abs(speedAlong) > MaxSpeed && Mathf.Sign(speedAlong) == Mathf.Sign(move))
+            if (Mathf.Abs(speedAlong) > curMaxSpeed && Mathf.Sign(speedAlong) == Mathf.Sign(move))
             {
                 move = 0f;
             }
-            RB.AddForce(fwd * move * Speed, ForceMode.Acceleration);
+
+            //ChangeColor
+            if (boosting)
+            {
+                ChangeColor();
+                SpeedLine.Play();
+            }
+            else
+            {
+                ChangeBackColor();
+                SpeedLine.Stop();
+            }
+
+            RB.AddForce(fwd * move * Speed * speedMul, ForceMode.Acceleration);
 
             //Break
             if (Mathf.Approximately(move, 0f))
@@ -62,6 +107,14 @@ public class CarControl : MonoBehaviour
                 Vector3 forwardVel = fwd * speedAlong;
                 RB.AddForce(-forwardVel * BreakDamp, ForceMode.Acceleration);
             }
+
+            //ScreenShake
+            if (boosting)
+            {
+                SendBoostImpulse();
+            }
+
+
 
             Vector3 v = RB.linearVelocity;
             Vector3 right = transform.right;
@@ -77,7 +130,7 @@ public class CarControl : MonoBehaviour
             //ShuaiJian
             float steer = Input.GetAxis("Horizontal");
             float speedMag = RB.linearVelocity.magnitude;
-            float speedRatio = Mathf.Clamp01(speedMag / Mathf.Max(1f, MaxSpeed));
+            float speedRatio = Mathf.Clamp01(speedMag / Mathf.Max(1f, curMaxSpeed));
             float steerScale = turnBySpeed.Evaluate(speedRatio); 
 
             float yawDeg = steer * TurnSpeed * steerScale * Time.fixedDeltaTime;
@@ -103,5 +156,33 @@ public class CarControl : MonoBehaviour
     public void ReGenerateCar()
     {
         this.transform.position = new Vector3(Player.transform.position.x, 0.96f, Player.transform.position.y);
+    }
+
+    public void SendBoostImpulse()
+    {
+ 
+        if (Time.time < _nextImpulseTime) return;
+        _nextImpulseTime = Time.time + BoostImpulseInterval;
+        Impulse.GenerateImpulse();
+    }
+
+    void ChangeColor()
+    {
+        foreach (Renderer r in Renderers)
+        {
+            r.GetPropertyBlock(_mpb);
+            _mpb.SetColor("_BaseColor", TargetColor); 
+            r.SetPropertyBlock(_mpb);
+        }
+    }
+
+    void ChangeBackColor()
+    {
+        foreach (Renderer r in Renderers)
+        {
+            r.GetPropertyBlock(_mpb);
+            _mpb.SetColor("_BaseColor", BaseColor);
+            r.SetPropertyBlock(_mpb);
+        }
     }
 }

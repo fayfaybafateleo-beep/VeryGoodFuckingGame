@@ -14,6 +14,7 @@ public class Bullet : MonoBehaviour
     public GameObject HitEffect;
     public GameObject ExtraHitEffect;
     public GameObject HitEffect2;
+    public GameObject HitEffect3;
     public ParticleSystem BulletParticle;
     public GameObject ParticlePrefab;
 
@@ -87,12 +88,15 @@ public class Bullet : MonoBehaviour
             if (hb.Thoughness <= PenatrateLevel)
             {
                 GameObject hitEffect2 = Instantiate(HitEffect2, hit.point + hit.normal * 0.1f, Quaternion.LookRotation(hit.normal));
+                GameObject hitEffect3 = Instantiate(HitEffect3, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
+               
                 if (enemy && Random.value <= ExtraEffectChance)
                 {
                    
                         GameObject extraHitEffect = Instantiate(ExtraHitEffect, hit.point + hit.normal * 0.1f, Quaternion.LookRotation(hit.normal));
                         extraHitEffect.transform.SetParent(collision.transform);
-                    
+                     
+
                 }
 
             }
