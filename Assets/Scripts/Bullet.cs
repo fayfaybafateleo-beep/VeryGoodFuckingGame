@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
     public GameObject HitEffect2;
     public GameObject HitEffect3;
     public ParticleSystem BulletParticle;
-    public GameObject ParticlePrefab;
+    public GameObject TrailPrefab;
 
     [Range(1, 10)]
     public float Duration = 5f;
@@ -63,6 +63,10 @@ public class Bullet : MonoBehaviour
 
         //DetachParticle
         if (BulletParticle != null)
+        {
+            PlayAndDetachParticle();
+        }
+        if (TrailPrefab != null)
         {
             PlayAndDetachParticle();
         }
@@ -156,15 +160,28 @@ public class Bullet : MonoBehaviour
     void PlayAndDetachParticle()
     {
         //Detach Particle
-        Transform psTransform = BulletParticle.transform;
-        psTransform.SetParent(null);
+        if (BulletParticle != null)
+        {
+            BulletParticle.transform.SetParent(null);
+            BulletParticle.transform.localScale = new Vector3(1, 1, 1);
 
-        BulletParticle.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+           BulletParticle.Stop(false, ParticleSystemStopBehavior.StopEmitting);
 
-        var main = BulletParticle.main;
-        float lifeTime = main.duration + main.startLifetime.constantMax;
+            var main = BulletParticle.main;
+            float lifeTime = main.duration + main.startLifetime.constantMax;
 
-        Destroy(BulletParticle.gameObject, lifeTime);
+            Destroy(BulletParticle.gameObject, lifeTime);
+        }
+        
+        if (TrailPrefab != null)
+        {
+            TrailPrefab.transform.SetParent(null);
+            TrailPrefab.GetComponent<TrailRenderer>().emitting = false;
+            Destroy(TrailPrefab.gameObject, TrailPrefab.GetComponent<TrailRenderer>().time);
+
+        }
+
+
     }
 
     public void ExplosionInstantiate()
