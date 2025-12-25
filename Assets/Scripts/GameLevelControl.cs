@@ -42,6 +42,10 @@ public class GameLevelControl : MonoBehaviour
     public GameObject CarPark;
     public GameObject GuideText;
     public GuideText GT;
+
+    [Header("CarCompass")]
+    public GameObject Compass;
+    public Compass CP;
     public enum LevelState
     { 
         NotActive,
@@ -56,6 +60,9 @@ public class GameLevelControl : MonoBehaviour
         PlayerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         GuideText = GameObject.FindGameObjectWithTag("GuideSystem");
         GT = GuideText.GetComponent<GuideText>();
+
+        Compass = GameObject.FindGameObjectWithTag("Compass");
+        CP = Compass.GetComponent<Compass>();
     }
 
     // Update is called once per frame
@@ -65,6 +72,8 @@ public class GameLevelControl : MonoBehaviour
         {
             CarPark.SetActive(true);
             SMobject.SetActive(true);
+
+            CP.Target = CarPark.transform;
         }
 
         float distance = Vector3.Distance(PlayerCamera.transform.position, Guidence.transform.position);
@@ -120,6 +129,8 @@ public class GameLevelControl : MonoBehaviour
                 IsSeleted = false;
                 GT.Text.text = "Return To Base";
                 Guidence.SetActive(false);
+
+                CP.SetBaseLocation();
                 break;
         }
 
