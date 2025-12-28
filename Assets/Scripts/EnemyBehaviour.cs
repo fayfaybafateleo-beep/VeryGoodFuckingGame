@@ -48,6 +48,11 @@ public class EnemyBehaviour : MonoBehaviour
     public LayerMask LineOfSightMask = ~0;
 
     [Header("MOA")]
+    public float T;
+    public bool UseDynamicMOA = true; 
+
+    public float MOAMultiplier = 10f; 
+
     public float VerticalSpreadAngle = 6f;
     public float HorizontalSpreadAngle = 6f;
 
@@ -144,6 +149,8 @@ public class EnemyBehaviour : MonoBehaviour
     public bool ApplyToFlankRefresh = false; 
     public bool ApplyToMOA = false;
 
+
+
     public bool IsDummy;
     void Start()
     {
@@ -180,6 +187,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             return;
         }
+
 
         // Reset attack timer when not attacking
         if (ES == EnemyState.Die || ES == EnemyState.Shock)
@@ -556,10 +564,26 @@ public class EnemyBehaviour : MonoBehaviour
                 // MOA
                 float h = HorizontalSpreadAngle;
                 float v = VerticalSpreadAngle;
+
+                if (UseDynamicMOA && Target != null)
+                {
+
+                    Vector3 origin = (FirePoint != null) ? FirePoint.position : transform.position;
+                    float distP = Vector3.Distance(origin, Target.transform.position);
+                    distP = Mathf.Min(distP, AttackRange);
+                    T = 1f - Mathf.Clamp01(distP / Mathf.Max(AttackRange, 0.01f));
+
+                    float moaMul = MOAMultiplier * T;
+
+                    h = HorizontalSpreadAngle+moaMul;
+                    v = VerticalSpreadAngle+moaMul;
+                }
+
+                // Individual Factor
                 if (UseIndividualFactor && ApplyToMOA)
                 {
-                    h = HorizontalSpreadAngle * IndividualFactor;
-                    v = VerticalSpreadAngle * IndividualFactor;
+                    h *= IndividualFactor;
+                    v *= IndividualFactor;
                 }
 
                 float yaw = c.x * h;

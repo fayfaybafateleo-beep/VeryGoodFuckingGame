@@ -151,8 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1408301d66ea38541a31b4317e61bc06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 10
-  PenetrateLevel: 3
+  Damage: 20
+  PenetrateLevel: 4
   IsPercussion: 1
   StartFuze: 0
   FuzeTime: 1
@@ -167,7 +167,7 @@ MonoBehaviour:
   Spin: 0
   TorqueAmount: 10
   TorqueDirection: {x: 0, y: 1, z: 0}
-  MaxAmmo: 10
+  MaxAmmo: 4
   InitialAmmo: 3
   RecoverCount: 2
 --- !u!198 &2218909903256107209

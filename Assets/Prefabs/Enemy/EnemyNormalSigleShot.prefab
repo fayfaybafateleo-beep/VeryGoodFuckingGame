@@ -1362,6 +1362,10 @@ MonoBehaviour:
   LineOfSightMask:
     serializedVersion: 2
     m_Bits: 10241
+  T: 0
+  UseDynamicMOA: 1
+  CloseMOAMultiplier: 0.1
+  MOAMultiplier: 10
   VerticalSpreadAngle: 3
   HorizontalSpreadAngle: 3
   Rigidbody: {fileID: 1900214545859322635}
@@ -1401,6 +1405,7 @@ MonoBehaviour:
   ApplyToFlankRadius: 1
   ApplyToFlankRefresh: 0
   ApplyToMOA: 0
+  IsDummy: 0
 --- !u!82 &5144821902404702106
 AudioSource:
   m_ObjectHideFlags: 0
