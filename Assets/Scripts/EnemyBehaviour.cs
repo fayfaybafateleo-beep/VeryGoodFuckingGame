@@ -51,7 +51,8 @@ public class EnemyBehaviour : MonoBehaviour
     public float T;
     public bool UseDynamicMOA = true; 
 
-    public float MOAMultiplier = 10f; 
+    public float FarMOAMultiplier = 0.1f;
+    public float CloseMOAMultiplier = 10f;
 
     public float VerticalSpreadAngle = 6f;
     public float HorizontalSpreadAngle = 6f;
@@ -568,15 +569,30 @@ public class EnemyBehaviour : MonoBehaviour
                 if (UseDynamicMOA && Target != null)
                 {
 
-                    Vector3 origin = (FirePoint != null) ? FirePoint.position : transform.position;
-                    float distP = Vector3.Distance(origin, Target.transform.position);
-                    distP = Mathf.Min(distP, AttackRange);
-                    T = 1f - Mathf.Clamp01(distP / Mathf.Max(AttackRange, 0.01f));
 
-                    float moaMul = MOAMultiplier * T;
+                    /*  Vector3 origin = (FirePoint != null) ? FirePoint.position : transform.position;
+                      float distP = Vector3.Distance(origin, Target.transform.position);
+                      distP = Mathf.Min(distP, AttackRange);
+                      T = 1f - Mathf.Clamp01(distP / Mathf.Max(AttackRange, 0.01f));
+                    
+                                         float moaMul = MOAMultiplier * T;*/
 
-                    h = HorizontalSpreadAngle+moaMul;
-                    v = VerticalSpreadAngle+moaMul;
+                    //
+
+
+                    Vector3 toTarget = Target.transform.position - transform.position;
+                    float dist = toTarget.magnitude;
+
+                    // clamp to attack range so outside range stays "far" (most accurate)
+                    dist = Mathf.Min(dist, AttackRange);
+
+                    // t: 0 = far(edge of range), 1 = close
+                    float t = 1f - Mathf.Clamp01(dist / Mathf.Max(AttackRange, 0.01f));
+
+                    float moaMul = Mathf.Lerp(FarMOAMultiplier, CloseMOAMultiplier, t);
+
+                    h *= moaMul;
+                    v *= moaMul;
                 }
 
                 // Individual Factor
