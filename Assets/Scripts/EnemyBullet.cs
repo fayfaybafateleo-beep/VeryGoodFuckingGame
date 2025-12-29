@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Splines.ExtrusionShapes;
 
 public class EnemyBullet : MonoBehaviour
 {
@@ -13,6 +14,11 @@ public class EnemyBullet : MonoBehaviour
 
     [Header("HitEffect")]
     public GameObject HitEffect;
+
+    [Header("SpecialBullet")]
+    public bool IsExplosive;
+    public GameObject Explosion;
+    public float ExplosionDamage;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,6 +38,13 @@ public class EnemyBullet : MonoBehaviour
         //HitEffecT
         GameObject hitEffect1 = Instantiate(HitEffect, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
         hitEffect1.transform.SetParent(collision.transform);
+
+        if (IsExplosive)
+        {
+            GameObject explosion= Instantiate(Explosion,collision.transform.position, Quaternion.identity);
+            
+        }
+
         if (collision.gameObject.GetComponent<PlayerHealth>() != null)
         {
             collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(Damage);
