@@ -283,7 +283,10 @@ MonoBehaviour:
   Speed: 12.5
   Duration: 10
   Damage: 0
-  HitEffect: {fileID: 5138012484018779897, guid: b34f5c3cdbd42534cad38969350c27c5, type: 3}
+  HitEffect: {fileID: 4788896414948856556, guid: 41fcb5a1647b0784280e15c0c179d44e, type: 3}
+  IsExplosive: 1
+  Explosion: {fileID: 5138012484018779897, guid: b34f5c3cdbd42534cad38969350c27c5, type: 3}
+  ExplosionDamage: 35
 --- !u!199 &3172889300252462905
 ParticleSystemRenderer:
   serializedVersion: 6

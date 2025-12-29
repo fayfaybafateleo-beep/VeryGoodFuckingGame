@@ -17,8 +17,10 @@ public class EnemyBullet : MonoBehaviour
 
     [Header("SpecialBullet")]
     public bool IsExplosive;
+    [Range(0f, 100f)]
+    public float ExplosionRadius = 6f;
     public GameObject Explosion;
-    public float ExplosionDamage;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -41,7 +43,9 @@ public class EnemyBullet : MonoBehaviour
 
         if (IsExplosive)
         {
-            GameObject explosion= Instantiate(Explosion,collision.transform.position, Quaternion.identity);
+            GameObject explosion= Instantiate(Explosion, hit.point, Quaternion.identity);
+            explosion.GetComponent<EnemyExplosive>().Radius = ExplosionRadius;
+            explosion.GetComponent<EnemyExplosive>().Damage = Damage;
             
         }
 

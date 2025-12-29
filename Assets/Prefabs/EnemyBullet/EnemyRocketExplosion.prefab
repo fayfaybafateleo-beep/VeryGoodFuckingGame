@@ -9943,6 +9943,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 139f78aca7367a544b0de5ebba671a73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Damage: 60
+  Radius: 90
+  ExplosionForce: 800
+  UpwardsModifier: 0.5
+  ForceAffectsMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  TriggerMode: 1
+  ObstructionMask:
+    serializedVersion: 2
+    m_Bits: 2305
+  DestroyAfter: 1
 --- !u!1 &6009824701777048786
 GameObject:
   m_ObjectHideFlags: 0
