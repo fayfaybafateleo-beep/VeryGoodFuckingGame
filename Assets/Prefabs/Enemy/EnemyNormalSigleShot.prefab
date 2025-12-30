@@ -1343,7 +1343,7 @@ MonoBehaviour:
   AngleOffset: 180
   TurningSpeed: 30
   EnemyAnimator: {fileID: 5161086026593443594}
-  AttackRange: 15
+  AttackRange: 30
   AttackRate: 2
   AttackRateTimer: 0
   Damage: 5
@@ -1364,7 +1364,7 @@ MonoBehaviour:
     m_Bits: 10241
   T: 0
   UseDynamicMOA: 1
-  FarMOAMultiplier: 0.01
+  FarMOAMultiplier: 0.000001
   CloseMOAMultiplier: 10
   VerticalSpreadAngle: 3
   HorizontalSpreadAngle: 3
