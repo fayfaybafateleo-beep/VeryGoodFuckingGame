@@ -52,7 +52,7 @@ public class HitBoxPart : MonoBehaviour
         if (IsCriticalPoint)
         {
             partMaxHealth = Owner.MaxHealth;
-
+           
         }
 
         partHealth = partMaxHealth;

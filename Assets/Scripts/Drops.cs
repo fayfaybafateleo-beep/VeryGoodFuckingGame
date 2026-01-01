@@ -46,7 +46,7 @@ public class Drops : MonoBehaviour
             if (Timer >= 3f)
             {
 
-                if (Type == "Ammo1")
+              /*  if (Type == "Ammo1")
                 {
                     RecoverAmmo1();
                 }
@@ -58,10 +58,7 @@ public class Drops : MonoBehaviour
                 {
                     RecoverGrenade();
                 }
-                if (Type == "Coin")
-                {
-                    GetCoin();
-                }
+              
                 if(Type == "Health")
                 {
                     GetHealth();
@@ -69,9 +66,16 @@ public class Drops : MonoBehaviour
                 if (Type == "Armour")
                 {
                     GetArmour();
+                }*/
+
+                if (Type == "Coin")
+                {
+                    GetCoin();
+                    Destroy(transform.parent.gameObject);
+                    IsUsed = true;
                 }
-                IsUsed = true;
-                Destroy(transform.parent.gameObject);
+
+            
             }
         }
     }
