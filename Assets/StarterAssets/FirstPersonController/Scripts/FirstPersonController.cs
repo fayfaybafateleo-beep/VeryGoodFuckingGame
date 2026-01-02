@@ -82,8 +82,8 @@ namespace StarterAssets
         private float _strafeTiltZ;
 		private float _strafeTiltVel;
 
-        // ====================== 关键修改开始 ======================
-        [Header("Slide Settings")] // [MOD]
+   
+        [Header("Slide Settings")] 
         public KeyCode SlideKey = KeyCode.LeftControl; 
         public float SlideSpeed = 10f; 
         public float SlideTime = 0.5f; 
