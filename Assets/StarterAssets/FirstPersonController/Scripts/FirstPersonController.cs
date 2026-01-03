@@ -2,6 +2,8 @@
 using Unity.VisualScripting;
 using UnityEngine.Windows;
 using Unity.Mathematics;
+using UnityEngine.AI;
+
 
 
 
@@ -210,7 +212,7 @@ namespace StarterAssets
 				#endif
 			}
 		}
-
+        
 		private void Awake()
 		{
 			// get a reference to our main camera
@@ -270,7 +272,7 @@ namespace StarterAssets
             {
                 SpeedLine.gameObject.SetActive(true);
             }
-
+        
             //SpeedModification
             MoveSpeed = OriginSpeed * BM.SpeedModificator;
             SlideSpeed = OriginSlideSpeed * BM.SpeedModificator;
@@ -802,6 +804,8 @@ namespace StarterAssets
                 CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0f, 0f);
             }
         }
+
+       
     }
    
 }

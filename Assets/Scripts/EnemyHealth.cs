@@ -95,6 +95,9 @@ public class EnemyHealth : MonoBehaviour
     public float FlyingDeathTorque = 10f;
     public List<GameObject> ParticleList;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    [Header("Icon")]
+    public GameObject Icon;
     void Start()
     {
         HitMark = GameObject.FindGameObjectWithTag("HitMark");
@@ -242,6 +245,9 @@ public class EnemyHealth : MonoBehaviour
             lights.GetComponent<Renderer>().material = LightsOffMaterial;
         }
         KillFeed.Instance.AddKillLIst("Kill", 5,1, new Vector3(1f, 1f, 1f));
+
+        //DestroyIcon
+        Destroy(Icon);
 
         //RegisterKill
         if(SectionManager!=null)
