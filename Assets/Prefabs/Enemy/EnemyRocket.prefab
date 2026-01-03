@@ -2486,6 +2486,7 @@ MonoBehaviour:
   LightsOffMaterial: {fileID: 2100000, guid: 761510b4ae776524ea692a37c85dc1d1, type: 2}
   IsGore: 0
   BodyDispearTime: 120
+  DieCause: 
   Head: {fileID: 3206654840511858543}
   Lower: {fileID: 6164167150907843305}
   Upper: {fileID: 7085949298545758025}
@@ -2514,6 +2515,9 @@ MonoBehaviour:
   - {fileID: 6666830113318450386, guid: 2d8b0d2bbdbd4ce4883fd44a6c87160e, type: 3}
   - {fileID: 2484064925702399884, guid: 77bf6ac273167d546a7f874c0d70b8c2, type: 3}
   - {fileID: 987435135784451071, guid: 64f55c6948d327543a6f86921ff72714, type: 3}
+  GrenadeClass:
+  - {fileID: 6666830113318450386, guid: 2d8b0d2bbdbd4ce4883fd44a6c87160e, type: 3}
+  - {fileID: 2484064925702399884, guid: 77bf6ac273167d546a7f874c0d70b8c2, type: 3}
   Coin: {fileID: 8850797187182654025, guid: b60384feeecd94b4cbb136117f0fd03a, type: 3}
   DropChance: 0.1
   Section: 0

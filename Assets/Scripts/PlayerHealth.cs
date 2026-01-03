@@ -102,11 +102,11 @@ public class PlayerHealth : MonoBehaviour
         {
             case PlayerState.Die:
 
-                Time.timeScale = Mathf.Lerp(Time.timeScale, 0.1f, 0.3f * Time.unscaledDeltaTime);
+                Time.timeScale = Mathf.Lerp(Time.timeScale, 0f, 0.3f * Time.unscaledDeltaTime);
 
-                if (Mathf.Abs(Time.timeScale - 0.1f) < 0.01f)
+                if (Mathf.Abs(Time.timeScale - 0f) < 0.01f)
                 {
-                    Time.timeScale = 0.1f;
+                    Time.timeScale = 0f;
                 }
 
                 Time.fixedDeltaTime = 0.02f * Time.timeScale;

@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 using static UnityEngine.UI.Image;
@@ -56,6 +57,8 @@ public class EnemyHealth : MonoBehaviour
 
     public float BodyDispearTime;
 
+    public string DieCause;
+
     [Header("BodyParts")]
     public GameObject Head;
     public GameObject Lower;
@@ -82,6 +85,7 @@ public class EnemyHealth : MonoBehaviour
     [Header("Drops")]
     public List<GameObject> SecondClass;
     public List<GameObject> FirstClass;
+    public List<GameObject> GrenadeClass;
     public GameObject Coin;
     public float DropChance;
 
@@ -192,8 +196,9 @@ public class EnemyHealth : MonoBehaviour
             Destroy(text, 1f);
         }
 
-        if (IsDead==false&&AccumulatedDamageForExecution >= MaxHealth&& IsGore==false)
+        if (IsDead==false&&AccumulatedDamageForExecution >= MaxHealth&& IsGore==false )
         {
+            if(DieCause=="Bolt"|| DieCause == "ShotGun"|| DieCause == "LargeCalibur" || DieCause == "Grenade")
             GoreExcution(false);
             IsGore=true;
         }
@@ -226,6 +231,16 @@ public class EnemyHealth : MonoBehaviour
         RB.AddTorque(Random.onUnitSphere * AngularPerDamage * FinalDamage, ForceMode.Impulse);
         RB.AddForceAtPosition(force, LastHitPoint, ForceMode.Impulse);
 
+        //Drops
+        if (DieCause == "Grenade")
+        {
+            GrenadeDrop();
+        }
+        else
+        {
+            KillDrop();
+        }
+
         if (EBehaviour.IsFlying)
         {
             StartCoroutine(FlyingDeathRoutine());
@@ -237,8 +252,8 @@ public class EnemyHealth : MonoBehaviour
         //DeadSound
         PlayRandomDeathSFX();
 
-        //Drops
-        KillDrop();
+       
+       
         foreach (GameObject lights in EnemyLightList)
         {
             if (lights == null) continue;
@@ -413,8 +428,30 @@ public class EnemyHealth : MonoBehaviour
         {
             if (Random.value > DropChance)
                 continue; 
-            int index2 = Random.Range(0, SecondClass.Count);
-            GameObject prefab2 = SecondClass[index2];
+            int index3 = Random.Range(0, SecondClass.Count);
+            GameObject prefab3 = SecondClass[index3];
+
+            GameObject inst3 = Instantiate(prefab3, transform.position, Quaternion.identity);
+
+            Rigidbody rb3 = inst3.GetComponent<Rigidbody>();
+            if (rb3 != null)
+            {
+                Vector3 randomDir3 = (Random.onUnitSphere + Vector3.up * 0.5f).normalized;
+                float randomForce3 = Random.Range(3f, 5f);
+                rb3.AddForce(randomDir3 * randomForce3, ForceMode.Impulse);
+                rb3.AddTorque(Random.onUnitSphere * 0.5f, ForceMode.Impulse);
+            }
+        }
+        InstanCoin(3);
+    }
+
+    public void GrenadeDrop()
+    {
+        for (int i = 0; i < 1; i++)
+        {
+
+            int index2 = Random.Range(0, GrenadeClass.Count);
+            GameObject prefab2 = GrenadeClass[index2];
 
             GameObject inst2 = Instantiate(prefab2, transform.position, Quaternion.identity);
 
@@ -427,7 +464,7 @@ public class EnemyHealth : MonoBehaviour
                 rb2.AddTorque(Random.onUnitSphere * 0.5f, ForceMode.Impulse);
             }
         }
-        InstanCoin(3);
+        InstanCoin(5);
     }
 
     public void GloryKillDrop()

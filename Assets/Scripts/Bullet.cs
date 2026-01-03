@@ -31,6 +31,7 @@ public class Bullet : MonoBehaviour
     [Header("GunDatas")]
     public float Damage;
     public int PenatrateLevel;
+    public string GunType;
 
     [Header("Penetration")]
     private HashSet<Transform> hitEnemyRoots = new HashSet<Transform>();
@@ -115,6 +116,9 @@ public class Bullet : MonoBehaviour
                 HitMarkParent.AddShake(1f);
                 HitMarkParent.HitMarkHitSoundPlay();
 
+                //DieCause
+                enemy.DieCause = GunType;
+
                 //pENERTRAEcOUNT
                 Transform enemyRoot = enemy.transform.root;
 
@@ -189,5 +193,6 @@ public class Bullet : MonoBehaviour
         var exp = Instantiate(Explosion, transform.position, transform.rotation);
         exp.GetComponent<Explosive>().Damage = Damage;
         exp.GetComponent<Explosive>().PenetrateLevel = PenatrateLevel;
+        exp.GetComponent<Explosive>().GunType = GunType;
     }
 }

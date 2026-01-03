@@ -9,16 +9,17 @@ public class Explosive : MonoBehaviour
     [Header("Damage")]
     public float Damage = 100f;
     [Range(0, 100f)]
-    public float Radius = 6f;               // 伤害半径
-    public int PenetrateLevel = 0;        // 传给 ApplyHit 的穿透等级（如无可置0）
+    public float Radius = 6f;             
+    public int PenetrateLevel = 0;
+    public string GunType;
 
     [Header("Force")]
-    public float ExplosionForce = 8f;       // 冲击力(Impulse)
-    public float UpwardsModifier = 0.5f;    // 向上偏移
-    public LayerMask ForceAffectsMask = ~0; // 受力层（一般默认）
+    public float ExplosionForce = 8f;       
+    public float UpwardsModifier = 0.5f;   
+    public LayerMask ForceAffectsMask = ~0; 
 
     [Header("Effects")]
-    public GameObject ScorchDecal;          // 烧痕贴花（可选）
+    public GameObject ScorchDecal;      
     public GameObject HitEffect;
     [Range(0, 1f)]
     public float ExtraEffectChance = 0.3f;
@@ -92,15 +93,14 @@ public class Explosive : MonoBehaviour
 
             float dmg = Damage;
 
-            if (hb && hb.destructible && hb.partHealth > 0)
+            if (hb && hb.destructible && hb.partHealth > 0 && hb.enabled)
             {
                 // Breakable
                 hb.ApplyPartDamage(dmg, PenetrateLevel);
                 enemy.ApplyHit(dmg, PenetrateLevel, hb , targetPoint);
-              
+                enemy.DieCause = GunType;
                 Vector3 normal = (targetPoint - center).normalized;
-                Instantiate(HitEffect, targetPoint + normal * 0.05f, Quaternion.LookRotation(normal, Vector3.up))
-                    .transform.SetParent(col.transform);
+                Instantiate(HitEffect, targetPoint + normal * 0.05f, Quaternion.LookRotation(normal, Vector3.up)).transform.SetParent(col.transform);
 
                 if (HitMark) HitMark.GetComponent<Animator>()?.SetTrigger("Hit");
                 HitMarkParent?.AddShake(1.5f);
@@ -109,10 +109,10 @@ public class Explosive : MonoBehaviour
                 continue;
             }
                 //OtherParts
-            if (hb && nonDestructibleDamaged.Add(enemy))
+            if (hb && nonDestructibleDamaged.Add(enemy) && hb.enabled)
             {
                 enemy.ApplyHit(dmg, PenetrateLevel, hb, targetPoint);
-
+                enemy.DieCause = GunType;
                 HitMark.GetComponent<Animator>()?.SetTrigger("Hit");
                 HitMarkParent?.AddShake(1.5f);
                 HitMarkParent?.HitMarkHitSoundPlay();

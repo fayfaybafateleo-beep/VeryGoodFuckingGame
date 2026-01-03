@@ -14,6 +14,7 @@ public class GunScript : MonoBehaviour
     [Header("WhenUcantEvenSay MYNAME")]
     public string Name;
     public int Cost;
+    public string GunType;
 
     [Header("Bullet")]
     public Transform FirePoint;
@@ -388,10 +389,12 @@ public class GunScript : MonoBehaviour
 
             Quaternion spreadRot = currentFirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
 
+            //DataSync
             Bullet bullet = Instantiate(BulletPrefab, currentFirePoint.position, spreadRot);
             bullet.GetComponent<Bullet>().Damage = GunDamage;
             bullet.GetComponent<Bullet>().PenatrateLevel = GunPeneration;
             bullet.GetComponent<Bullet>().MaxPenetrateTargets = PenertrateCount;
+            bullet.GetComponent<Bullet>().GunType=GunType;
         }
         //muzzleFlash//
         GameObject muzzleFlash = Instantiate(MuzzleFlash, currentFirePoint.position, currentFirePoint.rotation);

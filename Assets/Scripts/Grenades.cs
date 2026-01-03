@@ -5,6 +5,7 @@ public class Grenades : MonoBehaviour
     [Header("Damage")]
     public float Damage;
     public int PenetrateLevel;
+    public string GunType;
 
     [Header("WayToDetonate")]
     public bool IsPercussion;
@@ -77,6 +78,7 @@ public class Grenades : MonoBehaviour
         GameObject explosion=Instantiate(Explosive, transform.position, transform.rotation);
         explosion.GetComponent<Explosive>().Damage = Damage;
         explosion.GetComponent<Explosive>().PenetrateLevel=PenetrateLevel;
+        explosion.GetComponent<Explosive>().GunType = GunType;
         Destroy(gameObject, 0);
     }
 
