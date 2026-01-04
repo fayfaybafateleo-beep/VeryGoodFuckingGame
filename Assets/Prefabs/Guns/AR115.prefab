@@ -2853,7 +2853,7 @@ Transform:
   m_GameObject: {fileID: 4772845094167743657}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0.015499197, y: 0.001, z: 0.3915}
+  m_LocalPosition: {x: 0.015499197, y: 0.001, z: 0.3975}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4023,7 +4023,7 @@ MonoBehaviour:
   GlobalVolume: {fileID: 0}
   MotionBlur: {fileID: 0}
   GunModel: {fileID: 6817179556975638349}
-  MuzzleFlash: {fileID: 8808410404107600223, guid: 3ff0a1668f6998b40950e51dcfbb9be6, type: 3}
+  MuzzleFlash: {fileID: 2933326327969011748, guid: 2b7e7fc9265810a45b3ad8fd3e61a65a, type: 3}
   WeaponWagingScript: {fileID: 480771147718934359}
   Reminder: {fileID: 8044423059192922040}
   ReloadKey: 114
@@ -4387,8 +4387,8 @@ Transform:
   m_GameObject: {fileID: 7923767986443815534}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 0.0362, z: 0.093}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.05, y: 0.0362, z: 0.249}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 215165682758110224}
@@ -5115,11 +5115,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3668791999508292221, guid: d001ee52a9027db4ba1c116ebd4993fb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0446
+      value: 0.071
       objectReference: {fileID: 0}
     - target: {fileID: 3668791999508292221, guid: d001ee52a9027db4ba1c116ebd4993fb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.042
       objectReference: {fileID: 0}
     - target: {fileID: 3668791999508292221, guid: d001ee52a9027db4ba1c116ebd4993fb, type: 3}
       propertyPath: m_LocalPosition.z
