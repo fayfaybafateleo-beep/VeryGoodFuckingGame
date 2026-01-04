@@ -13703,7 +13703,7 @@ GameObject:
   - component: {fileID: 744283021}
   - component: {fileID: 744283020}
   - component: {fileID: 744283019}
-  - component: {fileID: 744283018}
+  - component: {fileID: 744283022}
   m_Layer: 0
   m_Name: SwitchPoint
   m_TagString: Untagged
@@ -13727,18 +13727,6 @@ Transform:
   - {fileID: 862013665}
   m_Father: {fileID: 615228450}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &744283018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 744283016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b6082bd871c2054fadbe236a039b054, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &744283019
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13813,6 +13801,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 744283016}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &744283022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744283016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e64020b9b115c42b51069c2a4cb844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SceneNum: 1
 --- !u!1 &745407599
 GameObject:
   m_ObjectHideFlags: 0
@@ -59737,6 +59738,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 
   Cost: 0
+  GunType: 
   FirePoint: {fileID: 0}
   CurrentFirePointIndex: 0
   IsMultiFirepoint: 0
