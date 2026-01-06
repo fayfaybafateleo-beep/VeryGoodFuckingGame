@@ -74,8 +74,11 @@ public class Drops : MonoBehaviour
                     Destroy(transform.parent.gameObject);
                     IsUsed = true;
                 }
-
-            
+            }
+            if (Timer >= 120f)
+            {
+                Destroy(transform.parent.gameObject);
+                IsUsed = true;
             }
         }
     }

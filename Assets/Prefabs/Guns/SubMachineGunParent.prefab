@@ -2103,6 +2103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: SMG PPP43
   Cost: 3500
+  GunType: 
   FirePoint: {fileID: 6791072409368940482}
   CurrentFirePointIndex: 0
   IsMultiFirepoint: 0
@@ -2253,7 +2254,7 @@ MonoBehaviour:
   positionTarget: {fileID: 5004394571427201234}
   rotationTarget: {fileID: 5004394571427201234}
   kickBackDistance: 0.2
-  kickPitchYaw: {x: 0.4, y: 1}
+  kickPitchYaw: {x: -0.4, y: 1}
   kickRandomYawSignChance: 1
   posSpringStiffness: 500
   rotSpringStiffness: 300
@@ -2297,7 +2298,6 @@ MonoBehaviour:
   stopSwayOnFire: 1
   fireSuppressTime: 0.12
   fireRecoverTime: 0.1
-  useUnscaledTime: 1
   characterController: {fileID: 0}
   externalMoveSpeed: 0
   externalGrounded: 1
