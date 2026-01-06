@@ -23,7 +23,8 @@ public class TimeStopFuntion : MonoBehaviour
 
     [Header("Pause")]
     public bool IsPaused;                 
-    public float SavedTimeScale = 1f;    
+    public float SavedTimeScale = 1f;
+    public GameObject PauseMenu;
 
     void Start()
     {
@@ -32,6 +33,10 @@ public class TimeStopFuntion : MonoBehaviour
         {
             PostVolume.profile.TryGet(out lens);
         }
+
+        PauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
+
+        PauseMenu.SetActive(false);
     }
 
     void Update()
@@ -50,12 +55,14 @@ public class TimeStopFuntion : MonoBehaviour
             SavedTimeScale = Time.timeScale;
             Time.timeScale = 0f;
             IsPaused = true;
+            PauseMenu.SetActive(true);
         }
         else
         {
             // UnPause
             Time.timeScale = SavedTimeScale;
             IsPaused = false;
+            PauseMenu.SetActive(false);
         }
     }
 
