@@ -23,7 +23,13 @@ namespace StarterAssets
         [Header("VehicleVeiw")]
         public bool LockVision;
 
+
+
 #if ENABLE_INPUT_SYSTEM
+         void Start()
+         {
+            LockCursor();
+         }
         public void OnMove(InputValue value)
         {
             MoveInput(value.Get<Vector2>());
@@ -83,7 +89,17 @@ namespace StarterAssets
             Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
         }
 
+        public void LockCursor()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 
+        public void UnlockCursor()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
 

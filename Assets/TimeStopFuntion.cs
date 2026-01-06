@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using System.Collections;
+using StarterAssets;
 public class TimeStopFuntion : MonoBehaviour
 {
     [Header("TimeSlow")]
@@ -26,6 +27,10 @@ public class TimeStopFuntion : MonoBehaviour
     public float SavedTimeScale = 1f;
     public GameObject PauseMenu;
 
+    [Header("Player")]
+    public StarterAssetsInputs SAI;
+
+
     void Start()
     {
         PostVolume = GameObject.FindGameObjectWithTag("GlobalVolume").GetComponent<Volume>();
@@ -35,8 +40,9 @@ public class TimeStopFuntion : MonoBehaviour
         }
 
         PauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
-
         PauseMenu.SetActive(false);
+
+        SAI = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssetsInputs>();
     }
 
     void Update()
@@ -56,6 +62,7 @@ public class TimeStopFuntion : MonoBehaviour
             Time.timeScale = 0f;
             IsPaused = true;
             PauseMenu.SetActive(true);
+            SAI.UnlockCursor();
         }
         else
         {
@@ -63,6 +70,7 @@ public class TimeStopFuntion : MonoBehaviour
             Time.timeScale = SavedTimeScale;
             IsPaused = false;
             PauseMenu.SetActive(false);
+            SAI.LockCursor();
         }
     }
 
