@@ -30,10 +30,16 @@ public class MissionSelect : MonoBehaviour
     public bool IsMissionSelected;
 
     public GameObject Guidence;
+
+    [Header("Compass")]
+    public GameObject Compass;
+    public Compass CP;
     void Start()
     {
         WM = GameObject.FindGameObjectWithTag("WeaponManager").GetComponent<WeaponManager>();
         CurrentLevel = null;
+
+        CP = Compass.GetComponent<Compass>();
     }
 
     // Update is called once per frame
@@ -72,6 +78,8 @@ public class MissionSelect : MonoBehaviour
             currentLV.GetComponent<GameLevelControl>().LS=GameLevelControl.LevelState.NotActive;
             IsMissionSelected = true;
             Animator.SetTrigger("Confirm");
+
+            CP.Target = Levels[CurrentInedx].transform;
         }
 
 
@@ -87,8 +95,8 @@ public class MissionSelect : MonoBehaviour
             {
                 DestroyImmediate(enemy);
             }
-
-            Animator.SetTrigger("Reset");
+            CP.Target = null;
+           Animator.SetTrigger("Reset");
         }
     }
     void OnTriggerEnter(Collider other)
