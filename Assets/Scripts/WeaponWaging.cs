@@ -40,9 +40,6 @@ public class WeaponWaging : MonoBehaviour
     public float fireRecoverTime = 0.10f;
 
     [Header("Time")]
-    [Tooltip("使用不受 timeScale 影响的时间（慢动作时保持节奏）")]
-    public bool useUnscaledTime = true;
-
     public CharacterController characterController;
     [Tooltip("没有 CC 时：外部手动设置移动速度（m/s）")]
     public float externalMoveSpeed;
@@ -92,8 +89,8 @@ public class WeaponWaging : MonoBehaviour
 
     void LateUpdate()
     {
-        float dt = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
-        float time = useUnscaledTime ? Time.unscaledTime : Time.time;
+        float dt = Time.deltaTime;
+        float time = Time.time;
         if (dt <= 0f) return;
 
         // MovementStatus

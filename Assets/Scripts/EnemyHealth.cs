@@ -98,6 +98,9 @@ public class EnemyHealth : MonoBehaviour
     public float FlyingDeathForce = 15f;    
     public float FlyingDeathTorque = 10f;
     public List<GameObject> ParticleList;
+
+    [Header("TimeStop")]
+    public TimeStopFuntion TSF;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     [Header("Icon")]
@@ -106,6 +109,8 @@ public class EnemyHealth : MonoBehaviour
     {
         HitMark = GameObject.FindGameObjectWithTag("HitMark");
         HitMarkParent = HitMark.GetComponentInParent<CrossHairGenral>();
+
+        TSF = GameObject.FindGameObjectWithTag("TimeSlow").GetComponent<TimeStopFuntion>();
 
         Health = MaxHealth;
 
@@ -356,6 +361,7 @@ public class EnemyHealth : MonoBehaviour
         if (isGolory)
         {
             GloryKillDrop();
+            TSF.PlayTimeSlow();
         }
         else
         {
