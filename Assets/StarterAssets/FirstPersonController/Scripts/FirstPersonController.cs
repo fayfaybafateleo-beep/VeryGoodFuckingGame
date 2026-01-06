@@ -173,7 +173,7 @@ namespace StarterAssets
 
         [Header("DeadSetting")]
         public PlayerHealth PH;
-        private float DeathTilt = 0f;     // 玩家死亡时的 z 轴倾斜角
+        private float DeathTilt = 0f;     
         private bool IsDeadTilting = false;
 
         public PlayerGetInCar PIC;
@@ -388,28 +388,29 @@ namespace StarterAssets
 
         private void CameraRotation()
         {
-            // 鼠标与手柄的时间系数
+            //TimeStop
+            if (Time.timeScale == 0f) return;
+            
             float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-            // 处理俯仰与水平旋转输入（与原逻辑一致）
+            // UpAndDown
             if (_input.look.sqrMagnitude >= _threshold)
             {
                 _cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
                 _rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
 
-                // 旋转玩家左右朝向（Yaw）
+                // left&Right（Yaw）
                 transform.Rotate(Vector3.up * _rotationVelocity);
             }
 
-            // 限制俯仰
+            // Limitation
             _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
-            // === 新增：根据左右移动输入产生“镜头滚转（Z轴倾斜）” ===
-            // 右移希望画面右倾：通常为负Z；如需反向把负号去掉
+           //LenzBias
             float targetTilt = -_input.move.x * StrafeTiltMax;
             _strafeTiltZ = Mathf.SmoothDampAngle(_strafeTiltZ, targetTilt, ref _strafeTiltVel, StrafeTiltSmoothTime);
 
-            // 应用到 CM 跟随目标：俯仰 + 滚转（保留原来的 Y=0）
+       
             CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0f, _strafeTiltZ);
         }
 

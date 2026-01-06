@@ -21,6 +21,10 @@ public class TimeStopFuntion : MonoBehaviour
 
     private Coroutine TimeSlowCoroutine;
 
+    [Header("Pause")]
+    public bool IsPaused;                 
+    public float SavedTimeScale = 1f;    
+
     void Start()
     {
         PostVolume = GameObject.FindGameObjectWithTag("GlobalVolume").GetComponent<Volume>();
@@ -29,6 +33,32 @@ public class TimeStopFuntion : MonoBehaviour
             PostVolume.profile.TryGet(out lens);
         }
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            UsePause();
+        }
+    }
+
+    public void UsePause()
+   {
+        if (IsPaused==false)
+        {
+            // Pause
+            SavedTimeScale = Time.timeScale;
+            Time.timeScale = 0f;
+            IsPaused = true;
+        }
+        else
+        {
+            // UnPause
+            Time.timeScale = SavedTimeScale;
+            IsPaused = false;
+        }
+    }
+
     public void PlayTimeSlow()
     {
         if (IsTimeSlow==false)
