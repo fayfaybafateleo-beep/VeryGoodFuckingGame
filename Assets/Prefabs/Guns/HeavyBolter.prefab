@@ -194,9 +194,9 @@ MonoBehaviour:
   FirePoints: []
   BulletPrefab: {fileID: 3454573842243275128, guid: 44e4e36a6c8a8c745afec1a17ba9374b, type: 3}
   PenertrateCount: 1
-  FireRate: 450
-  BurstRate: 0
-  IsBurstFire: 0
+  FireRate: 100
+  BurstRate: 600
+  IsBurstFire: 1
   BurstCount: 3
   IsBursting: 0
   BurstInterval: 0
@@ -382,7 +382,6 @@ MonoBehaviour:
   stopSwayOnFire: 1
   fireSuppressTime: 0.12
   fireRecoverTime: 0.1
-  useUnscaledTime: 1
   characterController: {fileID: 0}
   externalMoveSpeed: 0
   externalGrounded: 1

@@ -2420,6 +2420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Heavy MachineGun GAU134
   Cost: 15000
+  GunType: 
   FirePoint: {fileID: 2500275562901058428}
   CurrentFirePointIndex: 0
   IsMultiFirepoint: 0
@@ -2471,8 +2472,8 @@ MonoBehaviour:
   Reminder: {fileID: 9219329114969625103}
   ReloadKey: 114
   ReloadText: {fileID: 0}
-  InitialCapasityRate: 0.6
-  MaxCapasity: 3000
+  InitialCapasityRate: 0.7
+  MaxCapasity: 180
   CurrentCapasity: 0
   AmmoConvertRate: 0.3
   BM: {fileID: 0}
@@ -2614,7 +2615,6 @@ MonoBehaviour:
   stopSwayOnFire: 1
   fireSuppressTime: 0.12
   fireRecoverTime: 0.1
-  useUnscaledTime: 1
   characterController: {fileID: 0}
   externalMoveSpeed: 0
   externalGrounded: 1

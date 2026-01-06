@@ -131,6 +131,7 @@ public class PlayerGetInCar : MonoBehaviour
         foreach (Transform child in MainCamera.transform)
         {
             if (child.name == "OverLayCamera") continue;
+
             child.gameObject.SetActive(false);
         }
 

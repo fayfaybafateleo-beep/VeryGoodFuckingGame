@@ -18,30 +18,41 @@ public class TransparentView : MonoBehaviour
 
     [Header("ScreenShake")]
     public CinemachineImpulseSource Source;
+
+    [Header("Player")]
+    public PlayerHealth PH;
+    public PlayerGetInCar PIC;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Cam = GameObject.FindGameObjectWithTag("TransparentUiCam");
         Cam.SetActive(false);
+
+        PH = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        PIC = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerGetInCar>();
     }
     void Update()
     {
-        if (Input.GetKeyDown(Key))
+        if (PH.PS == PlayerHealth.PlayerState.Alive)
         {
-            if (Time.time - lastInputTime < InputCooldown)
+            if (Input.GetKeyDown(Key))
             {
-                return;
-            }
-            lastInputTime = Time.time;
-            if (IsUsing)
-            {
-                DisableScope();
-            }
-            else
-            {
-                ActivateScope();
+                if (Time.time - lastInputTime < InputCooldown)
+                {
+                    return;
+                }
+                lastInputTime = Time.time;
+                if (IsUsing)
+                {
+                    DisableScope();
+                }
+                else
+                {
+                    ActivateScope();
+                }
             }
         }
+      
     }
     public void ActivateScope()
     {

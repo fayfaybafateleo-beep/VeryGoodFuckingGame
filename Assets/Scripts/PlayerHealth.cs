@@ -1,3 +1,4 @@
+using StarterAssets;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -32,6 +33,9 @@ public class PlayerHealth : MonoBehaviour
     public BrutalSystem BS;          
     public float BrutalDrainPerSecond = 50f; 
     public bool IsUsingBrutalToSurvive = false;
+
+    [Header("CursorLock")]
+    public StarterAssetsInputs SAI;
     public enum PlayerState
     {
      Alive,
@@ -51,6 +55,8 @@ public class PlayerHealth : MonoBehaviour
 
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
+
+        SAI = GetComponent<StarterAssetsInputs>();
     }
 
     // Update is called once per frame
@@ -108,7 +114,7 @@ public class PlayerHealth : MonoBehaviour
                 {
                     Time.timeScale = 0f;
                 }
-
+                SAI.UnlockCursor();
                 Time.fixedDeltaTime = 0.02f * Time.timeScale;
                 break;
         }
