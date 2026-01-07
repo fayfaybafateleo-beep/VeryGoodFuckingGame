@@ -21,6 +21,7 @@ public class MissionSelect : MonoBehaviour
     [Header(" MissionInfo")]
     public TextMeshPro MissionName;
     public TextMeshPro MissionData;
+    public TextMeshPro DangerLevelText;
     public GameObject CurrentLevel;
 
     [Header("Animator")]
@@ -72,6 +73,7 @@ public class MissionSelect : MonoBehaviour
             //Info
         MissionName.text = Levels[CurrentInedx].GetComponent<GameLevelControl>().LevelName;
         MissionData.text = Levels[CurrentInedx].GetComponent<GameLevelControl>().HazardLevel.ToString();
+        DangerLevelText.text ="Danger Level: " +DangerLevel.GameDangerLevel.ToString();
 
         if (Input.GetKeyDown(Key7) && InTrigger && IsMissionSelected==false)
         {
