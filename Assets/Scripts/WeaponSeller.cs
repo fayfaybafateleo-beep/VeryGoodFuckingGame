@@ -51,9 +51,9 @@ public class WeaponSeller : MonoBehaviour
         MoneyText.text = AllWeaponList[CurrentInedx].GetComponent<GunScript>().Cost.ToString() + " $";
 
         //ChoosingGun
-        if (Input.GetKeyDown(Key5) && InTrigger) CurrentInedx++;
+        if (Input.GetKeyDown(Key5) && InTrigger) CurrentInedx--;
 
-        if (Input.GetKeyDown(Key6) && InTrigger) CurrentInedx --;
+        if (Input.GetKeyDown(Key6) && InTrigger) CurrentInedx ++;
 
         if (CurrentInedx == AllWeaponList.Count) CurrentInedx = 0;
 
