@@ -201,7 +201,7 @@ public class EnemyHealth : MonoBehaviour
             Destroy(text, 1f);
         }
 
-        if (IsDead==false&&AccumulatedDamageForExecution >= MaxHealth&& IsGore==false )
+        if (IsDead==false&&AccumulatedDamageForExecution >= MaxHealth&& IsGore==false && Health<=0)
         {
             if(DieCause=="Bolt"|| DieCause == "ShotGun"|| DieCause == "LargeCalibur" || DieCause == "Grenade")
             GoreExcution(false);
