@@ -55,6 +55,11 @@ public class WeaponManager : MonoBehaviour
 
     [Header("Player")]
     public PlayerHealth PH;
+
+    [Header("Melee LeftArmSet")]
+    public string DisableObjectName = "LeftArmSet";
+    private GameObject cachedLeftArmSetA;
+    private GameObject cachedLeftArmSetB;
     public enum FireControlState
     {
         AllowInput,
@@ -122,6 +127,9 @@ public class WeaponManager : MonoBehaviour
                 if (Input.GetKeyDown(Key3))
                 {
                     if (MeleeRateTimer < MeleeRate) return;
+
+                    DisableLeftArmSetOnBothWeapons();
+
                     MeleeAnimator.SetTrigger("Fire");
                     MeleeHitImpulse();
                     MeleeAnimator.speed = 5;
@@ -342,5 +350,65 @@ public class WeaponManager : MonoBehaviour
         {
             gun.GetComponent<GunScript>().GS = GunScript.GunState.CeaseFire;
         }
+    }
+
+    private Transform FindChildRecursive(Transform parent, string targetName)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == targetName)
+                return child;
+
+            Transform found = FindChildRecursive(child, targetName);
+            if (found != null)
+                return found;
+        }
+        return null;
+    }
+
+    private void DisableLeftArmSetOnBothWeapons()
+    {
+        cachedLeftArmSetA = DisableLeftArmSetOnWeaponIndex(I);
+        cachedLeftArmSetB = DisableLeftArmSetOnWeaponIndex(I + 1);
+    }
+
+    //DisableArm
+    private GameObject DisableLeftArmSetOnWeaponIndex(int index)
+    {
+        if (WeaponsOnEquipmentList == null)
+        {
+            return null;
+        }
+        if (index < 0 || index >= WeaponsOnEquipmentList.Count)
+        {
+            return null;
+        }
+        GameObject weapon = WeaponsOnEquipmentList[index];
+        if (!weapon)
+        {
+            return null;
+        }
+
+            Transform target = FindChildRecursive(weapon.transform, DisableObjectName);
+        if (target == null)
+        {
+            return null;
+        }
+
+
+        target.gameObject.SetActive(false);
+        return target.gameObject;
+    }
+
+    public void RecoverLeftArm()
+    {
+        if (cachedLeftArmSetA != null)
+            cachedLeftArmSetA.SetActive(true);
+
+        if (cachedLeftArmSetB != null)
+            cachedLeftArmSetB.SetActive(true);
+
+        cachedLeftArmSetA = null;
+        cachedLeftArmSetB = null;
     }
 }

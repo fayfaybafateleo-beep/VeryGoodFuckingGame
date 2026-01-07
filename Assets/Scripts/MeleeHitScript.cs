@@ -34,7 +34,7 @@ public class MeleeHitScript : MonoBehaviour
     public AudioClip HitClip;
 
     [Header("SweepOrDebug")]
-    public int maxSweepSteps = 3;    // 插值步数，避免高速漏检
+    public int maxSweepSteps = 3;   
     public bool debugGizmos = false;
 
     private bool WindowOpen;
@@ -43,6 +43,9 @@ public class MeleeHitScript : MonoBehaviour
 
     private readonly HashSet<Collider> hitColliders = new();
     private readonly HashSet<EnemyHealth> hitOwners = new();
+
+    [Header("WeaponManager")]
+    public WeaponManager WM;
 
     private void Awake()
     {
@@ -54,7 +57,7 @@ public class MeleeHitScript : MonoBehaviour
         {
             HitMarkParent = HitMark.GetComponentInParent<CrossHairGenral>();
         }
-           
+        WM = GameObject.FindGameObjectWithTag("WeaponManager").GetComponent<WeaponManager>();
     }
     public void BeginWindow()
     {
@@ -209,6 +212,11 @@ public class MeleeHitScript : MonoBehaviour
             MeleeImpulseSource.ImpulseDefinition.FrequencyGain = 0.3f;
         }
         MeleeImpulseSource.GenerateImpulse();
+    }
+
+    public void RecoverLeftArm()
+    {
+        WM.RecoverLeftArm();
     }
 }
 
