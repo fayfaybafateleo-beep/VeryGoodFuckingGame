@@ -31,7 +31,7 @@ public class EnemySectionSpawner : MonoBehaviour
     public AnimationCurve EliteChance = AnimationCurve.Linear(0, 0f, 10, 0.35f); 
     public AnimationCurve MiniBossChance = AnimationCurve.Linear(0, 0f, 10, 0.08f);
 
-    public int DangerLevel;
+    public int LevelDangerLevel;
     private void Start()
     {
       
@@ -44,6 +44,8 @@ public class EnemySectionSpawner : MonoBehaviour
 
     private void Update()
     {
+        LevelDangerLevel = DangerLevel.GameDangerLevel;
+
         MaxSpawnInThisSection = SectionManager.TargetSpawnCount;
         if (SectionManager == null) return;
 
@@ -107,7 +109,7 @@ public class EnemySectionSpawner : MonoBehaviour
         //MiniBoss
         if (MiniBossList.Count > 0 && LocalMiniBossCount < MaxMiniBossInThisSection)
         {
-            float miniBossChance = Mathf.Clamp01(MiniBossChance.Evaluate(DangerLevel));
+            float miniBossChance = Mathf.Clamp01(MiniBossChance.Evaluate(DangerLevel.GameDangerLevel));
             if (Random.value < miniBossChance)
             {
                 LocalMiniBossCount++;
@@ -118,7 +120,7 @@ public class EnemySectionSpawner : MonoBehaviour
         // Elite
         if (EliteList.Count > 0 && LocalEliteCount < MaxEliteInThisSection)
         {
-            float eliteChance = Mathf.Clamp01(EliteChance.Evaluate(DangerLevel));
+            float eliteChance = Mathf.Clamp01(EliteChance.Evaluate(DangerLevel.GameDangerLevel));
             if (Random.value < eliteChance)
             {
                 LocalEliteCount++;

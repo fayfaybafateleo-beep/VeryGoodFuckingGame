@@ -34,6 +34,10 @@ public class MissionSelect : MonoBehaviour
     [Header("Compass")]
     public GameObject Compass;
     public Compass CP;
+
+    [Header("DangerLevel")]
+    public DangerLevel DL;
+    public bool IsDangerLevelRise;
     void Start()
     {
         WM = GameObject.FindGameObjectWithTag("WeaponManager").GetComponent<WeaponManager>();
@@ -80,6 +84,8 @@ public class MissionSelect : MonoBehaviour
             Animator.SetTrigger("Confirm");
 
             CP.Target = Levels[CurrentInedx].transform;
+
+            IsDangerLevelRise = false;
         }
 
 
@@ -88,6 +94,12 @@ public class MissionSelect : MonoBehaviour
         {
             CurrentLevel = null;
             IsMissionSelected = false;
+
+            if (IsDangerLevelRise == false)
+            {
+                DangerLevel.GameDangerLevel += 1;
+                IsDangerLevelRise = true;
+            }
 
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
