@@ -35,7 +35,7 @@ public class Test : MonoBehaviour
 
     void LateUpdate()
     {
-        // 抬头一般是 -pitch；如果方向反了，把 -currentKick 改成 +currentKick
+       
         Quaternion recoilRot = Quaternion.Euler(-CurrentKick, 0f, 0);
         transform.localRotation = baseLocalRot * recoilRot;
     }

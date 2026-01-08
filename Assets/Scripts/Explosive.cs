@@ -18,8 +18,7 @@ public class Explosive : MonoBehaviour
     public float UpwardsModifier = 0.5f;   
     public LayerMask ForceAffectsMask = ~0; 
 
-    [Header("Effects")]
-    public GameObject ScorchDecal;      
+    [Header("Effects")]    
     public GameObject HitEffect;
     [Range(0, 1f)]
     public float ExtraEffectChance = 0.3f;
@@ -119,14 +118,7 @@ public class Explosive : MonoBehaviour
             }
 
             Vector3 n = (targetPoint - center).normalized;
-            Instantiate(HitEffect, targetPoint + n * 0.05f, Quaternion.LookRotation(n, Vector3.up))
-                .transform.SetParent(col.transform);
-        }
-
-        // ScorchDecalInstantiate
-        if (ScorchDecal && Physics.Raycast(center + Vector3.up * 0.2f, Vector3.down, out var rh, 2.0f, ~0, TriggerMode))
-        {
-            Instantiate(ScorchDecal, rh.point + rh.normal * 0.02f, Quaternion.LookRotation(rh.normal));
+            Instantiate(HitEffect, targetPoint + n * 0.05f, Quaternion.LookRotation(n, Vector3.up)).transform.SetParent(col.transform);
         }
     }
 

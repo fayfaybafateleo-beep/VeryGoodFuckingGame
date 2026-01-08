@@ -316,7 +316,7 @@ public class EnemyBehaviour : MonoBehaviour
                 {
                     PhaseTimer += Time.deltaTime;
 
-                    // NoSign,Repos
+                    // NoSign Repos
                     if (!HasLOS && UseFlankWhenNoLOS)
                     {
                         if (!IsRepositioning)
@@ -356,7 +356,7 @@ public class EnemyBehaviour : MonoBehaviour
                     Vector3 targetPos = Target.transform.position + Vector3.up * 1.15f;
                     Vector3 aimDir = targetPos - FirePoint.position;
 
-                    //InCasePlayerIsTooClose
+                    //InCase Player Is Too Close
                     if (aimDir.sqrMagnitude > 0.0001f)
                     {
                         Quaternion aimRot = Quaternion.LookRotation(aimDir.normalized, Vector3.up);
@@ -568,17 +568,6 @@ public class EnemyBehaviour : MonoBehaviour
 
                 if (UseDynamicMOA && Target != null)
                 {
-
-
-                    /*  Vector3 origin = (FirePoint != null) ? FirePoint.position : transform.position;
-                      float distP = Vector3.Distance(origin, Target.transform.position);
-                      distP = Mathf.Min(distP, AttackRange);
-                      T = 1f - Mathf.Clamp01(distP / Mathf.Max(AttackRange, 0.01f));
-                    
-                                         float moaMul = MOAMultiplier * T;*/
-
-                    //
-
 
                     Vector3 toTarget = Target.transform.position - transform.position;
                     float dist = toTarget.magnitude;

@@ -41,7 +41,7 @@ public class KillListing : MonoBehaviour
         }
         else
         {
-            // 抖完回到原位
+            //Recover
             TextBoject.transform.localPosition = OriginalPos;
         }
 

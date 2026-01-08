@@ -196,7 +196,7 @@ public class WeaponManager : MonoBehaviour
     {
         var Swap = WeaponsOnEquipmentList[gunSelected].GetComponent<WeaponWaging>(); 
 
-        float waitTime = Swap.raiseDuration ;
+        float waitTime = Swap.RaiseDuration ;
 
         yield return new WaitForSecondsRealtime(waitTime);
 
@@ -262,7 +262,7 @@ public class WeaponManager : MonoBehaviour
             }
         }
 
-        // 3) ActivatedTheHolding
+        //ActivatedTheHolding
         if (WeaponsOnEquipmentList.Count > 0)
         {
             if (activeGun < 0 || activeGun >= WeaponsOnEquipmentList.Count)
@@ -280,7 +280,7 @@ public class WeaponManager : MonoBehaviour
                     if (gs) gs.GS = active ? GunScript.GunState.CanFire : GunScript.GunState.CeaseFire;
                 }
             }
-            // synqunized
+            //synqunized
             if (activeGun == I)
             {
                 IsWeaponSwaped = false;

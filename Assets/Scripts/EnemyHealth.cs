@@ -283,7 +283,7 @@ public class EnemyHealth : MonoBehaviour
     }
     public void EnemyKinematic()
     {
-        //SwapToOtherLayer
+        //Swap To Other Layer
         SwapLayer();
         DestroyBody();
     }
@@ -310,7 +310,7 @@ public class EnemyHealth : MonoBehaviour
     {
         Health = -10;
 
-        //DelayOnKillList
+        //Delay On Kill List
         StartCoroutine(DelayCall());
 
         IEnumerator DelayCall()

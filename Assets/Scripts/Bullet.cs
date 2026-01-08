@@ -142,7 +142,7 @@ public class Bullet : MonoBehaviour
                     Collider bulletCol = GetComponent<Collider>();
                     if (bulletCol != null)
                     {
-                        // 忽略这只敌人身上所有的 collider
+                        // IgnoreOtherCollider
                         foreach (var col in enemyRoot.GetComponentsInChildren<Collider>())
                         {
                             Physics.IgnoreCollision(bulletCol, col);
@@ -158,7 +158,7 @@ public class Bullet : MonoBehaviour
             }   
         }
         
-        // Destroy the bullet on collision
+        // DestroyBullet 
         Destroy(gameObject);
     }
     void PlayAndDetachParticle()

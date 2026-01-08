@@ -145,7 +145,7 @@ public class GunScript : MonoBehaviour
         //Damage
         GunDamage = OriginGunDamage * (1 + BM.DamageIncreaseRate);
 
-        //ZeroTheFirePoint
+        //Zero The FirePoint
         Vector3 RayOrigin = Camera.transform.position + Camera.transform.forward * Offset;
         Vector3 RayDir = Camera.transform.forward;
 
@@ -226,7 +226,7 @@ public class GunScript : MonoBehaviour
             case GunState.CanFire:
                 FireTimer -= Time.deltaTime;
                 GunAnimator.speed = AnimatorSpeed;
-                // Mouse pressed
+                // MousePressed
                 if (IsBurstFire)
                 {
                     if (Input.GetMouseButton(0) && MagazineCounter > 0 && !IsBursting)
@@ -258,7 +258,7 @@ public class GunScript : MonoBehaviour
                     GS = GunState.Reload;
                 }
 
-                //MoveSpeedModificate
+                //Mov eSpeed Modificate
                 bool holdingFire = Input.GetMouseButton(0);
                 if (holdingFire || IsBursting)
                 {
