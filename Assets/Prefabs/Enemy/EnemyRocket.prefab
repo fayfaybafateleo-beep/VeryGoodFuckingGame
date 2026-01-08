@@ -2430,7 +2430,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.314, y: 1.59, z: 10.95}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5916576565604369336}
@@ -2651,6 +2651,7 @@ MonoBehaviour:
   FirePoint: {fileID: 7672260323938616294}
   EnemyBullet: {fileID: 56932041484218793, guid: 7183fd6d649a81d4ca1cbddbc1419ab1, type: 3}
   EnemyMuzzleFlash: {fileID: 2933326327969011748, guid: 95425991aec5fa744916937b8c616b55, type: 3}
+  IsSpecialBullet: 0
   Lock: 0
   IsFlying: 0
   FlyHeight: 0

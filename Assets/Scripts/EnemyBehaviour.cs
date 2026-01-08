@@ -31,6 +31,7 @@ public class EnemyBehaviour : MonoBehaviour
     public Transform FirePoint;
     public GameObject EnemyBullet;
     public GameObject EnemyMuzzleFlash;
+    public bool IsSpecialBullet;
     public bool Lock = false;
 
     [Header("FlySetting")]
@@ -548,6 +549,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     private IEnumerator BurstRoutine()
     {
+
+
         IsBurstFiring = true;
         BurstShotsFired = 0;
         AttackRateTimer = 0f;
@@ -597,8 +600,19 @@ public class EnemyBehaviour : MonoBehaviour
                 if (FirePoint != null)
                 {
                     Quaternion spreadRot = FirePoint.rotation * Quaternion.Euler(pitch, yaw, 0f);
-                    GameObject bullet = Instantiate(EnemyBullet, FirePoint.position, spreadRot);
-                    bullet.GetComponent<EnemyBullet>().Damage = Damage;
+                    if (IsSpecialBullet == false)
+                    {
+                        GameObject bullet = Instantiate(EnemyBullet, FirePoint.position, spreadRot);
+                        bullet.GetComponent<EnemyBullet>().Damage = Damage;
+                    }
+                    if (IsSpecialBullet)
+                    {
+                        GameObject bullet2 = Instantiate(EnemyBullet, FirePoint.position,Quaternion.identity);
+                        bullet2.GetComponent<EnemyArtillery>().Damage = Damage;
+                        bullet2.GetComponent<EnemyArtillery>().MinRadius = h;
+                        bullet2.GetComponent<EnemyArtillery>().MaxRadius = v;
+                    }
+                 
                 }
             }
 

@@ -1,12 +1,16 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyArtillery : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [Header("Target")]
+    [Header("Player")]
     public Transform player;
 
-    [Header("Random Area (Ring)")]
+    [Header("Damage")]
+    public int Damage;
+
+    [Header("MOA")]
     public float MinRadius = 2f;
     public float MaxRadius = 8f;
 
@@ -19,13 +23,28 @@ public class EnemyArtillery : MonoBehaviour
     [Header("Try Settings")]
     public int MaxTries = 20;
 
-    [Header("Align To Ground (optional)")]
+    [Header("Align To Ground")]
     public bool AlignToGroundNormal = false;
+
+    [Header("Explosion")]
+    public GameObject ExplosionPrefab;
+    public bool IsExploded;
+
+    [Header("Size")]
+    public Transform OuterRing;
+    public Transform InnerRing;
+
+    [Header("FuzeTime")]
+    public float FuzeTime = 0.5f;
 
     void Start()
     {
       player = GameObject.FindGameObjectWithTag("Player").transform;
         LocatePlayer();
+
+        InnerRing.localScale = Vector3.zero;
+
+        StartCoroutine(GrowRoutine());
     }
 
     public void LocatePlayer()
@@ -54,5 +73,40 @@ public class EnemyArtillery : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(forward.normalized, hit.normal);
             }
         }
+    }
+
+    public void Explosion()
+    {
+        if (IsExploded == false)
+        {
+            GameObject e = Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
+            e.GetComponent<EnemyExplosive>().Damage = Damage;
+            e.GetComponent<EnemyExplosive>().Radius = OuterRing.transform.localScale.x;
+            IsExploded =true;
+        }
+        Destroy(gameObject);
+    }
+
+    IEnumerator GrowRoutine()
+    {
+        Vector3 targetScale = OuterRing.localScale;
+        float t = 0f;
+
+        while (t < 1f)
+        {
+            float dt =Time.deltaTime;
+            t += dt / Mathf.Max(0.0001f, FuzeTime);
+
+            float k = Mathf.Clamp01(t);
+            // SmoothStep
+            k = k * k * (3f - 2f * k);
+
+            InnerRing.localScale = Vector3.LerpUnclamped(Vector3.zero, targetScale, k);
+            yield return null;
+        }
+        
+        InnerRing.localScale = targetScale;
+
+        Explosion();
     }
 }
