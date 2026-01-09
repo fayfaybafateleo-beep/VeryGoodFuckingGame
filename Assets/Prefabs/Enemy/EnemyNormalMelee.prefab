@@ -1335,6 +1335,7 @@ MonoBehaviour:
   FirePoint: {fileID: 2381303764834033051}
   EnemyBullet: {fileID: 2442374717578617672, guid: 09ff6534c09a9af43808048030048877, type: 3}
   EnemyMuzzleFlash: {fileID: 0}
+  IsSpecialBullet: 0
   Lock: 0
   IsFlying: 0
   FlyHeight: 0
@@ -2339,7 +2340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8224fd48bc4f9a24aa2ed403dcf1ea28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 1
+  damageMultiplier: 0.75
   IsCriticalPoint: 0
   destructible: 0
   Thoughness: 0
