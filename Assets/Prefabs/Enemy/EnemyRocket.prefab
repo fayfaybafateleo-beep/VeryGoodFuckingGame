@@ -695,12 +695,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 1
   IsCriticalPoint: 0
+  IsMetal: 0
   destructible: 1
   Thoughness: 0
   partMaxHealth: 40
   partHealth: 0
   BloodPoint: {fileID: 4637630618007472815}
   Blood: {fileID: 501394236874677983, guid: 6080c47d52237a44b9c8aaaf4e9624b6, type: 3}
+  ExtraEffect: 0
+  ExtraDestroyEffect: {fileID: 0}
   BloodSplash: {fileID: 1722730097017444589, guid: 1093cb16752f88c41874197b764f108a, type: 3}
   TextObject: {fileID: 629695357997126060, guid: 3f377e8f8e67dff409d796e5022f10d1, type: 3}
   Text: DISSECT
@@ -1715,12 +1718,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 2
   IsCriticalPoint: 1
+  IsMetal: 0
   destructible: 1
   Thoughness: 0
   partMaxHealth: 100
   partHealth: 0
   BloodPoint: {fileID: 6805132054374411976}
   Blood: {fileID: 501394236874677983, guid: 6080c47d52237a44b9c8aaaf4e9624b6, type: 3}
+  ExtraEffect: 0
+  ExtraDestroyEffect: {fileID: 0}
   BloodSplash: {fileID: 1722730097017444589, guid: 1093cb16752f88c41874197b764f108a, type: 3}
   TextObject: {fileID: 629695357997126060, guid: 20e1c5bae0b8b4f46b3a913abc21c1e1, type: 3}
   Text: HEADSHOT!!!
@@ -2519,6 +2525,9 @@ MonoBehaviour:
   - {fileID: 6666830113318450386, guid: 2d8b0d2bbdbd4ce4883fd44a6c87160e, type: 3}
   - {fileID: 2484064925702399884, guid: 77bf6ac273167d546a7f874c0d70b8c2, type: 3}
   Coin: {fileID: 8850797187182654025, guid: b60384feeecd94b4cbb136117f0fd03a, type: 3}
+  SecondClassDropCount: 1
+  FirstClassDropCount: 3
+  GrenadeClassDropCount: 2
   DropChance: 0.1
   Section: 0
   SectionManager: {fileID: 0}
@@ -2931,12 +2940,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 1
   IsCriticalPoint: 0
+  IsMetal: 0
   destructible: 1
   Thoughness: 0
   partMaxHealth: 40
   partHealth: 0
   BloodPoint: {fileID: 2699595962671768689}
   Blood: {fileID: 501394236874677983, guid: 6080c47d52237a44b9c8aaaf4e9624b6, type: 3}
+  ExtraEffect: 0
+  ExtraDestroyEffect: {fileID: 0}
   BloodSplash: {fileID: 1722730097017444589, guid: 1093cb16752f88c41874197b764f108a, type: 3}
   TextObject: {fileID: 629695357997126060, guid: 3f377e8f8e67dff409d796e5022f10d1, type: 3}
   Text: DISSECT
@@ -3516,12 +3528,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 1
   IsCriticalPoint: 0
+  IsMetal: 0
   destructible: 0
   Thoughness: 0
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 0}
   Blood: {fileID: 0}
+  ExtraEffect: 0
+  ExtraDestroyEffect: {fileID: 0}
   BloodSplash: {fileID: 1722730097017444589, guid: 1093cb16752f88c41874197b764f108a, type: 3}
   TextObject: {fileID: 0}
   Text: 
@@ -3979,12 +3994,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 1
   IsCriticalPoint: 0
+  IsMetal: 0
   destructible: 0
   Thoughness: 0
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 0}
   Blood: {fileID: 0}
+  ExtraEffect: 0
+  ExtraDestroyEffect: {fileID: 0}
   BloodSplash: {fileID: 1722730097017444589, guid: 1093cb16752f88c41874197b764f108a, type: 3}
   TextObject: {fileID: 0}
   Text: 

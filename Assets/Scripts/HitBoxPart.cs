@@ -8,6 +8,7 @@ public class HitBoxPart : MonoBehaviour
     [Header("HeadShotDamage")]
     public float damageMultiplier = 2.0f;
     public bool IsCriticalPoint=false;
+    public bool IsMetal;
 
     [Header("PartHealth")]
     public bool destructible = false;
@@ -18,6 +19,8 @@ public class HitBoxPart : MonoBehaviour
     [Header("PartDestrcutionEffect")]
     public Transform BloodPoint;
     public GameObject Blood;
+    public bool ExtraEffect;
+    public GameObject ExtraDestroyEffect;
     public GameObject BloodSplash;
     public GameObject TextObject;
     public string Text;
@@ -105,7 +108,11 @@ public class HitBoxPart : MonoBehaviour
         }
 
         GameObject bloodEffect = Instantiate(Blood, spawnPos, spawnRot);
-      
+
+        if (ExtraEffect)
+        {
+            GameObject extraEffect = Instantiate(ExtraDestroyEffect, spawnPos, spawnRot);
+        }
 
         GameObject bloodSplash = Instantiate(BloodSplash, spawnPos, spawnRot);
 

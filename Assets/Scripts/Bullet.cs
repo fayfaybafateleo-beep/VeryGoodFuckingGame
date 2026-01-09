@@ -92,10 +92,20 @@ public class Bullet : MonoBehaviour
             }
             if (hb.Thoughness <= PenatrateLevel)
             {
-                GameObject hitEffect2 = Instantiate(HitEffect2, hit.point + hit.normal * 0.1f, Quaternion.LookRotation(hit.normal));
-                GameObject hitEffect3 = Instantiate(HitEffect3, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
                
-                if (enemy && Random.value <= ExtraEffectChance)
+
+                if (hb.IsMetal)
+                {
+                    GameObject hitEffect2 = Instantiate(HitEffect, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
+                    hitEffect2.transform.SetParent(collision.transform);
+                }
+                else
+                {
+                    GameObject hitEffect2 = Instantiate(HitEffect2, hit.point + hit.normal * 0.1f, Quaternion.LookRotation(hit.normal));
+                    GameObject hitEffect3 = Instantiate(HitEffect3, hit.point + hit.normal * 0.001f, Quaternion.LookRotation(hit.normal));
+                }
+
+                if (enemy && Random.value <= ExtraEffectChance && hb.IsMetal==false)
                 {
                    
                         GameObject extraHitEffect = Instantiate(ExtraHitEffect, hit.point + hit.normal * 0.1f, Quaternion.LookRotation(hit.normal));

@@ -87,6 +87,9 @@ public class EnemyHealth : MonoBehaviour
     public List<GameObject> FirstClass;
     public List<GameObject> GrenadeClass;
     public GameObject Coin;
+    public int SecondClassDropCount=1;
+    public int FirstClassDropCount = 1;
+    public int GrenadeClassDropCount = 1;
     public float DropChance;
 
     [Header("Sections")]
@@ -430,7 +433,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void KillDrop()
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < SecondClassDropCount; i++)
         {
             if (Random.value > DropChance)
                 continue; 
@@ -453,7 +456,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void GrenadeDrop()
     {
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < GrenadeClassDropCount; i++)
         {
 
             int index2 = Random.Range(0, GrenadeClass.Count);
@@ -475,7 +478,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void GloryKillDrop()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < FirstClassDropCount; i++)
         {
             //  FirstClassDrop
             int index1 = Random.Range(0, FirstClass.Count);
@@ -492,9 +495,13 @@ public class EnemyHealth : MonoBehaviour
                 rb1.AddTorque(Random.onUnitSphere * 0.5f, ForceMode.Impulse);
             }
 
-            //  ScondClassDrop
+            
+        }
+        //  ScondClassDrop
+        for (int i = 0; i < SecondClassDropCount; i++)
+        {
             int index2 = Random.Range(0, SecondClass.Count);
-            GameObject prefab2 = SecondClass[index2]; 
+            GameObject prefab2 = SecondClass[index2];
 
             GameObject inst2 = Instantiate(prefab2, transform.position, Quaternion.identity);
 
@@ -506,9 +513,10 @@ public class EnemyHealth : MonoBehaviour
                 rb2.AddForce(randomDir2 * randomForce2, ForceMode.Impulse);
                 rb2.AddTorque(Random.onUnitSphere * 0.5f, ForceMode.Impulse);
             }
+           
         }
-        InstanCoin(6);
 
+        InstanCoin(6);
     }
 
     public void InstanCoin(int multipulier)
