@@ -28,6 +28,7 @@ public class BrutalSystem : MonoBehaviour
     public float SupplyCooldown = 3f;   
 
     public int DropsCount = 3;
+    public int DropsCount2 = 8;
     public GameObject Player;
 
     [Header("Skill UI")]
@@ -116,12 +117,12 @@ public class BrutalSystem : MonoBehaviour
 
     void Skill1Effect(GameObject drop1, GameObject drop2)
     {
-        SpawnDrops(drop1,drop2);
+        SpawnDrops(drop1,drop2,DropsCount);
     }
 
     void Skill2Effect(GameObject drop1, GameObject drop2)
     {
-        SpawnDrops(drop1, drop2);
+        SpawnDrops(drop1, drop2, DropsCount2);
     }
 
     void Skill3Effect()
@@ -131,11 +132,11 @@ public class BrutalSystem : MonoBehaviour
     }
 
 
-    void SpawnDrops(GameObject drop1, GameObject drop2)
+    void SpawnDrops(GameObject drop1, GameObject drop2,int dropCount)
     {
         if (Player == null) return;
 
-        for (int i = 0; i < DropsCount; i++)
+        for (int i = 0; i < dropCount; i++)
         {
             Vector3 offset = new Vector3(
                 Random.Range(-0.5f, 0.5f),
