@@ -100,10 +100,14 @@ public class BrutalSystem : MonoBehaviour
     void TryCastSkill(int cost, int need, System.Action skillAction)
     {
         if (SupplyCooldownTimer > 0f)
+        {
             return;
-
+        }
         if (CurrentBrutal < need || CurrentBrutal < cost)
+        {
             return;
+        }
+            
 
         skillAction?.Invoke();
 
@@ -161,14 +165,11 @@ public class BrutalSystem : MonoBehaviour
         bool canSkill2 = SupplyCooldownTimer <= 0f && CurrentBrutal >= BrutalCost2 && CurrentBrutal >= BrutalNeed2;
         bool canSkill3 = SupplyCooldownTimer <= 0f && CurrentBrutal >= BrutalCost3 && CurrentBrutal >= BrutalNeed3;
 
-        if (SkillIcon1 != null)
-            SkillIcon1.color = canSkill1 ? ReadyColor : OriginalColor1;
+        if (SkillIcon1 != null)SkillIcon1.color = canSkill1 ? ReadyColor : OriginalColor1;
 
-        if (SkillIcon2 != null)
-            SkillIcon2.color = canSkill2 ? ReadyColor : OriginalColor2;
+        if (SkillIcon2 != null)SkillIcon2.color = canSkill2 ? ReadyColor : OriginalColor2;
 
-        if (SkillIcon3 != null)
-            SkillIcon3.color = canSkill3 ? ReadyColor : OriginalColor3;
+        if (SkillIcon3 != null) SkillIcon3.color = canSkill3 ? ReadyColor : OriginalColor3;
     }
 
 }

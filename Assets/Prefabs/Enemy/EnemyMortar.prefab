@@ -2401,6 +2401,11 @@ MonoBehaviour:
   ApplyToFlankRadius: 1
   ApplyToFlankRefresh: 1
   ApplyToMOA: 1
+  AudioSource: {fileID: 0}
+  FireClips:
+  - {fileID: 8300000, guid: 091edd783b1c0ef4e9c43e916c1a8069, type: 3}
+  FirePitchMin: 0.75
+  FirePitchMax: 1.05
   IsDummy: 0
 --- !u!82 &5144821902404702106
 AudioSource:
@@ -2421,7 +2426,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 0
+  Priority: 178
   DopplerLevel: 1
   MinDistance: 2
   MaxDistance: 50

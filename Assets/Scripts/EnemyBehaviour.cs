@@ -784,11 +784,10 @@ public class EnemyBehaviour : MonoBehaviour
         {
             return;
         }
-        float originalPitch = AudioSource.pitch;
+        
         AudioSource.pitch = Random.Range(FirePitchMin, FirePitchMax);
 
         AudioSource.PlayOneShot(clip);
 
-        AudioSource.pitch = originalPitch;
     }
 }

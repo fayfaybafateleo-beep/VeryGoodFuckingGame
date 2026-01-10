@@ -455,7 +455,8 @@ MonoBehaviour:
   ShellPoint: {fileID: 3040102728354519805}
   AudioSource: {fileID: 5343288007197257805}
   ClipShooting: {fileID: 8300000, guid: d486fa72777463746a4f7cb9c436f236, type: 3}
-  ClipCocking: {fileID: 8300000, guid: d486fa72777463746a4f7cb9c436f236, type: 3}
+  FirePitchMin: 0.85
+  FirePitchMax: 1.05
   Impulse: {fileID: 495336969908398784}
   Recoil: {fileID: 0}
   RecoilStrength: 4
@@ -483,7 +484,7 @@ MonoBehaviour:
   ReloadKey: 114
   ReloadText: {fileID: 0}
   InitialCapasityRate: 1
-  MaxCapasity: 8
+  MaxCapasity: 16
   CurrentCapasity: 0
   AmmoConvertRate: 2
   BM: {fileID: 0}
@@ -651,7 +652,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 9
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

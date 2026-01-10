@@ -3282,7 +3282,8 @@ MonoBehaviour:
   ShellPoint: {fileID: 7711691061333343623}
   AudioSource: {fileID: 1227090237746764954}
   ClipShooting: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
-  ClipCocking: {fileID: 8300000, guid: 6c58abe3614e42c499d28825cd601154, type: 3}
+  FirePitchMin: 0.85
+  FirePitchMax: 1.05
   Impulse: {fileID: 8079157214226115878}
   Recoil: {fileID: 0}
   RecoilStrength: 1
@@ -3405,27 +3406,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee380b713a28c8f45b835a0d5b11db89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionTarget: {fileID: 8527786742178356590}
-  rotationTarget: {fileID: 8527786742178356590}
-  kickBackDistance: 0.2
-  kickPitchYaw: {x: -20, y: 0.4}
-  kickRandomYawSignChance: 0.3
-  posSpringStiffness: 400
-  rotSpringStiffness: 300
-  dampingRatioPos: 1.1
-  dampingRatioRot: 1.15
-  noisePosAmp: 0.03
-  noiseRotAmp: 0.03
-  noiseFrequency: 18
-  noiseAxesPos: {x: 1, y: 1, z: 0.2}
-  noiseAxesRot: {x: 0.4, y: 0.6, z: 1}
-  shakeHoldTime: 0.03
-  shakeFadeTime: 0.09
-  enableIdleNoise: 0
-  idleNoisePosAmp: 0.0006
-  idleNoiseRotAmp: 0.12
-  idleNoiseFrequency: 6
-  useUnscaledTime: 0
+  PositionTarget: {fileID: 8527786742178356590}
+  RotationTarget: {fileID: 8527786742178356590}
+  RecoilBackDistance: 0.2
+  RecoilPitchYaw: {x: -20, y: 0.4}
+  RandomYawChance: 0.3
+  PositionReturnSpeed: 400
+  RotationReturnSpeed: 300
+  PositionDamping: 1.1
+  RotationDamping: 1.15
+  FirePositionShake: 0.03
+  FireRotationShake: 0.03
+  FireShakeFrequency: 18
+  PositionShakeAxis: {x: 1, y: 1, z: 0.2}
+  RotationShakeAxis: {x: 0.4, y: 0.6, z: 1}
+  ShakeHoldTime: 0.03
+  ShakeFadeTime: 0.09
+  EnableIdleShake: 0
+  IdlePositionShake: 0.0006
+  IdleRotationShake: 0.12
+  IdleShakeFrequency: 6
+  IgnoreTimeScale: 0
 --- !u!114 &4658939131199449416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3438,27 +3439,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d1bc8ba0aa39c041bf4f0a0314e3ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionTarget: {fileID: 8675910104650657520}
-  rotationTarget: {fileID: 8675910104650657520}
-  walkFrequency: 8
-  walkPosAmplitude: {x: -0.025, y: -0.3, z: -0.25}
-  walkRotAmplitude: {x: -0.25, y: 1, z: -15}
-  blendSmoothTime: 0.12
-  referenceMoveSpeed: 4
-  adsWeight: 0.1
-  idlePosAmplitude: {x: 0.0015, y: 0.003, z: 0.001}
-  idleRotAmplitude: {x: 0.35, y: 0.45, z: 0.2}
-  idleFrequency: 2.2
-  stopSwayOnFire: 1
-  fireSuppressTime: 0.12
-  fireRecoverTime: 0.1
-  characterController: {fileID: 0}
-  externalMoveSpeed: 0
-  externalGrounded: 1
-  lowerDistance: 1
-  animPitchDeg: -8
-  lowerDuration: 0.5
-  raiseDuration: 0.2
+  PositionTarget: {fileID: 8675910104650657520}
+  RotationTarget: {fileID: 8675910104650657520}
+  WalkFrequency: 8
+  WalkPosAmplitude: {x: -0.025, y: -0.3, z: -0.25}
+  WalkRotAmplitude: {x: -0.25, y: 1, z: -15}
+  BlendSmoothTime: 0.12
+  ReferenceMoveSpeed: 4
+  AdsWeight: 0.1
+  IdlePosAmplitude: {x: 0.0015, y: 0.003, z: 0.001}
+  IdleRotAmplitude: {x: 0.35, y: 0.45, z: 0.2}
+  IdleFrequency: 2.2
+  StopSwayOnFire: 1
+  FireSuppressTime: 0.12
+  FireRecoverTime: 0.1
+  CharacterController: {fileID: 0}
+  ExternalMoveSpeed: 0
+  ExternalGrounded: 1
+  LowerDistance: 1
+  AnimPitchDeg: -8
+  LowerDuration: 0.5
+  RaiseDuration: 0.2
 --- !u!82 &1227090237746764954
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3478,7 +3479,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 9
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

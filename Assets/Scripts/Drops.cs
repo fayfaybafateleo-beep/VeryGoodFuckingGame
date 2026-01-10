@@ -26,7 +26,7 @@ public class Drops : MonoBehaviour
     void Start()
     {
         WM = GameObject.FindGameObjectWithTag("WeaponManager");
-        WMScript = WM.GetComponent<WeaponManager>();
+        WMScript = WM.GetComponent<WeaponManager>();    
 
         Player= GameObject.FindGameObjectWithTag("Player");
         PD=Player.GetComponent<PlayerData>();

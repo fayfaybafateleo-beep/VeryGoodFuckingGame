@@ -57,7 +57,8 @@ public class GunScript : MonoBehaviour
     [Header("Sound")]
     public AudioSource AudioSource;
     public AudioClip ClipShooting;
-    public AudioClip ClipCocking;
+    public float FirePitchMin = 0.85f;
+    public float FirePitchMax = 1.05f;
 
     [Header("Screenshake")]
     public CinemachineImpulseSource Impulse;
@@ -139,6 +140,8 @@ public class GunScript : MonoBehaviour
         Recoil = GameObject.FindGameObjectWithTag("Recoil").GetComponent<Test>();
 
         DefaultMoveSpeedMultiplier =1;
+
+        AudioSource = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -375,7 +378,8 @@ public class GunScript : MonoBehaviour
         }
 
         // Sound
-        AudioSource.PlayOneShot(ClipShooting);
+        FireSound();
+
         // Fire
         WeaponWagingScript.SuppressSwayOnFire();
         //SlugCount
@@ -453,5 +457,14 @@ public class GunScript : MonoBehaviour
 
         IsFiringNow = false;
         BM.SpeedModificator = DefaultMoveSpeedMultiplier; 
+    }
+    public void FireSound()
+    {
+
+        AudioSource.pitch = Random.Range(FirePitchMin, FirePitchMax);
+
+        AudioSource.PlayOneShot(ClipShooting);
+
+       
     }
 }

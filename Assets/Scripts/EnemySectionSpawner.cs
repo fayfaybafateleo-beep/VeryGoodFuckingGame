@@ -100,6 +100,8 @@ public class EnemySectionSpawner : MonoBehaviour
     public void ResetState()
     {
         LocalSpawnCount = 0;
+        LocalEliteCount = 0;
+        LocalMiniBossCount = 0;
         SpawnTimer = 0f;
      
     }
@@ -107,7 +109,7 @@ public class EnemySectionSpawner : MonoBehaviour
     public GameObject PickPrefabByDanger()
     {
         //MiniBoss
-        if (MiniBossList.Count > 0 && LocalMiniBossCount < MaxMiniBossInThisSection)
+        if (MiniBossList.Count > 0 && LocalMiniBossCount < MaxMiniBossInThisSection && LevelDangerLevel>=7)
         {
             float miniBossChance = Mathf.Clamp01(MiniBossChance.Evaluate(DangerLevel.GameDangerLevel));
             if (Random.value < miniBossChance)
@@ -118,7 +120,7 @@ public class EnemySectionSpawner : MonoBehaviour
         }
 
         // Elite
-        if (EliteList.Count > 0 && LocalEliteCount < MaxEliteInThisSection)
+        if (EliteList.Count > 0 && LocalEliteCount < MaxEliteInThisSection && LevelDangerLevel >= 4)
         {
             float eliteChance = Mathf.Clamp01(EliteChance.Evaluate(DangerLevel.GameDangerLevel));
             if (Random.value < eliteChance)

@@ -13,6 +13,10 @@ public class MissionSelect : MonoBehaviour
     [Header(" WeaponManager")]
     public WeaponManager WM;
 
+    [Header("Player")]
+    public GameObject Player;
+    public PlayerHealth PH;
+
     [Header(" InputSettings")]
     public KeyCode Key5 = KeyCode.V;
     public KeyCode Key6 = KeyCode.C;
@@ -45,6 +49,9 @@ public class MissionSelect : MonoBehaviour
         CurrentLevel = null;
 
         CP = Compass.GetComponent<Compass>();
+
+        Player = GameObject.FindGameObjectWithTag("Player");
+        PH = Player.GetComponent<PlayerHealth>();
     }
 
     // Update is called once per frame
@@ -72,7 +79,7 @@ public class MissionSelect : MonoBehaviour
 
             //Info
         MissionName.text = Levels[CurrentInedx].GetComponent<GameLevelControl>().LevelName;
-        MissionData.text = Levels[CurrentInedx].GetComponent<GameLevelControl>().HazardLevel.ToString();
+        MissionData.text = "Number of Hostiles:  "+Levels[CurrentInedx].GetComponent<GameLevelControl>().HazardLevel.ToString();
         DangerLevelText.text ="Danger Level: " +DangerLevel.GameDangerLevel.ToString();
 
         if (Input.GetKeyDown(Key7) && InTrigger && IsMissionSelected==false)
@@ -100,6 +107,9 @@ public class MissionSelect : MonoBehaviour
             if (IsDangerLevelRise == false)
             {
                 DangerLevel.GameDangerLevel += 1;
+                PH.CurrentHealth += PH.MaxHealth;
+                PH.CurrentArmuor += PH.MaxArmuor;
+               
                 IsDangerLevelRise = true;
             }
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7532165003616343326}
   - component: {fileID: 3127206204616807605}
   - component: {fileID: 2361703449241076581}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: MortarShellOutRing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 7042717675539495504}
   - component: {fileID: 5436360948505263694}
   - component: {fileID: 4746234783677667058}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: MortarShellInring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +182,7 @@ GameObject:
   m_Component:
   - component: {fileID: 972619171804260471}
   - component: {fileID: 4031277976143007592}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: MortarShell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +224,7 @@ MonoBehaviour:
   MaxRadius: 8
   groundMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2049
   RayStartHeight: 30
   RaycastDistance: 100
   GroundOffset: 0.02

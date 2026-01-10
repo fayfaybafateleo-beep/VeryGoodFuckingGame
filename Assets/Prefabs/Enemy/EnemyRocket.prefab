@@ -2534,7 +2534,8 @@ MonoBehaviour:
   FlyingDeathDuration: 1.5
   FlyingDeathForce: 15
   FlyingDeathTorque: 10
-  ParticleList: []
+  ParticleList:
+  - {fileID: 0}
   TSF: {fileID: 0}
   Icon: {fileID: 8192328642174032260}
 --- !u!95 &5161086026593443594
@@ -2715,6 +2716,11 @@ MonoBehaviour:
   ApplyToFlankRadius: 1
   ApplyToFlankRefresh: 0
   ApplyToMOA: 0
+  AudioSource: {fileID: 0}
+  FireClips:
+  - {fileID: 8300000, guid: 0fa31a84e09f328438c5a357c2c24b70, type: 3}
+  FirePitchMin: 0.75
+  FirePitchMax: 1.05
   IsDummy: 0
 --- !u!82 &5144821902404702106
 AudioSource:
@@ -2735,7 +2741,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 0
+  Priority: 178
   DopplerLevel: 1
   MinDistance: 2
   MaxDistance: 50
