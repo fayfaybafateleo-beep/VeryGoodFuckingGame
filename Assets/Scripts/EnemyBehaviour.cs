@@ -151,7 +151,11 @@ public class EnemyBehaviour : MonoBehaviour
     public bool ApplyToFlankRefresh = false; 
     public bool ApplyToMOA = false;
 
-
+    [Header("Audio")]
+    public AudioSource AudioSource;
+    public List<AudioClip> FireClips = new List<AudioClip>();
+    public float FirePitchMin = 0.75f;
+    public float FirePitchMax = 1.05f;
 
     public bool IsDummy;
     void Start()
@@ -181,6 +185,8 @@ public class EnemyBehaviour : MonoBehaviour
         {
             IndividualFactor = 1f;
         }
+
+        AudioSource = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -561,6 +567,9 @@ public class EnemyBehaviour : MonoBehaviour
         {
             EnemyAnimator.SetTrigger("Fire");
 
+            //Sound
+            FireSound();
+
             for (int i = 0; i < SlugCount; i++)
             {
                 Vector2 c = Random.insideUnitCircle;
@@ -761,5 +770,25 @@ public class EnemyBehaviour : MonoBehaviour
         if (los) score += 100000f;
 
         return score;
+    }
+
+    public void FireSound()
+    {
+        if (FireClips.Count == 0)
+        {
+            return;
+        }
+
+        AudioClip clip = FireClips[Random.Range(0, FireClips.Count)];
+        if (clip == null)
+        {
+            return;
+        }
+        float originalPitch = AudioSource.pitch;
+        AudioSource.pitch = Random.Range(FirePitchMin, FirePitchMax);
+
+        AudioSource.PlayOneShot(clip);
+
+        AudioSource.pitch = originalPitch;
     }
 }

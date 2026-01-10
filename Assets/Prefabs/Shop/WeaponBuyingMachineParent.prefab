@@ -1073,12 +1073,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 0
   IsCriticalPoint: 0
+  IsMetal: 0
   destructible: 0
   Thoughness: 1000
   partMaxHealth: 10000
   partHealth: 10000
   BloodPoint: {fileID: 0}
   Blood: {fileID: 0}
+  ExtraEffect: 0
+  ExtraDestroyEffect: {fileID: 0}
   BloodSplash: {fileID: 0}
   TextObject: {fileID: 0}
   Text: 
@@ -1216,12 +1219,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 2
   IsCriticalPoint: 0
+  IsMetal: 0
   destructible: 0
   Thoughness: 10000
   partMaxHealth: 20
   partHealth: 0
   BloodPoint: {fileID: 0}
   Blood: {fileID: 0}
+  ExtraEffect: 0
+  ExtraDestroyEffect: {fileID: 0}
   BloodSplash: {fileID: 0}
   TextObject: {fileID: 0}
   Text: 
@@ -2001,11 +2007,15 @@ MonoBehaviour:
   - {fileID: 7091615679065204936, guid: eb993aaaeae08394eb30edaf748abba4, type: 3}
   - {fileID: 2969789118428629143, guid: 573e66d6700daa449965270a9f37cc12, type: 3}
   - {fileID: 7663199390295935275, guid: 0c957d51cf9082644a28267d5326e076, type: 3}
+  - {fileID: 1893658384926547071, guid: 8a312747018bbb64094b06e738e5a1da, type: 3}
   - {fileID: 8252787098904650708, guid: 94f7e68595af7964f959a0f1cbccd6e3, type: 3}
   - {fileID: 6817179556975638349, guid: dd93294966ba20d4f9088ec2a074ef2d, type: 3}
   - {fileID: 8494665456162348921, guid: 7141b1c048029bd4fb81fb15fca3022f, type: 3}
-  - {fileID: 5914898984465226578, guid: cd19ee0c2d0df9345a91258e7e63739e, type: 3}
+  - {fileID: 7649644272090429413, guid: cd3ddd9bf0a598745a13e01994c65c61, type: 3}
+  - {fileID: 6336084583645716903, guid: aa6204e8f6af8e94bafe12be3b8e5bbc, type: 3}
+  - {fileID: 756794448211500277, guid: 3fbc35f6a22115e4bbaaacea591ab806, type: 3}
   - {fileID: 3271866396862045891, guid: 1e78654607135c641ba59888e9b3c64f, type: 3}
+  - {fileID: 5914898984465226578, guid: cd19ee0c2d0df9345a91258e7e63739e, type: 3}
   - {fileID: 8114416893616632136, guid: bf7e79d864ca1fa42879ce1bcf5d9ca7, type: 3}
   - {fileID: 3382578996612646959, guid: a51f57fe9b2d8e24285f7ff7c1c18a48, type: 3}
   - {fileID: 1464926010860024187, guid: 9e489255b43e2a74a8196d92064be7c2, type: 3}
