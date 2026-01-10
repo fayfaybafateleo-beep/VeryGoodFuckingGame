@@ -23,6 +23,8 @@ public class Explosive : MonoBehaviour
     [Range(0, 1f)]
     public float ExtraEffectChance = 0.3f;
 
+    [Header("Detection")]
+    public LayerMask EnemyLayer;
     public string EnemyTag = "Enemy";       
     public CrossHairGenral HitMarkParent;   
     public GameObject HitMark;              
@@ -76,11 +78,11 @@ public class Explosive : MonoBehaviour
             }
                
         }
-        var cols = Physics.OverlapSphere(center, Radius, ~0, TriggerMode);
+        var cols = Physics.OverlapSphere(center, Radius, EnemyLayer, TriggerMode);
 
         HashSet<EnemyHealth> nonDestructibleDamaged = new HashSet<EnemyHealth>();
 
-        foreach (var col in Physics.OverlapSphere(center, Radius, ~0, TriggerMode))
+        foreach (var col in cols)
         {
             var hb = col.GetComponent<HitBoxPart>();
             var enemy = hb ? hb.Owner : col.GetComponentInParent<EnemyHealth>();

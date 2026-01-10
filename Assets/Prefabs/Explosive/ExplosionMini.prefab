@@ -9849,14 +9849,17 @@ MonoBehaviour:
   Damage: 10
   Radius: 1.5
   PenetrateLevel: 3
-  ExplosionForce: 8
-  UpwardsModifier: 0.5
+  GunType: 
+  ExplosionForce: 0.5
+  UpwardsModifier: 0.1
   ForceAffectsMask:
     serializedVersion: 2
     m_Bits: 256
-  ScorchDecal: {fileID: 0}
   HitEffect: {fileID: 4093106789292649546, guid: ad866b53836cde94984736a78cd59c35, type: 3}
   ExtraEffectChance: 0.3
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
   EnemyTag: Enemy
   HitMarkParent: {fileID: 0}
   HitMark: {fileID: 0}
