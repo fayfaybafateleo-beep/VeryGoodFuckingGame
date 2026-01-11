@@ -45,6 +45,18 @@ public class CarControl : MonoBehaviour
     public Color TargetColor = Color.green;
     public Color BaseColor;
 
+    [Header("Engine Audio")]
+    public AudioSource IdleSource;
+    public AudioSource DriveSource;
+    public AudioSource BoostSource;
+
+    public float IdleSpeed = 0.8f; 
+    public float FadeSpeed = 6f;           
+    public float PitchMin = 0.9f;
+    public float PitchMax = 1.6f;
+    public AnimationCurve PitchBySpeed = AnimationCurve.EaseInOut(0f, 0.95f, 1f, 1.5f);
+
+
     MaterialPropertyBlock _mpb;
     void Awake()
     {
@@ -63,6 +75,19 @@ public class CarControl : MonoBehaviour
         Renderers[0].GetPropertyBlock(_mpb);
         BaseColor = Renderers[0].sharedMaterial.GetColor("_BaseColor");
         SpeedLine.Stop();
+
+        if (IdleSource)
+        {
+            IdleSource.loop = true; IdleSource.Play(); IdleSource.volume = 0f; 
+        }
+        if (DriveSource) 
+        { 
+            DriveSource.loop = true; DriveSource.Play(); DriveSource.volume = 0f;
+        }
+        if (BoostSource) 
+        { 
+            BoostSource.loop = true; BoostSource.Play(); BoostSource.volume = 0f; 
+        }
     }
 
     void FixedUpdate()
@@ -114,7 +139,8 @@ public class CarControl : MonoBehaviour
                 SendBoostImpulse();
             }
 
-
+            //Audio
+            UpdateEngineAudio(boosting, curMaxSpeed);
 
             Vector3 v = RB.linearVelocity;
             Vector3 right = transform.right;
@@ -150,7 +176,8 @@ public class CarControl : MonoBehaviour
         {
             RB.linearDamping = Mathf.MoveTowards(RB.linearDamping, 200, 40f * Time.deltaTime);
         }
-        
+
+   
     }
 
     public void ReGenerateCar()
@@ -184,5 +211,43 @@ public class CarControl : MonoBehaviour
             _mpb.SetColor("_BaseColor", BaseColor);
             r.SetPropertyBlock(_mpb);
         }
+    }
+    void UpdateEngineAudio(bool boosting, float curMaxSpeed)
+    {
+        if (!IdleSource || !DriveSource || !BoostSource) return;
+
+        // GetSpeed
+        float speed = RB.linearVelocity.magnitude;
+
+        // IS Forward/BackWard
+        float move = Mathf.Abs(Input.GetAxis("Vertical"));
+        bool hasThrottle = move > 0.05f;
+
+        // Lowspeed Stop Detection
+        bool isIdle = speed < IdleSpeed && !boosting;
+
+        if (!hasThrottle && speed < (IdleSpeed * 1.5f) && !boosting)
+        {
+            isIdle = true;
+        }
+           
+        float targetIdle = isIdle ? 1f : 0f;
+        float targetDrive = (!isIdle && !boosting) ? 1f : 0f;
+        float targetBoost = boosting ? 1f : 0f;
+
+        //Fade in/Out
+        float t = FadeSpeed * Time.fixedDeltaTime;
+        IdleSource.volume = Mathf.MoveTowards(IdleSource.volume, targetIdle, t);
+        DriveSource.volume = Mathf.MoveTowards(DriveSource.volume, targetDrive, t);
+        BoostSource.volume = Mathf.MoveTowards(BoostSource.volume, targetBoost, t);
+
+        //Pitch Change By Speed
+        float speed01 = Mathf.Clamp01(speed / Mathf.Max(1f, curMaxSpeed));
+        float pitch = Mathf.Lerp(PitchMin, PitchMax, PitchBySpeed.Evaluate(speed01));
+
+        //Difference
+        IdleSource.pitch = Mathf.Lerp(0.95f, 1.05f, speed01 * 0.3f);
+        DriveSource.pitch = pitch;
+        BoostSource.pitch = pitch + 0.12f;
     }
 }

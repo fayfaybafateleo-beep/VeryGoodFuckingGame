@@ -88,7 +88,7 @@ public class PlayerGetInCar : MonoBehaviour
         if (distance <= MountDistance && IsMounted == false)
         {
             GetInText.SetActive(true);
-            FadeTimer = FadeDuration;  // 重置淡出计时器，让它保持显示
+            FadeTimer = FadeDuration;  
         }
 
         //Fadeout
