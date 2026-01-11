@@ -25,10 +25,15 @@ public class SectorDoor : MonoBehaviour
 
     [Header("StartGate")]
     public bool IsStart;
+
+    [Header("Sound")]
+    public AudioSource Asource;
+    public AudioClip Open;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        Asource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -96,5 +101,10 @@ public class SectorDoor : MonoBehaviour
         }
 
         GateAnimator.SetTrigger("Reset");
+    }
+
+    public void GateOpenSound()
+    {
+        Asource.PlayOneShot(Open);
     }
 }

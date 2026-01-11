@@ -22,6 +22,10 @@ public class TransparentView : MonoBehaviour
     [Header("Player")]
     public PlayerHealth PH;
     public PlayerGetInCar PIC;
+
+    [Header("ScopeSound")]
+    public AudioSource ASource;
+    public AudioClip Scope;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -70,6 +74,7 @@ public class TransparentView : MonoBehaviour
     public void EnableCam()
     {
         Cam.SetActive(true);
+       
     }
 
     public void DisableCam()
@@ -83,5 +88,9 @@ public class TransparentView : MonoBehaviour
     public void UpShake()
     {
         Source.GenerateImpulse(-1);
+    }
+    public void ScopeSound()
+    {
+        ASource.PlayOneShot(Scope);
     }
 }

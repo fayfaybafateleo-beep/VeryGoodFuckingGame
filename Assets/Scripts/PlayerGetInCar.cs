@@ -52,6 +52,9 @@ public class PlayerGetInCar : MonoBehaviour
         WM = GameObject.FindGameObjectWithTag("WeaponManager").GetComponent<WeaponManager>();
 
         GetInText.SetActive(false);
+
+      //  if(CG==null) CG = GameObject.FindGameObjectWithTag("GetIn").GetComponent<CanvasGroup>();
+
     }
 
     public void Update()

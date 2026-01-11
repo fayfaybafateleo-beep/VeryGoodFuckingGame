@@ -4,29 +4,34 @@ using TMPro;
 
 public class WeaponSeller : MonoBehaviour
 {
-    [Header(" WeaponList")]
+    [Header("WeaponList")]
     public List<GameObject> AllWeaponList;
     public int CurrentInedx;
 
-    [Header(" WeaponManager")]
+    [Header("WeaponManager")]
     public WeaponManager WM;
 
-    [Header(" WeaponInfo")]
+    [Header("WeaponInfo")]
     public TextMeshPro NameText;
     public TextMeshPro NameText2;
     public TextMeshPro DataText;
     public TextMeshPro MoneyText;
 
-    [Header(" InputSettings")]
+    [Header("InputSettings")]
     public KeyCode Key5 = KeyCode.N;
     public KeyCode Key6 = KeyCode.M;
     public KeyCode Key7 = KeyCode.B;
     public bool InTrigger;
 
-    [Header(" Player")]
+    [Header("Player")]
     public GameObject Player;
     public PlayerData PD;
     public int CurrentPlayerMoney;
+
+    [Header("Sound")]
+    public AudioSource SoundSource;
+    public AudioClip Buttom;
+    public AudioClip Confirm;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -53,9 +58,10 @@ public class WeaponSeller : MonoBehaviour
         MoneyText.text = AllWeaponList[CurrentInedx].GetComponent<GunScript>().Cost.ToString() + " $";
 
         //ChoosingGun
-        if (Input.GetKeyDown(Key5) && InTrigger) CurrentInedx--;
+        if (Input.GetKeyDown(Key5) && InTrigger) { CurrentInedx--; SoundSource.PlayOneShot(Buttom); }
 
-        if (Input.GetKeyDown(Key6) && InTrigger) CurrentInedx ++;
+
+        if (Input.GetKeyDown(Key6) && InTrigger) { CurrentInedx++; SoundSource.PlayOneShot(Buttom); }
 
         if (CurrentInedx == AllWeaponList.Count) CurrentInedx = 0;
 
@@ -63,9 +69,13 @@ public class WeaponSeller : MonoBehaviour
 
         if (Input.GetKeyDown(Key7) && InTrigger)
         {
-            if(CurrentPlayerMoney>= AllWeaponList[CurrentInedx].GetComponent<GunScript>().Cost)
+           
+
+            if (CurrentPlayerMoney>= AllWeaponList[CurrentInedx].GetComponent<GunScript>().Cost)
             {
                 GameObject purchased = AllWeaponList[CurrentInedx];
+
+                SoundSource.PlayOneShot(Confirm);
 
                 if (purchased != null)
                 {
@@ -82,7 +92,7 @@ public class WeaponSeller : MonoBehaviour
                     }
                 }
             }
-           
+          
         }
        
     }

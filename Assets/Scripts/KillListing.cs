@@ -33,11 +33,7 @@ public class KillListing : MonoBehaviour
         {
             Timer -= Time.deltaTime;
             //Shanking
-            TextBoject.transform.localPosition = OriginalPos + new Vector3(
-                Random.Range(-Intensity, Intensity),
-                Random.Range(-Intensity, Intensity),
-                0f
-            );
+            TextBoject.transform.localPosition = OriginalPos + new Vector3( Random.Range(-Intensity, Intensity), Random.Range(-Intensity, Intensity),  0f );
         }
         else
         {

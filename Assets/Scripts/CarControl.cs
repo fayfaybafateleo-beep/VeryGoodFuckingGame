@@ -175,6 +175,11 @@ public class CarControl : MonoBehaviour
         else
         {
             RB.linearDamping = Mathf.MoveTowards(RB.linearDamping, 200, 40f * Time.deltaTime);
+
+            //ShutDown
+            if (IdleSource) IdleSource.volume = Mathf.MoveTowards(IdleSource.volume, 0f, FadeSpeed * Time.deltaTime);
+            if (DriveSource) DriveSource.volume = Mathf.MoveTowards(DriveSource.volume, 0f, FadeSpeed * Time.deltaTime);
+            if (BoostSource) BoostSource.volume = Mathf.MoveTowards(BoostSource.volume, 0f, FadeSpeed * Time.deltaTime);
         }
 
    
@@ -231,7 +236,7 @@ public class CarControl : MonoBehaviour
             isIdle = true;
         }
            
-        float targetIdle = isIdle ? 1f : 0f;
+        float targetIdle = isIdle ? 0.3f : 0f;
         float targetDrive = (!isIdle && !boosting) ? 1f : 0f;
         float targetBoost = boosting ? 1f : 0f;
 

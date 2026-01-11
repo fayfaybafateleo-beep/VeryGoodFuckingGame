@@ -43,6 +43,11 @@ public class MissionSelect : MonoBehaviour
     [Header("DangerLevel")]
     public DangerLevel DL;
     public bool IsDangerLevelRise;
+
+    [Header("Sound")]
+    public AudioSource SoundSource;
+    public AudioClip Buttom;
+
     void Start()
     {
         WM = GameObject.FindGameObjectWithTag("WeaponManager").GetComponent<WeaponManager>();
@@ -59,9 +64,11 @@ public class MissionSelect : MonoBehaviour
     {
         if (IsMissionSelected == false)
         {
-            if (Input.GetKeyDown(Key5) && InTrigger) CurrentInedx++;
+            if (Input.GetKeyDown(Key5) && InTrigger) { CurrentInedx++; SoundSource.PlayOneShot(Buttom); }
+        
 
-            if (Input.GetKeyDown(Key6) && InTrigger) CurrentInedx--;
+            if (Input.GetKeyDown(Key6) && InTrigger) {CurrentInedx--; SoundSource.PlayOneShot(Buttom); }
+        
             Guidence.SetActive(true);
         }
 
