@@ -33,6 +33,8 @@ public class WeaponSeller : MonoBehaviour
         WM = GameObject.FindGameObjectWithTag("WeaponManager").GetComponent<WeaponManager>();
         Player = GameObject.FindGameObjectWithTag("Player");
         PD = Player.GetComponent<PlayerData>();
+
+       
     }
 
     // Update is called once per frame
@@ -82,6 +84,7 @@ public class WeaponSeller : MonoBehaviour
             }
            
         }
+       
     }
     void OnTriggerEnter(Collider other)
     {
@@ -101,7 +104,7 @@ public class WeaponSeller : MonoBehaviour
             WM.EnableWeaponsWhileFinishInteract();
         }
     }
-    
-        
+
    
+
 }
