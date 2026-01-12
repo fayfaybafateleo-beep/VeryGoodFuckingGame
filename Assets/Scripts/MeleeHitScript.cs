@@ -69,7 +69,6 @@ public class MeleeHitScript : MonoBehaviour
         if (EndPoint) lastEnd = EndPoint.position;
     }
 
-    /// <summary>动画事件：关窗，并返回本窗口是否命中过</summary>
     public bool EndWindow()
     {
         WindowOpen = false;
@@ -95,7 +94,7 @@ public class MeleeHitScript : MonoBehaviour
             var overlaps = Physics.OverlapCapsule(s, e, Radius, HitMask, QueryTriggerInteraction.Collide);
             foreach (var col in overlaps)
             {
-                // OneTIme结算
+                // OneTImeHit
                 HitBoxPart hb = null;
                 col.TryGetComponent(out hb);
 

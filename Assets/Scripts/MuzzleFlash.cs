@@ -11,8 +11,8 @@ public class MuzzleFlash : MonoBehaviour
     {
         Vector3 rot = transform.localEulerAngles;
 
-        // 修改其中一个分量（Z 轴）
-        rot.z = Random.Range(-MuzzleFlashOffset,MuzzleFlashOffset); // 设置为绝对角度（例如 45°）
+  
+        rot.z = Random.Range(-MuzzleFlashOffset,MuzzleFlashOffset); 
         transform.localEulerAngles = rot;
         Destroy(gameObject, DestroyTime);
     }

@@ -12,7 +12,7 @@ public class UIParent : MonoBehaviour
     public AudioSource AudioSource;
     public AudioClip Diesound;
     bool OneShot;
-    bool unlockedOnDeath;   // 确保只在死亡第一次时解锁一次
+    bool unlockedOnDeath;   
 
     private void Awake()
     {
