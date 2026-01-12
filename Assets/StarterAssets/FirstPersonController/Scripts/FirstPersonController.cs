@@ -76,7 +76,7 @@ namespace StarterAssets
 
 
         //Modify
-        [Header("Camera Tilt (Strafe)")]
+        [Header("CameraTilt(Strafe)")]
    
         public float StrafeTiltMax = 6f;
       
