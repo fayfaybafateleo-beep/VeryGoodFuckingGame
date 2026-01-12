@@ -77,9 +77,9 @@ namespace StarterAssets
 
         //Modify
         [Header("Camera Tilt (Strafe)")]
-        [Tooltip("左右平移时镜头最大倾斜角（度，右移一般是负Z）")]
+   
         public float StrafeTiltMax = 6f;
-        [Tooltip("倾斜平滑时间（秒），越小越跟手")]
+      
         public float StrafeTiltSmoothTime = 0.08f;
         private float _strafeTiltZ;
 		private float _strafeTiltVel;
@@ -299,7 +299,7 @@ namespace StarterAssets
                     switch (CS)
                     {
                         case ControllerState.CanMove:
-                            // [MOD] 更新滑铲（不移动）
+                            //SlideUpdate
                             if (EnableSlide)
                             {
                                 if (UnityEngine.Input.GetKeyDown(SlideKey) && Grounded && _input.move.sqrMagnitude > 0.1f && !_isSliding && CanSlide)
@@ -471,14 +471,15 @@ namespace StarterAssets
             if (_input.move != Vector2.zero)
                 inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
 
-            // [MOD] 滑铲时用滑铲方向，并以“滑铲当前速度 vs 普通速度”二者取大
+            
             Vector3 moveDir = inputDirection.normalized;
             float moveSpeed = _speed;
 
             if (_isSliding)
             {
-                moveDir = _slideDirection;                              // 锁定滑铲方向
-                moveSpeed = Mathf.Max(_speed, _currentSlideSpeed);       // 速度平滑衔接
+                // LockinDirection
+                moveDir = _slideDirection;                              
+                moveSpeed = Mathf.Max(_speed, _currentSlideSpeed);       // SpeedModif
             }
 
             _controller.Move(
