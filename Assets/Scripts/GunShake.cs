@@ -216,7 +216,7 @@ public class GunShake : MonoBehaviour
     {
         float w = Mathf.Sqrt(Mathf.Max(stiffness, 0.0001f));
         float c = 2f * damping * w;
-
+        //second order system
         Vector3 accel = -stiffness * (value - target) - c * velocity;
 
         velocity += accel * dt;

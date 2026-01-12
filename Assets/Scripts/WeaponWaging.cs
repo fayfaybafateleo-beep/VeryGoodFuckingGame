@@ -225,9 +225,10 @@ public class WeaponWaging : MonoBehaviour
 
             if (t >= 1f) AnimState = HandAnimState.None;
         }
-
+        //AI Formular//
         P.localPosition = BaseLocalPos + AnimPosOffset + walkPos + idlePos;
         R.localRotation = Quaternion.Euler(BaseLocalEuler + AnimRotOffsetEuler + walkRot + idleRot);
+        //AI Formular//
     }
 
 
